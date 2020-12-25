@@ -1,0 +1,1356 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>CNS格式</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="the-cns-format">
+<h1 class="title">CNS 格式</h1>
+
+<p>M.U.G.E.N, (c) Elecbyte 1999-2013</p>
+<p>Documentation for version 1.1 (2013)</p>
+<p>Updated 09 June 2013</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id2">介绍</a><ul>
+<li><a class="reference internal" href="#some-terminology" id="id3">一些术语</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#player-variables" id="id4">玩家变量</a></li>
+<li><a class="reference internal" href="#states" id="id5">状态</a><ul>
+<li><a class="reference internal" href="#introduction-to-states" id="id6">状态介绍</a><ul>
+<li><a class="reference internal" href="#life-and-power" id="id7">生命和能量</a></li>
+<li><a class="reference internal" href="#control" id="id8">控制</a></li>
+<li><a class="reference internal" href="#game-time-and-state-time" id="id9">游戏时间和状态时间</a></li>
+<li><a class="reference internal" href="#position-velocity-and-acceleration" id="id10">位置，速度和加速度</a></li>
+<li><a class="reference internal" href="#juggling" id="id11">戏法（Juggling）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-parts-of-a-state" id="id12">状态的基本组成部分</a></li>
+<li><a class="reference internal" href="#details-on-statedef" id="id13">有关StateDef的详细信息</a><ul>
+<li><a class="reference internal" href="#type" id="id14"><tt class="docutils literal">type</tt></a></li>
+<li><a class="reference internal" href="#movetype" id="id15"><tt class="docutils literal">movetype</tt></a></li>
+<li><a class="reference internal" href="#physics" id="id16"><tt class="docutils literal">physics</tt></a></li>
+<li><a class="reference internal" href="#anim" id="id17"><tt class="docutils literal">anim</tt></a></li>
+<li><a class="reference internal" href="#velset" id="id18"><tt class="docutils literal">velset</tt></a></li>
+<li><a class="reference internal" href="#ctrl" id="id19"><tt class="docutils literal">ctrl</tt></a></li>
+<li><a class="reference internal" href="#poweradd" id="id20"><tt class="docutils literal">poweradd</tt></a></li>
+<li><a class="reference internal" href="#juggle" id="id21"><tt class="docutils literal">juggle</tt></a></li>
+<li><a class="reference internal" href="#facep2" id="id22"><tt class="docutils literal">facep2</tt></a></li>
+<li><a class="reference internal" href="#hitdefpersist" id="id23"><tt class="docutils literal">hitdefpersist</tt></a></li>
+<li><a class="reference internal" href="#movehitpersist" id="id24"><tt class="docutils literal">movehitpersist</tt></a></li>
+<li><a class="reference internal" href="#hitcountpersist" id="id25"><tt class="docutils literal">hitcountpersist</tt></a></li>
+<li><a class="reference internal" href="#sprpriority" id="id26"><tt class="docutils literal">sprpriority</tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#details-on-state-controllers" id="id27">状态控制器的详细信息</a><ul>
+<li><a class="reference internal" href="#controller-format" id="id28">控制器格式</a></li>
+<li><a class="reference internal" href="#triggers" id="id29">触发</a><ul>
+<li><a class="reference internal" href="#trigger-logic" id="id30">触发逻辑</a></li>
+<li><a class="reference internal" href="#trigger-persistency" id="id31">触发持久性</a></li>
+<li><a class="reference internal" href="#trigger-redirection" id="id32">触发重定向</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commonly-used-controllers" id="id33">常用控制器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-states-common1-cns" id="id34">常见状态(common1.cns)</a></li>
+<li><a class="reference internal" href="#special-state-numbers" id="id35">特殊状态码</a></li>
+<li><a class="reference internal" href="#expressions" id="id36">表达方式</a><ul>
+<li><a class="reference internal" href="#data-types" id="id37">数据类型</a></li>
+<li><a class="reference internal" href="#arithmetic-operators" id="id38">算术运算符</a></li>
+<li><a class="reference internal" href="#precedence-and-associativity-of-operators" id="id39">运算符的优先级和关联性</a></li>
+<li><a class="reference internal" href="#expression-syntax" id="id40">表达式语法</a></li>
+<li><a class="reference internal" href="#condition-and-function-type-triggers" id="id41">条件和函数类型触发器</a></li>
+<li><a class="reference internal" href="#id1" id="id42">触发重定向</a></li>
+<li><a class="reference internal" href="#bottom" id="id43">底部</a><ul>
+<li><a class="reference internal" href="#special-forms" id="id44">特殊形式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#avoiding-warnings" id="id45">避免警告</a></li>
+<li><a class="reference internal" href="#expressions-in-trigger-arguments" id="id46">触发器参数中的表达式</a></li>
+<li><a class="reference internal" href="#expressions-in-state-and-state-controller-parameters" id="id47">状态和状态控制器参数中的表达式</a></li>
+<li><a class="reference internal" href="#organizing-for-efficiency" id="id48">为效率而组织 Organizing for efficiency</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1><a class="toc-backref" href="#id2">介绍</a></h1>
+<p>玩家的CNS文件有两个用途：</p>
+<ol class="lowerroman simple">
+<li>它定义了该玩家的变量，例如步行速度，绘图比例因子等。</li>
+<li>它包含玩家的状态，这些状态描述了玩家可以执行的所有动作。状态是您可以用来创建简单动作以及复杂动作的基础。</li>
+</ol>
+<p>像许多其他字符文件一样，CNS是一个文本文件，您可以使用任何文本编辑器进行编辑。</p>
+<p>在CNS文件中，分号(;)被视为&quot;注释&quot;字符。分号后同一行上的所有文本将被程序忽略。 CNS几乎不区分大小写，即&quot;MyName&quot;与&quot;myname&quot;和&quot;mYnAMe&quot;相同。一个例外是<tt class="docutils literal">command</tt>触发器（在 CMD 文档中有详细介绍）。</p>
+<div class="section" id="some-terminology">
+<h2><a class="toc-backref" href="#id3">一些术语</a></h2>
+<p>当我们说&quot;组&quot;时，是指以<tt class="docutils literal">[groupname]</tt>之类的东西开始的文本行，然后在下一个组之前结束。例如，组<tt class="docutils literal">Foo</tt>由下面的前三行组成：</p>
+<pre class="literal-block">
+[Foo]
+line1
+line2
+
+[Group 2]
+more lines
+</pre>
+<p>在组内，参数可以按任何顺序出现。所以，</p>
+<pre class="literal-block">
+[SomeGroup]
+value1 = 1234
+value2 = &quot;A string&quot;
+</pre>
+<p>等效于：</p>
+<pre class="literal-block">
+[SomeGroup]
+value2 = &quot;A string&quot;
+value1 = 1234
+</pre>
+</div>
+</div>
+<div class="section" id="player-variables">
+<h1><a class="toc-backref" href="#id4">玩家变量</a></h1>
+<p>尚无完整文档。有关每个变量的注释，<tt class="docutils literal">请看 chars/kfm/kfm.cns</tt>。</p>
+<p>一些重要的注意事项：</p>
+<ul class="simple">
+<li>在<tt class="docutils literal">[Size]</tt>中，可以使用<tt class="docutils literal">xscale</tt>和<tt class="docutils literal">yscale</tt>更改角色的宽度和高度。这省去了缩放每个精灵的麻烦。</li>
+<li>在<tt class="docutils literal">[Velocity]</tt>中设置玩家的速度</li>
+<li>在<tt class="docutils literal">[Movement]</tt>中设置玩家的向下加速度 -- <tt class="docutils literal">yaccel</tt></li>
+</ul>
+</div>
+<div class="section" id="states">
+<h1><a class="toc-backref" href="#id5">状态</a></h1>
+<p>动画和声音是MUGEN角色最明显的表现，但角色的真正&quot;核心（heart）&quot;是其CNS文件。 CNS文件，也称为角色的&quot;状态（states）&quot;文件，包含的代码实际上为角色提供了功能 —— 允许其在命令时执行移动，击中对手或遵守重力定律。</p>
+<p>CNS文件的结构很简单。代码被组织成称为<tt class="docutils literal">[StateDef]</tt>的逻辑组。 <tt class="docutils literal">[StateDef]</tt>块已编号，典型字符可能包含数百个。每个<tt class="docutils literal">[StateDef]</tt>中有许多<tt class="docutils literal">[State]</tt>块，也称为状态控制器。每个状态控制器都是一个触发动作对：它指定角色要采取的某些动作以及执行该动作的条件。</p>
+<p>在游戏时间的每个瞬间（&quot;滴答（tick）&quot;），角色都会在<tt class="docutils literal">[StateDef]</tt>块中执行代码。例如，如果角色闲置站立，则通常在<tt class="docutils literal">[StateDef 0]</tt>块中执行。为简便起见，我们说该字符处于&quot;状态0（in state 0）&quot;。在角色处于状态0的每个滴答声中，它将从上到下评估<tt class="docutils literal">[StateDef 0]</tt>块中的状态控制器，检查条件并采取指定的任何操作。如果角色需要更改为其他<tt class="docutils literal">[StateDef]</tt>块，可以说是状态417，因为它正在执行移动，它可以执行<tt class="docutils literal">ChangeState</tt>状态控制器进行切换。然后，角色将以完全相同的方式开始执行<tt class="docutils literal">[StateDef 417]</tt>中的代码。</p>
+<p>每个MUGEN角色还具有三个特殊状态，分别为-1，-2和-3。这些是带有负数的唯一允许状态。状态-1通常包含根据用户输入（命令commands）确定状态转换规则的状态控制器。状态-2包含其他每个滴答滴答都需要检查的状态控制器。状态-3包含状态控制器，除非游戏者暂时使用其他游戏者的状态数据（例如，当游戏者被抛出时），否则每个滴答都会对其进行检查。</p>
+<p>综上所述：对于游戏时间的每一个滴答声，MUGEN都会按照从高到低的状态编号（-3，-2，然后-1）的顺序从上到下单次通过每个特殊状态。对于遇到的每个状态控制器，都会评估其条件类型触发器，如果​​满足，则执行该控制器。然后，处理进入该状态下的下一个状态控制器。任何特殊状态下的状态转换（<tt class="docutils literal">ChangeState</tt>）将更新玩家的当前状态号，并将中止处理该状态的其余部分。在检查了所有处于特殊状态的状态控制器后，将再次从上到下处理玩家的当前状态。如果从当前状态中进行状态转换，则将跳过当前状态中的其余状态控制器（如果有），并且从新状态的开头继续进行处理。当到达当前状态的末尾并且不进行任何状态转换时，此刻度将暂停处理。</p>
+<p>上述情况有一个例外。如果角色是&quot;帮助者（helper）&quot;角色，即由<tt class="docutils literal">Helper</tt>状态控制器生成，则该角色将不会具有特殊状态-3和-2。除非启用了键盘输入，否则辅助角色也不会具有特殊状态-1。 （这是在创建角色时由<tt class="docutils literal">Helper</tt>状态控制器控制的。）</p>
+<div class="section" id="introduction-to-states">
+<h2><a class="toc-backref" href="#id6">状态介绍</a></h2>
+<p>编程状态是创建角色最困难的部分。它需要大量的工作，测试，有时还要反复试验。在本节中，我们经常会引用正在编程的玩家以及他的对手。让我们将正在编辑状态的玩家称为P1，将其对手称为P2。</p>
+<p>如果您在初读时对本文档不了解很多，不要灰心。了解状态的最好方法是，先在完整角色的CNS中使用值，然后看看它们对他或她有什么影响。 &quot;调整(tweaking)&quot; CNS无需担心。 M.U.G.E.N旨在检测语法错误并进行报告。</p>
+<p>M.U.G.E.N发行包中包含一个名为“功夫男”（简称KFM）的角色。您可以在 chars/kfm目录中找到他。</p>
+<p>CMD文件包含命令名称的声明和状态-1的定义，状态-1是一种特殊状态，用于控制字符如何响应用户输入。有关更多信息，请参见CMD文档。</p>
+<p>以下是一些对您有用的概念。</p>
+<div class="section" id="life-and-power">
+<h3><a class="toc-backref" href="#id7">生命和能量</a></h3>
+<p>玩家的生命条是屏幕顶部屏幕一侧的黄色栏。当生命条达到零时，玩家将被淘汰。他的能量条是蓝色条，并且随着他进行或发起的每次攻击而增加。当力量条达到特定值时，他可以进行超级动作（super moves）。</p>
+</div>
+<div class="section" id="control">
+<h3><a class="toc-backref" href="#id8">控制</a></h3>
+<p>当我们说一个玩家&quot;有控制权&quot;时，是指他已经准备好步行，跳跃或进攻。没有控制权的玩家将不会响应您的输入（通过键盘或操纵杆）。例如，当P1处于站立状态时，他具有控制权，如果您按下前进按钮，它将向前走。当玩家处于攻击状态时，通常不会对其进行控制，否则，您可以在中途离开。</p>
+<p>但是，该规则有一个例外。有时，即使玩家没有控制权，您也可以让其对某些动作做出响应。这称为&quot;移动中断&quot;或&quot;移动取消&quot;。有关详细信息，请参见CMD文档。</p>
+<p>我们将经常提到玩家的&quot;控制标志（control flag）&quot;。 &quot;标志（flag）&quot;是一个值为true或false的值。如果我们说玩家的控制标记为true，则表示他拥有控制权。</p>
+</div>
+<div class="section" id="game-time-and-state-time">
+<h3><a class="toc-backref" href="#id9">游戏时间和状态时间</a></h3>
+<p>M.U.G.E.N会跟踪游戏中经过的时间。每次游戏更新时（包括更新玩家，检查碰撞并渲染到屏幕上），我们说游戏时间增加了一个。玩家花费在某个状态的时间称为&quot;状态时间（state-time）&quot;。状态时间在状态开始时从0开始，并在游戏时间的每一刻增加一刻。</p>
+</div>
+<div class="section" id="position-velocity-and-acceleration">
+<h3><a class="toc-backref" href="#id10">位置，速度和加速度</a></h3>
+<p>那些具有数学基础知识的人应该了解这些概念。 M.U.G.E.N使用以下坐标系。 x位置越大，玩家越靠右。 x位置越少，他越靠近左侧。 y位置的零在地面上。随着玩家的Y位置变大，他向下移动。例如，负y位置表示他在空中。同样，当我们说一个玩家的x速度为正时，表示他正在向前移动，如果他的x速度为负，则表示他正在向后移动。 y速度为正的玩家正在向下移动，y速度为负的玩家正在向上移动。正x加速度表示玩家的x速度在增加，负x加速度表示玩家的x速度在减小。对于y加速度也是如此。</p>
+</div>
+<div class="section" id="juggling">
+<h3><a class="toc-backref" href="#id11">戏法（Juggling）</a></h3>
+<p>M.U.G.E.N允许某些动作&quot;戏法（Juggling）&quot;，即击中被撞倒或躺在地上的对手。杂耍系统的工作方式是这样的：每个人在使他们摔倒的第一次击中时都有一定数量的杂耍&quot;点（points）&quot;开始，通常为15。</p>
+<p>一些快速的术语：当我们说一个玩家正在&quot;摔倒（falling）&quot;时，我们的意思是他没有恢复空中控制，而是会摔倒在地。</p>
+<p>如果玩家在跌倒或躺在地面上时被击中，那么他的juggle points将根据攻击减少一定量。当攻击需要的juggle points超过对手的剩余点数时，攻击将会失败。任何导致对手摔倒的动作都会在第一击中立即减去其juggle points。</p>
+<p>例如，理论上需要7个杂耍点的攻击可以用来对对手进行两次杂耍（假设您从15点开始），而使对手只剩下1点。随后的此类攻击将丢失。</p>
+<p>这种杂耍系统的原因是为了防止空气中的无限连击。</p>
+</div>
+</div>
+<div class="section" id="basic-parts-of-a-state">
+<h2><a class="toc-backref" href="#id12">状态的基本组成部分</a></h2>
+<p>注意：本节假定您至少已浏览 AIR文件 的文档，并了解动画的概念，并且知道关键字和短语（例如动作和动作元素）的含义。</p>
+<p>这是P1的简短示例状态：</p>
+<pre class="literal-block">
+[Statedef 200]
+type = S
+physics = S
+movetype = I
+ctrl = 0
+anim = 200
+velset = 0
+
+[State 200, 1]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+</pre>
+<p>此状态将播放P1动画的动作200，并在动画结束后将P1返回其站立状态。在这种情况下，假定动作200具有有限的循环时间。即，动作200不具有时间等于-1的任何元素。</p>
+<p>此时，您无需担心细节。让我们首先了解一个状态组成。</p>
+<p>所有状态都必须有一个Statedef节和一个或多个State节。</p>
+<p>Statedef包含状态的起始信息，例如状态是什么状态（站立，蹲伏，悬空）以及他正在执行哪种动作（攻击，空转）。</p>
+<p>每个状态部分都称为状态控制器，或简称为控制器。控制器告诉程序对P1做什么以及何时进行。控制器有很多种，每种都有自己的功能。例如，有些控制器可更改玩家的位置或速度，定义攻击效果，创建弹丸，在动画动作之间切换，更改状态等。每个控制器必须至少有一个触发器。触发器是导致控制器被激活的事件。示例包括：在状态的开始处触发，在动画的结尾处触发（如上面的示例状态所示），在动画Action的元素上触发，在P2在P1的特定范围内时触发，等等。宗上。</p>
+</div>
+<div class="section" id="details-on-statedef">
+<h2><a class="toc-backref" href="#id13">有关StateDef的详细信息</a></h2>
+<p>每个状态都必须从一个StateDef组开始，也就是Statedef节。 StateDef组必须看起来像这样（在点处放入一个或多个参数）：</p>
+<pre class="literal-block">
+[Statedef state_number]
+. state_parameters
+.
+.
+</pre>
+<p>将<tt class="docutils literal">state_number</tt>替换为您正在编程的状态码。除特殊组号（请参阅附录A）外，您可以使用您选择的任何状态码。为避免选择特殊的组号码，请勿选择0-199和5000-5999之间的号码。</p>
+<p>接下来的行应包含以下基本参数：</p>
+<ul class="simple">
+<li><a class="reference internal" href="#type">type</a></li>
+<li><a class="reference internal" href="#movetype">movetype</a></li>
+<li><a class="reference internal" href="#physics">physics</a></li>
+<li><a class="reference internal" href="#anim">anim</a></li>
+</ul>
+<p>还可能包含其他可选参数：</p>
+<ul class="simple">
+<li><a class="reference internal" href="#velset">velset</a></li>
+<li><a class="reference internal" href="#ctrl">ctrl</a></li>
+<li><a class="reference internal" href="#poweradd">poweradd</a></li>
+<li><a class="reference internal" href="#juggle">juggle</a></li>
+<li><a class="reference internal" href="#facep2">facep2</a></li>
+<li><a class="reference internal" href="#hitdefpersist">hitdefpersist</a></li>
+<li><a class="reference internal" href="#movehitpersist">movehitpersist</a></li>
+<li><a class="reference internal" href="#hitcountpersist">hitcountpersist</a></li>
+<li><a class="reference internal" href="#sprpriority">sprpriority</a></li>
+</ul>
+<div class="section" id="type">
+<h3><a class="toc-backref" href="#id14"><tt class="docutils literal">type</tt></a></h3>
+<p>这是该状态下P1的状态类型。它定义了他是站立，蹲伏，在空中还是在躺下。相应的值分别为&quot;S&quot;，&quot;C&quot;，&quot;A&quot;和&quot;L&quot;（不带引号）。要使类型保持先前状态不变，请使用值&quot;U&quot;。如果省略此行，则假定类型为&quot;S&quot;。您最常使用&quot;S&quot;，&quot;C&quot;和&quot;A&quot;。例如，蹲伏状态类型将需要以下行：</p>
+<pre class="literal-block">
+type = C
+</pre>
+<p>该类型用于确定几个因素，最重要的是，P1对被击中的反应如何。例如，处于&quot;站立&quot;状态，P1会做出反应，就像他站在地面上一样。如果类型是&quot;空气&quot;，那么P1将对点击做出相应的反应。</p>
+</div>
+<div class="section" id="movetype">
+<h3><a class="toc-backref" href="#id15"><tt class="docutils literal">movetype</tt></a></h3>
+<p>P1正在执行的移动类型为：&quot;A&quot;表示攻击，&quot;I&quot;表示空闲，&quot;H&quot;表示被击中。要使movetype与以前的状态保持不变，请使用值&quot;U&quot;。如果省略此行，则假定该值为&quot;I&quot;。 &quot;A&quot;和&quot;H&quot;应不言自明。 &quot;I&quot;用于P1既不攻击也不被击中的状态。例如，攻击状态应包含以下行：</p>
+<pre class="literal-block">
+movetype = A
+</pre>
+<p>您需要指定移动类型，以便程序将知道如何处理状态。错误指定移动类型可能会导致P1行为不正确。</p>
+</div>
+<div class="section" id="physics">
+<h3><a class="toc-backref" href="#id16"><tt class="docutils literal">physics</tt></a></h3>
+<p>您需要指定在该状态下要使用的物理。有效值是&quot;S&quot;代表架子，&quot;C&quot;代表蹲伏，&quot;A&quot;代表空气，&quot;N&quot;代表无。要使物理状态与先前状态保持不变，请使用值&quot;U&quot;。如果省略，则假定值为&quot;N&quot;。物理性质用于确定P1的行为。</p>
+<ul class="simple">
+<li>对于&quot;S&quot;物理学，P1将与地面摩擦。摩擦系数的值在<a class="reference internal" href="#player-variables">玩家变量</a>中设置。</li>
+<li>对于&quot;C&quot;物理学，P1会经历摩擦，就像在&quot;S&quot;状态下一样。</li>
+<li>对于&quot;A&quot;物理学，P1将向下加速，如果他的y位置大于0（即他接触地面），他将立即进入着陆状态。</li>
+<li>如果您使用&quot;N&quot;，P1将不使用任何这些预编程的物理方法。</li>
+</ul>
+<p>不要将&quot;物理&quot;与状态&quot;类型&quot;混淆。它们通常是相同的，但是如果您想要更多控制权，则可以选择。例如，您可以选择使用&quot;N&quot;（无物理学），并为空中状态指定自己的加速度和着陆检测。</p>
+</div>
+<div class="section" id="anim">
+<h3><a class="toc-backref" href="#id17"><tt class="docutils literal">anim</tt></a></h3>
+<p>此参数更改P1的动画动作。指定操作编号作为值。如果您不希望P1在状态开始时更改动画，请忽略此参数。</p>
+<p>因此，如果状态为400（玩家正在用动作400进行蹲伏攻击），则典型参数为：</p>
+<pre class="literal-block">
+[Statedef 400]
+type = c
+movetype = a
+physics = c
+anim = 400
+</pre>
+</div>
+<div class="section" id="velset">
+<h3><a class="toc-backref" href="#id18"><tt class="docutils literal">velset</tt></a></h3>
+<p>您可以使用<tt class="docutils literal">velset</tt>在状态开始时设置P1的速度。格式是一个数字对，分别表示x速度和y速度。省略这条线将使P1的速度保持不变。例如，</p>
+<pre class="literal-block">
+velset = 4,-8
+</pre>
+<p>使P1开始沿对角线向上和向前移动。</p>
+<p>有一个例外。即使您的<tt class="docutils literal">velset = 0</tt>，在拐角处攻击P2也会将P1推开。</p>
+</div>
+<div class="section" id="ctrl">
+<h3><a class="toc-backref" href="#id19"><tt class="docutils literal">ctrl</tt></a></h3>
+<p>此参数将设置P1的控制。值&quot;0&quot;将标志设置为false，&quot;1&quot;将其设置为true。如果省略，则P1的控制标志保持不变。例如，要控制P1，请使用</p>
+<pre class="literal-block">
+ctrl = 1
+</pre>
+</div>
+<div class="section" id="poweradd">
+<h3><a class="toc-backref" href="#id20"><tt class="docutils literal">poweradd</tt></a></h3>
+<p>如果包含，<tt class="docutils literal">poweradd</tt>参数将添加到玩家的能量栏中。该值是一个数字，可以是正数或负数。此参数通常用于攻击动作中，您希望玩家仅通过执行攻击来获得力量。例如，要增加40次幂，请键入</p>
+<pre class="literal-block">
+poweradd = 40
+</pre>
+</div>
+<div class="section" id="juggle">
+<h3><a class="toc-backref" href="#id21"><tt class="docutils literal">juggle</tt></a></h3>
+<p><tt class="docutils literal">juggle</tt>参数仅对攻击有用。它指定了移动需要多少点juggling。如果省略了攻击，则如果先前的攻击状态成功juggle，则该攻击将juggle。对于所有攻击，都应包括<tt class="docutils literal">juggle</tt>参数。如果攻击跨越一个以上的状态，则仅在该攻击的第一个状态中包括<tt class="docutils literal">juggle</tt>参数。另请参阅<a class="reference internal" href="#juggling">Juggling</a>。</p>
+</div>
+<div class="section" id="facep2">
+<h3><a class="toc-backref" href="#id22"><tt class="docutils literal">facep2</tt></a></h3>
+<p>当您将<tt class="docutils literal">facep2 = 1</tt>包含在内时，玩家将在必要时转向在状态开始时面对对手。如果省略，<tt class="docutils literal">facep2</tt>的默认值为&quot;0&quot;。</p>
+</div>
+<div class="section" id="hitdefpersist">
+<h3><a class="toc-backref" href="#id23"><tt class="docutils literal">hitdefpersist</tt></a></h3>
+<p>如果设置为1，则在状态转换到此状态时处于活动状态的任何 HitDef 将保持活动状态。如果设置为0（默认值），则在进行状态转换时将禁用任何此类 HitDef。</p>
+</div>
+<div class="section" id="movehitpersist">
+<h3><a class="toc-backref" href="#id24"><tt class="docutils literal">movehitpersist</tt></a></h3>
+<p>如果设置为1，则前一状态的移动命中信息（攻击命中或未击中，是否受到保护等；请参阅触发器文档中的&quot;Move *&quot;触发器）将被带入此状态。如果设置为0（默认值），则此信息将在进入此状态后重置。</p>
+</div>
+<div class="section" id="hitcountpersist">
+<h3><a class="toc-backref" href="#id25"><tt class="docutils literal">hitcountpersist</tt></a></h3>
+<p>如果设置为1，则命中计数器（此攻击已完成多少次命中）将从前一状态延续到该状态。如果设置为0（默认值），则命中计数器将在状态转换时重置。此参数不会影响屏幕上显示的组合计数器。有关如何检查点击计数器的信息，请参见<tt class="docutils literal">HitCount</tt>和<tt class="docutils literal">UniqHitCount</tt>触发器文档。</p>
+</div>
+<div class="section" id="sprpriority">
+<h3><a class="toc-backref" href="#id26"><tt class="docutils literal">sprpriority</tt></a></h3>
+<p>如果存在此参数，则玩家的Sprite分层优先级将设置为指定的值。如果省略，则精灵优先级将保持不变。 <tt class="docutils literal">common1.cns</tt>（每个玩家都继承的CNS文件）将站立或蹲伏玩家的精灵优先级定义为0，将跳跃玩家的精灵优先级定义为1。对于大多数攻击状态，您需要将<tt class="docutils literal">sprpriority = 2</tt>设置为攻击者出现在前面。</p>
+<p>有关如何使用控制器更改Sprite优先级的信息，请参见sctrls文档中的<tt class="docutils literal">SprPriority</tt>。</p>
+</div>
+</div>
+<div class="section" id="details-on-state-controllers">
+<h2><a class="toc-backref" href="#id27">状态控制器的详细信息</a></h2>
+<div class="section" id="controller-format">
+<h3><a class="toc-backref" href="#id28">控制器格式</a></h3>
+<p>所有状态必须至少具有一个状态控制器，否则将导致错误。状态控制器组具有以下格式：</p>
+<pre class="literal-block">
+[State state_number, some_number]
+type = controller_type
+trigger1 = condition_exp
+&lt;universal optional parameters&gt;
+&lt;additional parameters depending on controller&gt;
+</pre>
+<p>state_number必须与<tt class="docutils literal">StateDef</tt>中的状态相同。 <em>some_number</em>可以是您选择的任何数字；它是发现错误时报告的编号，因此您知道需要修复哪个控制器。</p>
+<p>通用（适用于所有状态控制器）可选参数是<tt class="docutils literal">ignorehitpause</tt>和<tt class="docutils literal">持久性（persistency）</tt>参数。如果<tt class="docutils literal">ignorehitpause</tt>设置为1，即使角色被击中暂停，MUGEN也会检查此状态控制器。否则，在命中暂停期间将不会检查此状态控制器。缺省值为0，对于除特殊情况以外的所有情况，建议使用该值。有关<tt class="docutils literal">持久性（persistency）</tt>参数的说明，请参阅<a class="reference internal" href="#trigger-persistency">触发持久性</a>。</p>
+<p><em>controller_type</em>是您正在使用的控制器的名称。每种类型的控制器都有不同的作用，并且需要不同的参数。有关状态控制器的完整列表，请参见sctrls.txt。</p>
+<p>控制器的顺序很重要。首先列出的控制器是已检查的控制器，如有必要，首先激活。</p>
+<p>这是一个控制器的示例，该控制器在状态开始时提供P1控制（与将<tt class="docutils literal">ctrl = 1</tt>作为<tt class="docutils literal">StateDef</tt>中的参数的效果相同）：</p>
+<pre class="literal-block">
+[State 300, 1] ;State 300. 1 is just an arbitrary number.
+type = CtrlSet ;Changes the control flag.
+trigger1 = Time = 0
+value = 1
+</pre>
+<p>在此示例中，使用<tt class="docutils literal">CtrlSet</tt>类型可以更改P1的控制标志。读取<tt class="docutils literal">trigger1 = Time = 0</tt>的行表示状态时间为0时（即，在该状态开始时）该控制器被激活。行<tt class="docutils literal">value = 1</tt>表示我们要将控制标志的值设置为1，这表示true。如果要使P1不受控制地开始状态，则只需将最后一行更改为<tt class="docutils literal">value = 0</tt>。</p>
+<p>让我们来看另一个例子。该控制器将P1向前移动两次10像素：在其当前“动画动作”的第二个和第三个元素上。如果您不知道哪种参数与哪种控制器类型一起使用，请不要担心。您可以从状态控制器文档（sctrls）了解有关它们的更多信息。</p>
+<pre class="literal-block">
+[State 300, 2]
+type = PosAdd ;Adds to P1's position
+trigger1 = AnimElem = 2 ;Trigger on 2nd element.
+trigger2 = AnimElem = 3 ;Trigger on 3rd element.
+x = 10
+</pre>
+<p>如上所述，每个控制器必须至少有一个触发器。触发是导致控制器被激活的条件。此示例有两个触发器，并且当<em>任意一个</em>触发器为真时，将激活控制器。</p>
+</div>
+<div class="section" id="triggers">
+<h3><a class="toc-backref" href="#id29">触发</a></h3>
+<div class="section" id="trigger-logic">
+<h4><a class="toc-backref" href="#id30">触发逻辑</a></h4>
+<p>第一个触发器应该始终是<tt class="docutils literal">trigger1</tt>，随后的触发器应该是<tt class="docutils literal">trigger2</tt>，然后是<tt class="docutils literal">trigger3</tt>，依此类推。决定是否应激活控制器的逻辑是：</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal">trigger1</tt>的所有条件都正确吗？如果是这样，则是，激活控制器。</li>
+<li>否则，对<tt class="docutils literal">trigger2</tt>重复测试，依此类推，直到找不到更多触发器。</li>
+</ol>
+<p>可以将其视为&quot;或&quot;逻辑。</p>
+<p>小心;跳过数字将导致某些触发器被忽略。例如，如果您有触发器<tt class="docutils literal">trigger1</tt>，<tt class="docutils literal">trigger2</tt>和<tt class="docutils literal">trigger4</tt>而没有<tt class="docutils literal">trigger3</tt>，那么<tt class="docutils literal">trigger4</tt>将被忽略。</p>
+<p>现在，如果要在激活控制器之前满足多个条件怎么办？这是测试空中玩家是否已经到达地面的常用示例。使用的触发器是：</p>
+<pre class="literal-block">
+trigger1 = Vel Y &gt; 0 ; True if Y-velocity is &gt; 0 (going down)
+trigger1 = Pos Y &gt; 0 ; True if Y-position is &gt; 0 (below ground)
+</pre>
+<p>此时，您可能会对触发器的格式感到困惑。现在不用担心。我们会尽快解决。</p>
+<p>如上所示，两个触发器的编号相同。当多个触发器具有相同的编号时，它将实现&quot;与&quot;逻辑。即，如果具有相同编号的每个触发器中的每个触发器为真，则激活控制器，但如果其中一个或多个触发器为假，则不激活控制器。</p>
+<p>您可以将两种想法结合在一起。例如：</p>
+<pre class="literal-block">
+trigger1 = Vel Y &gt; 0 ; True if Y-velocity is &gt; 0 (going down)
+trigger1 = Pos Y &gt; 0 ; True if Y-position is &gt; 0 (below ground)
+trigger2 = Time = 5  ; True if state-time is 5
+</pre>
+<p>如果玩家降落在地面上（y速度和y位置都&gt; 0），或者如果他的状态时间为5，则将激活此控制器。</p>
+<p>总结如下：</p>
+<ul class="simple">
+<li>具有相同编号的触发器仅在所有触发器都为真时才激活控制器。</li>
+<li>如果其中一个或多个为真，则具有不同编号的触发器将激活控制器。</li>
+</ul>
+<p>触发器的格式为：</p>
+<blockquote>
+<tt class="docutils literal">trigger?</tt> = <em>condition_exp</em></blockquote>
+<p><tt class="docutils literal">condition_exp</tt>是要检查是否等于0的算术表达式。如果condition_exp为0，则触发器为false。如果<em>condition_exp</em>为非零，则触发器为true。如以上示例所示，<em>condition_exp</em>通常是一个简单的关系表达式，但是可以根据需要简单或复杂。</p>
+<p>可以在表达式之间使用逻辑运算符。例如，这等效于上面的示例。</p>
+<pre class="literal-block">
+trigger1 = ((Vel Y &gt; 0) &amp;&amp; (Pos Y &gt; 0)) || Time = 5
+</pre>
+<p>有关算术表达式的详细说明，请参见<a class="reference internal" href="#expressions">表达式（Expressions）</a>。</p>
+<p>您可能使用的一个有用的快捷方式是<tt class="docutils literal">triggerall</tt>。它指定所有触发器必须为真的条件。例如，考虑：</p>
+<pre class="literal-block">
+triggerall = Vel X = 0
+trigger1 = Pos Y &gt; -2
+trigger2 = AnimElem = 3
+trigger3 = Time = [2,9]
+</pre>
+<p>为了检查<tt class="docutils literal">trigger1</tt>到<tt class="docutils literal">trigger3</tt>中的任何一个，<tt class="docutils literal">triggerall</tt>条件也必须为true。在这种情况下，只要x速度不为0，就不会激活状态控制器。如果需要，可以有多个<tt class="docutils literal">triggerall</tt>条件。请注意，即使您指定<tt class="docutils literal">triggerall</tt>，也必须至少存在一个trigger1。</p>
+</div>
+<div class="section" id="trigger-persistency">
+<h4><a class="toc-backref" href="#id31">触发持久性</a></h4>
+<p>如果您不希望触发器每一次都满足条件，则您需要添加一个<tt class="docutils literal">持久性（persistent）</tt>参数。让我们从一个例子开始：</p>
+<pre class="literal-block">
+[State 310, 1]
+type = PosAdd
+trigger1 = Vel Y &gt; 1
+x = 10
+</pre>
+<p>该状态控制器在P1的y速度大于1的游戏时间的每个滴答中将P1向前移动10个像素。也就是说，每当触发条件为true时，就会激活该控制器。如果我们希望控制器仅被激活一次，则需要添加一行：</p>
+<pre class="literal-block">
+[State 310, 1]
+type = PosAdd
+trigger1 = Vel Y &gt; 1
+persistent = 0       ;&lt;-- Added this line
+x = 10
+</pre>
+<p><tt class="docutils literal">持久性（persistent）</tt>的默认值为1，这意味着每次触发器为true时都会激活控制器。将<tt class="docutils literal">persistent</tt>设置为0将允许在该状态下仅激活一次控制器。在P1离开该状态之前一直如此。如果P1稍后返回该状态，则可以再次激活控制器。</p>
+<p><tt class="docutils literal">持久(persistent)</tt>参数还可以采用0和1以外的值：</p>
+<pre class="literal-block">
+[State 310, 1]
+type = PosAdd
+trigger1 = Vel Y &gt; 1
+persistent = 2       ;&lt;-- Modified this line
+x = 10
+</pre>
+<p>在这种情况下，将<tt class="docutils literal">persistent</tt>设置为2意味着每两次触发为真，控制器将被激活一次。将<tt class="docutils literal">持久性（persistent）</tt>设置为3会每3次激活一次控制器，依此类推。</p>
+</div>
+<div class="section" id="trigger-redirection">
+<h4><a class="toc-backref" href="#id32">触发重定向</a></h4>
+<p>可能希望检查游戏者目标或游戏者伙伴（如果游戏者是helper）的状态时间，等等。使用所谓的触发器重定向是可能的。有关详细信息，请参见<a class="reference internal" href="#expressions">表达式（Expressions）</a>。</p>
+</div>
+</div>
+<div class="section" id="commonly-used-controllers">
+<h3><a class="toc-backref" href="#id33">常用控制器</a></h3>
+<p><tt class="docutils literal">null</tt>控制器对于调试非常有用。<tt class="docutils literal">null</tt>控制器基本上什么也不做。您可以使用它暂时关闭某些控制器，而不用注释掉整个部分。例如，您可能要禁用此功能：</p>
+<pre class="literal-block">
+[State 300, 1] ;Controller that accelerates P1 forwards
+type = VelAdd
+trigger1 = Time &gt;= 0
+x = .8
+</pre>
+<p>只需注释掉类型并放入<tt class="docutils literal">null</tt>即可：</p>
+<pre class="literal-block">
+[State 300, 1] ;Controller that accelerates P1 forwards
+type = null ;VelAdd
+trigger1 = Time &gt;= 0
+x = .8
+</pre>
+<p>以后，当您要重新启用控制器时，只需将类型更改回原来的类型即可。</p>
+<p>现在让我们回顾一下示例：</p>
+<pre class="literal-block">
+[Statedef 200]
+type = S
+physics = S
+movetype = I
+ctrl = 0
+anim = 200
+velset = 0
+
+[State 200, 1]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+</pre>
+<p><tt class="docutils literal">[State 200, 1]</tt>是一个<tt class="docutils literal">ChangeState</tt>控制器。顾名思义，它更改了P1的状态号（例如执行P1的<tt class="docutils literal">[StateDef]</tt>块）。 <tt class="docutils literal">value</tt>参数应具有要更改为的状态号。可以在P1更改状态时将可选的<tt class="docutils literal">ctrl</tt>参数设置为P1的控制标志。</p>
+<p>现在让我们将其设为攻击状态。首先，动画动作需要攻击碰撞盒。从AIR文档中快速回顾一下：<tt class="docutils literal">Clsn1</tt>用于攻击，而<tt class="docutils literal">Clsn2</tt>用于攻击玩家。因此，如果任何一个P1的<tt class="docutils literal">Clsn1</tt>框与任何一个P2的<tt class="docutils literal">Clsn2</tt>框相交，则P1将击中P2。</p>
+<p>例如，假设P1的AIR文件中的动画动作如下所示：</p>
+<pre class="literal-block">
+[Begin Action 200]
+200,0, 0,0, 3
+200,1, 0,0, 4
+200,2, 0,0, 4
+200,3, 0,0, 3
+</pre>
+<p>定义边界框后，它看起来像：</p>
+<pre class="literal-block">
+[Begin Action 200]
+Clsn2: 1
+  Clsn2[0] = -10,0, 10,-80
+200,0, 0,0, 3
+Clsn1: 1
+  Clsn1[0] =  10,-70, 40,-60
+Clsn2: 2
+  Clsn2[0] = -10,  0, 10,-80
+  Clsn2[1] =  10,-70, 40,-60
+200,1, 0,0, 4
+Clsn2Default: 1 ;Use this box for the last two frames
+  Clsn2[0] = -10,0, 10,-80
+200,2, 0,0, 4
+200,3, 0,0, 3
+</pre>
+<p>如您所见，每个元素都有一个为其定义的<tt class="docutils literal">Clsn2</tt>框（最后两个元素使用相同的框）。第二个元素是唯一带有<tt class="docutils literal">Clsn1 box</tt>的元素。</p>
+<p>注意：可以为“动画动作Animation Action”中的任何元素定义<tt class="docutils literal">Clsn1</tt>框，但是如果在第一个元素中放置<tt class="docutils literal">Clsn1</tt>框，攻击将立即发生，并且变得不可阻挡。因此，建议仅为第一个之后的元素定义<tt class="docutils literal">Clsn1</tt>框。</p>
+<p>现在，我们准备在CNS中设置状态。我们将在下面解释更改。</p>
+<pre class="literal-block">
+[Statedef 200]
+type = S
+physics = S
+movetype = A  ;&lt;-- changed from &quot;I&quot; to &quot;A&quot;
+ctrl = 0
+anim = 200
+velset = 0
+
+[State 200, 1] ;&lt;-- Added this state controller
+type = HitDef
+trigger1 = AnimElem = 2
+attr = S, NA
+animtype  = Light
+damage    = 10
+guardflag = MA
+pausetime = 12,12
+sparkxy = 0,-55
+hitsound   = 5,0
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 12
+ground.hittime  = 15
+ground.velocity = -5
+air.velocity = -2.5,-3.5
+
+[State 200, 2]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+</pre>
+<p>StateDef中的<tt class="docutils literal">movetype</tt>参数针对&quot;攻击（attack）&quot;设置为<tt class="docutils literal">A</tt>。请记住对所有攻击状态都执行此操作。和以前一样，动画结束后，P1会回到站立状态。</p>
+<p>那个<tt class="docutils literal">HitDef</tt>控制器看起来像个怪物！不用担心，我们将慢慢进行。</p>
+<pre class="literal-block">
+type = HitDef
+trigger1 = AnimElem = 2
+</pre>
+<p>这将控制器类型指定为<tt class="docutils literal">HitDef</tt>，代表&quot;命中定义（Hit
+Definition）&quot;。它在动画的第二个元素上触发。从激活触发器开始的任何<tt class="docutils literal">Clsn2</tt>框都将采用此匹配定义。</p>
+<p>例如，如果您在动画的第二个和第三个元素中都有一个<tt class="docutils literal">Clsn1</tt>，则在第二个元素上触发单个<tt class="docutils literal">HitDef</tt>使其适用于动画的两个元素。因此，P1最多将命中一次：如果第二个元素命中，则第三个元素将丢失。如果第二个元素未命中，则第三个元素仍然可以命中。要使攻击命中两次，必须为两个元素中的每一个触发一个<tt class="docutils literal">HitDef</tt>。</p>
+<pre class="literal-block">
+attr = S, NA
+</pre>
+<p>这是攻击的属性。它用于确定攻击是否可以达到P2。在这种情况下，它是常规站立攻击。</p>
+<p><tt class="docutils literal">attr</tt>的格式为<tt class="docutils literal">attr = arg1, arg2</tt>，其中：</p>
+<ul class="simple">
+<li><tt class="docutils literal">arg1</tt>是<tt class="docutils literal">S</tt>，<tt class="docutils literal">C</tt>或<tt class="docutils literal">A</tt>。类似于<tt class="docutils literal">StateDef</tt>的<tt class="docutils literal">statetype</tt>，它表示攻击是站立攻击，蹲伏攻击或空袭。</li>
+<li><tt class="docutils literal">arg2</tt>是2个字符的字符串。第一个字符是&quot;正常（normal）&quot;为<tt class="docutils literal">N</tt>，&quot;特殊（special）&quot;为S或&quot;超级（hyper）&quot;（或众所周知的&quot;超级（super）&quot;）为H。第二个字符必须是<tt class="docutils literal">A</tt>（用于&quot;攻击&quot;）（正常命中攻击），<tt class="docutils literal">T</tt>（用于&quot;投掷&quot;）或<tt class="docutils literal">P</tt>（用于弹丸）。</li>
+</ul>
+<pre class="literal-block">
+animtype = Light
+</pre>
+<p>这是指P2在受到攻击时将进入的动画类型。从<tt class="docutils literal">light</tt>, <tt class="docutils literal">medium</tt>, <tt class="docutils literal">hard</tt>或<tt class="docutils literal">back</tt>中选择。前三个应该是不言自明的。<tt class="docutils literal">Back</tt>是动画，其中P2被敲了下来。</p>
+<pre class="literal-block">
+damage = 10
+</pre>
+<p>这是P2命中时受到的伤害，如果受到保护，则不会造成伤害。如果我们将那条线更改为<tt class="docutils literal">damage = 10, 1</tt>，那么如果受到保护，它将造成1点伤害。</p>
+<pre class="literal-block">
+guardflag = MA
+</pre>
+<p><tt class="docutils literal">guardflag</tt>决定了P2如何防范攻击。在这里，它可以被保护在高（站立），低（蹲下）和空中的状态。该参数必须是包含以下任何一个字符的字符串：<tt class="docutils literal">H</tt>代表&quot;高&quot;，<tt class="docutils literal">L</tt>代表&quot;低&quot;或<tt class="docutils literal">A</tt>代表空中。 <tt class="docutils literal">M</tt>（中）等价于<tt class="docutils literal">HL</tt>。</p>
+<pre class="literal-block">
+pausetime = 12,12
+</pre>
+<p>这是每个玩家暂停击中的时间。第一个参数是冻结P1的时间，以游戏周期为单位。第二个是使P2在从打击中回弹之前摇动的时间。</p>
+<pre class="literal-block">
+sparkxy = 0,-55
+</pre>
+<p>这是使 hit/guard 发火的地方。参数必须采用<tt class="docutils literal">x, y</tt>的形式。 <tt class="docutils literal">x</tt>相对于P2的前面。负数<tt class="docutils literal">x</tt>会使P2内部的火花更深。 <tt class="docutils literal">y</tt>相对于P1。负<tt class="docutils literal">y</tt>会使火花升高。</p>
+<pre class="literal-block">
+hitsound = 5,0
+</pre>
+<p>这是击中时播放的声音（来自fight.snd）。随附的fight.snd可让您从5,0（轻击声）到5,4（痛苦的重击声）之间进行选择。要播放玩家自己的SND文件中的声音，请在第一个数字之前加上<tt class="docutils literal">S</tt>。例如，<tt class="docutils literal">hitsound = S1,0</tt>。</p>
+<pre class="literal-block">
+guardsound = 6,0
+</pre>
+<p>这是要警惕的声音（来自fight.snd）。现在我们只有6,0。要播放玩家自己的SND文件中的声音，请在第一个数字之前加上<tt class="docutils literal">S</tt>。</p>
+<pre class="literal-block">
+ground.type = High
+</pre>
+<p>这是针对地面攻击的攻击（如果未指定<tt class="docutils literal">air.type</tt>参数，则默认为空中攻击）。在这种情况下，这是一个很高的攻击。选择<tt class="docutils literal">High</tt>表示使P2的头部向后弹跳；<tt class="docutils literal">Low</tt>表示看起来像是在胃部击打；<tt class="docutils literal">Trip</tt>表示低扫掠攻击；或者<tt class="docutils literal">None</tt>不对P2起作用。如果<tt class="docutils literal">AnimType</tt>为<tt class="docutils literal">Back</tt>，则对P2的<tt class="docutils literal">High</tt>位和<tt class="docutils literal">Low</tt>位攻击相同。</p>
+<pre class="literal-block">
+ground.slidetime = 12
+</pre>
+<p>这是P2在被击中后将向后滑动的时间（此时间不包括P2的暂停时间）。仅适用于将P2保持在地面的打击。</p>
+<pre class="literal-block">
+ground.hittime = 15
+</pre>
+<p>P2被击中后保持击中状态的时间。仅适用于将P2保持在地面的打击。</p>
+<pre class="literal-block">
+ground.velocity = -5
+</pre>
+<p>如果P2在地面上处于站立或蹲伏状态，则在被击中后赋予P2的初始x速度。如果希望将P2敲向空中，则可以将y速度指定为第二个参数。例如 <tt class="docutils literal">ground.velocity = <span class="pre">-3,</span> <span class="pre">-2</span></tt>。</p>
+<pre class="literal-block">
+air.velocity = -2.5,-3.5
+</pre>
+<p>如果P2被击中，则给出P2的初始速度。</p>
+<p>您可以在<tt class="docutils literal">HitDef</tt>中控制更多内容。有关详细信息，请参见sctrls文档。</p>
+</div>
+</div>
+</div>
+<div class="section" id="common-states-common1-cns">
+<h1><a class="toc-backref" href="#id34">常见状态(common1.cns)</a></h1>
+<p>如果查看玩家的DEF文件，您将看到以下行：</p>
+<pre class="literal-block">
+stcommon = common1.cns  ;Common states
+</pre>
+<p>每个玩家都有一些共同的状态，这是游戏引擎的基本组成部分。这些常见状态可在 data/common1.cns 中找到。一些示例是运行和受到攻击的状态。完整列表可在<a class="reference internal" href="#special-state-numbers">特殊状态码</a>中找到。</p>
+<p>如果您想覆盖某个玩家的共同状态，那么您所要做的就是在该玩家的CNS中设置一个与您要覆盖的区域相同的状态。然后，当玩家更改为该状态编号时，他将进入该新状态，而不是 common1.cns 中的状态。</p>
+<p>您应该记住，当覆盖某些具有在M.U.G.E.N中编码的特殊属性的状态时，您创建的新状态仍将具有与您覆盖的特殊状态相同的特殊属性。例如，运行状态（状态100）将玩家的速度设置为您在玩家变量中指定的任何值。如果您覆盖状态100，则新状态将仍然具有设置该玩家速度的属性。</p>
+<p>一个常见的示例是覆盖运行状态。 M.U.G.E.N在运行状态下的默认行为是让玩家继续以恒定速度向前移动，直到您松开前进键。此时，他返回到站立状态。</p>
+<p>现在，假设我们希望该玩家（让我们称他为P1）向前跳跃，就像默认的双击后跳一样。您可以在P1的CNS中建立状态：</p>
+<pre class="literal-block">
+; RUN_FWD (overridden to dash-type)
+[Statedef 100]
+type    = S   ;Running is on the ground
+physics = N   ;We'll define our own physics
+anim = 100    ;Anim action 100
+ctrl = 0      ;No control for duration of dash
+
+[State 100, 1] ;To start dashing forwards
+type = VelSet
+trigger1 = Time = [0,5]
+x = 6
+
+[State 100, 2] ;Friction after initial dash
+type = VelMul
+trigger1 = Time &gt; 5
+x = .85
+
+[State 100, 3] ;
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+</pre>
+<p>在这里，我们假定动作100具有有限的循环时间。玩家变量<tt class="docutils literal">[Velocity]</tt>下的<tt class="docutils literal">run.fwd</tt>中的速度实际上并没有被忽略，但是<tt class="docutils literal">[State 100,1]</tt>通过将x速度设置为6来覆盖该细节。</p>
+</div>
+<div class="section" id="special-state-numbers">
+<h1><a class="toc-backref" href="#id35">特殊状态码</a></h1>
+<p>除非您打算覆盖公共状态，否则请避免选择0-199到5000-5999范围内的状态号。这是common1.cns中的状态列表。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Number</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0</td>
+<td>Stand</td>
+</tr>
+<tr><td>10</td>
+<td>Stand to crouch</td>
+</tr>
+<tr><td>11</td>
+<td>Crouching</td>
+</tr>
+<tr><td>12</td>
+<td>Crouch to stand</td>
+</tr>
+<tr><td>20</td>
+<td>Walk</td>
+</tr>
+<tr><td>40</td>
+<td>Jump start</td>
+</tr>
+<tr><td>45</td>
+<td>Air jump start</td>
+</tr>
+<tr><td>50</td>
+<td>Jump up</td>
+</tr>
+<tr><td>52</td>
+<td>Jump land</td>
+</tr>
+<tr><td>100</td>
+<td>Run forward</td>
+</tr>
+<tr><td>105</td>
+<td>Hop backwards</td>
+</tr>
+<tr><td>106</td>
+<td>Hop backwards (land)</td>
+</tr>
+<tr><td>120</td>
+<td>Guard (start)</td>
+</tr>
+<tr><td>130</td>
+<td>Stand guard (guarding)</td>
+</tr>
+<tr><td>131</td>
+<td>Crouch guard (guarding)</td>
+</tr>
+<tr><td>132</td>
+<td>Air guard (guarding)</td>
+</tr>
+<tr><td>140</td>
+<td>Guard (end)</td>
+</tr>
+<tr><td>150</td>
+<td>Stand guard hit (shaking)</td>
+</tr>
+<tr><td>151</td>
+<td>Stand guard hit (knocked back)</td>
+</tr>
+<tr><td>152</td>
+<td>Crouch guard hit (shaking)</td>
+</tr>
+<tr><td>153</td>
+<td>Crouch guard hit (knocked back)</td>
+</tr>
+<tr><td>154</td>
+<td>Air guard hit (shaking)</td>
+</tr>
+<tr><td>155</td>
+<td>Air guard hit (knocked away)</td>
+</tr>
+<tr><td>170</td>
+<td>Lose (time over)</td>
+</tr>
+<tr><td>175</td>
+<td>Draw game (time over)</td>
+</tr>
+<tr><td>190</td>
+<td>Pre-intro</td>
+</tr>
+<tr><td>191</td>
+<td>Intro (override this state to give character an intro)</td>
+</tr>
+<tr><td>5000</td>
+<td>Stand get-hit (shaking)</td>
+</tr>
+<tr><td>5001</td>
+<td>Stand get-hit (knocked back)</td>
+</tr>
+<tr><td>5010</td>
+<td>Crouch get-hit (shaking)</td>
+</tr>
+<tr><td>5011</td>
+<td>Crouch get-hit (knocked back)</td>
+</tr>
+<tr><td>5020</td>
+<td>Air get-hit (shaking)</td>
+</tr>
+<tr><td>5030</td>
+<td>Air get-hit (knocked away)</td>
+</tr>
+<tr><td>5035</td>
+<td>Air get-hit (transition)</td>
+</tr>
+<tr><td>5040</td>
+<td>Air get-hit (recovering in air, not falling)</td>
+</tr>
+<tr><td>5050</td>
+<td>Air get-hit (falling)</td>
+</tr>
+<tr><td>5070</td>
+<td>Tripped get-hit (shaking)</td>
+</tr>
+<tr><td>5071</td>
+<td>Tripped get-hit (knocked away)</td>
+</tr>
+<tr><td>5080</td>
+<td>Downed get-hit (shaking)</td>
+</tr>
+<tr><td>5081</td>
+<td>Downed get-hit (knocked back)</td>
+</tr>
+<tr><td>5100</td>
+<td>Downed get-hit (hit ground from fall)</td>
+</tr>
+<tr><td>5101</td>
+<td>Downed get-hit (bounce off ground)</td>
+</tr>
+<tr><td>5110</td>
+<td>Downed get-hit (lying down)</td>
+</tr>
+<tr><td>5120</td>
+<td>Downed get-hit (getting up)</td>
+</tr>
+<tr><td>5150</td>
+<td>Downed get-hit (lying defeated)</td>
+</tr>
+<tr><td>5200</td>
+<td>Air get-hit (fall recovery on ground; still falling)</td>
+</tr>
+<tr><td>5201</td>
+<td>Air get-hit (fall recovery on ground)</td>
+</tr>
+<tr><td>5210</td>
+<td>Air get-hit (fall recovery in air)</td>
+</tr>
+<tr><td>5500</td>
+<td>Continue screen animation</td>
+</tr>
+<tr><td>5900</td>
+<td>Initialize (at the start of the round)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="expressions">
+<h1><a class="toc-backref" href="#id36">表达方式</a></h1>
+<p>MUGEN在大多数触发器和状态控制器中都支持算术表达式。与仅使用固定值相比，这将允许更加灵活和可定制的行为。本节描述了表达式的概念和语法。</p>
+<div class="section" id="data-types">
+<h2><a class="toc-backref" href="#id37">数据类型</a></h2>
+<p>MUGEN使用三种数据类型：32位整数，32位浮点数和特殊的空值&quot;底部（bottom）&quot;。整数表示 -2^31 和 2^31-1 之间的整数，即大约-20亿至20亿。浮点数是单精度浮点数。也就是说，它们是带有&quot;小数部分&quot;和大约7个有效数字的数字。浮点数可以表示很小的部分，也可以表示很大的数字。</p>
+<p>在表达式中写入数字时，MUGEN会根据小数点的存在来推导数据类型。因此，例如&quot;7&quot;始终是整数。如果希望将7设置为浮点数，则应输入&quot;7.0&quot;。</p>
+<p>&quot;底部（bottom）&quot;是一种特殊的数据类型，它会将出现在其中的任何表达式归零（有一些非常有限的例外）。它的存在表示某种错误情况。您应该尝试以永远不会产生bottom的方式进行编码。有关详细信息，您可以在<a class="reference internal" href="#bottom">底部（bottom）</a>看到专用部分。</p>
+<p>算术表达式的行为在很大程度上取决于用于表示数字的基础数据类型。同样，状态控制器可能希望将其输入指定为某种类型，如果提供了错误的类型，则会给出错误信息。</p>
+<p>当需要以某种方式（例如，通过加法）组合不同数据类型的值时，就会发生&quot;类型提升&quot;。通常，这意味着整数将被更改为浮点数，从而可能会降低过程的精度。在以下各节中，我们将注意所有相关的类型升级方案。</p>
+</div>
+<div class="section" id="arithmetic-operators">
+<h2><a class="toc-backref" href="#id38">算术运算符</a></h2>
+<p>算术运算符使您可以执行基本的运算，例如加法，乘法，除法等。MUGEN提供了一些大多数程序员都应该熟悉的运算符。它们如下：</p>
+<ul>
+<li><p class="first">+</p>
+<p>将两个数字相加。如果x和y都是整数，则x + y也是一个整数。如果两个都是浮点数，则x + y是一个浮点数。如果一个是浮点数，则另一个提升为浮点数，然后将两个浮点数相加。</p>
+</li>
+<li><p class="first">-</p>
+<p>数字减法。类型提升与添加相同。</p>
+</li>
+<li><p class="first">*</p>
+<p>两个数字相乘。类型提升与添加相同。</p>
+</li>
+<li><p class="first">/</p>
+<p>两个数的除法。如果x和y均为整数，则x / y给出整数商，即y均匀地进入x的次数。例如，7/2 =3。如果x和y都是浮点数，则x / y返回一个浮点数。我们之前的示例将变为7.0 / 2.0 = 3.5。如果x或y中只有一个是浮点数，则将提升另一个浮点数并执行浮点除法。除以0将产生bottom。</p>
+</li>
+<li><p class="first">%</p>
+<p>余数或mod运算符。如果x和y均为整数，则x x将y除以y时，x％y给出余数。如果一个或两个都是浮点数，或者y为0，则产生bottom。</p>
+</li>
+<li><p class="first">**</p>
+<p>求幂运算符。如果x和y均为非负整数，则x ** y给出一个表示x的整数，该整数升为y的幂。 （我们定义0 ** 0 = 1）。但是，在计算大功率时，很容易使int的最大可能值溢出。在这些情况下，将返回MAX_INT（最大可能的整数），并生成警告。如果x或y中的一个为负数或为浮点数，则两个参数都将提升为浮点数，并且x ** y计算为实数的幂。 -1 ** .5之类的无效乘幂将产生bottom。</p>
+</li>
+<li><p class="first">!</p>
+<p>逻辑非运算符。 如果x不为零，！x的值为0（int），如果x为零，则为1（int）。</p>
+</li>
+<li><p class="first">&amp;&amp;</p>
+<p>逻辑与运算符。 如果x和y都非零，则x &amp;&amp; y的取值为1（int），否则为0（int）。</p>
+</li>
+<li><p class="first">||</p>
+<p>逻辑或运算符。 如果x和y中的一个或多个非零，x | | y计算为1（int），否则计算为0（int）。</p>
+</li>
+<li><p class="first">^^</p>
+<p>逻辑异或运算符。 如果x和y中只有一个不为零，x^y的值为1（int），否则为0（int）。</p>
+</li>
+<li><p class="first">~</p>
+<p>按位非运算符。 ~x反转x的二进制（2的补码）表示形式的位。如果x是浮点数，则生成bottom。</p>
+</li>
+<li><p class="first">&amp;</p>
+<p>按位与运算符。 当且仅当x和y的第n位都已设置时，才设置x&amp;y的第n位。如果x或y是浮点数，则生成bottom。</p>
+</li>
+<li><div class="first line-block">
+<div class="line"><br /></div>
+</div>
+<p>按位或运算符。 当且仅当设置x或y（或两者）的第n位时，才设置x | y的第n位。如果x或y是浮点数，则返回bottom。</p>
+</li>
+<li><p class="first">^</p>
+<p>按位异或运算符。 当且仅当x和y中正好一个的第n位被设置时，x^y的第n位被设置。如果x或y是浮点型，则返回bottom。</p>
+</li>
+<li><p class="first">=</p>
+<p>相等运算符。 如果x和y都是int或都是float，如果x和y相等，x=y计算为1（int），否则为0。如果x或y中正好有一个是float，那么在测试相等性之前，它们都被转换成float。</p>
+</li>
+<li><p class="first">:=</p>
+<p>赋值运算符。 未重定向的变量名（对于n的适当值，为var（n）或fvar（n））必须出现在左侧。 如果左侧包含一个整数变量，则赋值之前，右侧将被截断为整数。 如果左侧包含float变量，则在分配之前，如有必要，右侧将转换为float。 在两种情况下，表达式的值都是分配给变量的值。</p>
+</li>
+<li><p class="first">!=</p>
+<p>不等式运算符。 如果x和y都是int或都是float，那么x！如果x和y不相等，则y等于1（int），否则为0。如果x或y中正好有一个是float，那么在测试相等性之前，它们都被转换成float。</p>
+</li>
+<li><p class="first">&lt;</p>
+<p>小于运算符。 如果x和y都是int或都是float，则x&lt;y计算为1（int），否则为0。如果x或y中正好有一个是float，那么在测试相等性之前，它们都被转换成float。</p>
+</li>
+<li><p class="first">&lt;=</p>
+<p>类似于&lt;，但如果x=y，则x&lt;=y返回1（int）。</p>
+</li>
+<li><p class="first">&gt;</p>
+<p>大于运算符。 如果x和y都是int或都是浮点，则x&gt;y的值为1（int），否则为0（int）。 如果x或y中正好有一个是float，那么在测试相等性之前，它们都被转换成float。</p>
+</li>
+<li><p class="first">&gt;=</p>
+<p>类似于&gt;，但如果x=y，则x&gt;=y返回1（int）。</p>
+</li>
+<li><p class="first">=[,]
+!=[,]
+=[,)
+!=[,)
+=(,]
+!=(,]
+=(,)
+!=(,)</p>
+<p>区间运算符。 它们有三个参数，x、y和z。如果x、y或z中的任何一个是float，它们都将转换为float。如有必要，转换后，x=[y，z]相当于（x&gt;=y）&amp;&amp;（x&lt;=z）。类似地，x=（y，z）相当于（x&gt;y）&amp;&amp;（x&lt;z）。半开区间具有明显的意义。</p>
+<p>反区间运算符的工作方式如下：x！=[y，z]相当于（如有必要，转换后）为（x&lt;y）||（x&gt;z）。x！=（y，z）相当于（x&lt;=y）||（x&gt;=z）。半开区间又有明显的意义。</p>
+<p>您可以将interval操作符视为在int或float上生成适当的开、闭或半开区间。= 符号表示在此上下文中设置成员身份。</p>
+<p>有些限制适用于表达式中可以放置间隔的位置。具体来说，间隔只能放在表达式或子表达式的末尾。有关详细信息，请参阅语法部分。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="precedence-and-associativity-of-operators">
+<h2><a class="toc-backref" href="#id39">运算符的优先级和关联性</a></h2>
+<p>如果考虑一个类似3+2*5的表达式，结果会有所不同，具体取决于您是计算*first（产生13）还是计算+first（产生25）。为了消除像这样的表达式的歧义，操作符被赋予不同的优先级。在这种情况下，*的优先级高于+的优先级，因此首先计算*的值，然后将+应用于结果。所以正确答案是13。</p>
+<p>如果两个运算符具有相同的优先级，则表达式将从左到右求值，但一元运算符和赋值运算符除外，它们是从右向左关联的。例如，*和/共享相同的优先级，因此5.0*5/6的计算结果为25.0/6，即4.166667。另一方面，5/6*5.0的计算结果为0*5.0，即0.0。相反，因为一元运算符是从右向左关联的，-！0分组为-（！0），计算结果为-（1），然后计算为-1。</p>
+<p>如果表达式的一部分分组在括号（）中，则首先计算表达式的该部分。例如，在表达式（3+2）*5中，首先对+求值，得到5*5，然后求出25。如果括号是嵌套的，则首先计算最里面的圆括号。</p>
+<p>运算符优先级与C中的基本相同。运算符优先级的完整列表（从高到低）如下：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Operator(s)</th>
+<th class="head">Precedence Level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>! ~ - (unary operators)</td>
+<td>Highest</td>
+</tr>
+<tr><td>**</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>* / %</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>+ -</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>&gt; &gt;= &lt; &lt;=</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>= != intervals</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>:=</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>&amp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>^</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>|</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>&amp;&amp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>^^</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>||</td>
+<td>Lowest</td>
+</tr>
+</tbody>
+</table>
+<p>鼓励程序员在必要时加上括号以保持清晰度。否则，几乎可以肯定由于对运算符优先级的细微误解而导致的错误。</p>
+</div>
+<div class="section" id="expression-syntax">
+<h2><a class="toc-backref" href="#id40">表达式语法</a></h2>
+<p>基本上，任何正常的算术表达式都是允许的。此外，由于关系运算符（&gt;，&lt;=，等等）被视为返回整数，所以可以对它们的返回值进行操作，给出一些不寻常的表达式，例如</p>
+<pre class="literal-block">
+1.0 = (2 = (1 &gt; 0) + !(0 &lt; 1))
+</pre>
+<p>1&gt;0项计算为1，0&lt;1项计算为0。因此！（0&lt;1）的计算结果为1，因此表达式简化为</p>
+<pre class="literal-block">
+1.0 = (2 = 1 + 1)
+</pre>
+<p>由于2=1+1，括号中的项的计算结果为1，因此表达式（在类型转换后）进一步简化为</p>
+<pre class="literal-block">
+1.0 = 1.0
+</pre>
+<p>计算结果为1（int），因为等式成立。</p>
+<p>表达式语法中一个值得注意的限制是间隔运算符只允许出现在表达式的最右侧。如果表达式的一部分包含在括号中，则该部分被视为子表达式，并且允许在该子表达式的右侧出现一个间隔。因此，下面是一个格式良好的表达式，其计算结果为0：</p>
+<pre class="literal-block">
+(1 = [0,2]) = (0,1)
+</pre>
+<p>但以下内容并不完善：</p>
+<pre class="literal-block">
+1 = [0,2] = (0,1)
+</pre>
+<p>此外，除了=或！=可能出现在间隔之前。因此，不允许使用类似5 &gt; [0,2]或4+[1,4）的表达式。</p>
+<p>在逗号分隔的参数列表中，例如某些函数类型触发器的参数或状态控制器的参数，列表中的每个表达式都被视为单独的子表达式，因此间隔可能出现在这些子表达式的末尾。</p>
+</div>
+<div class="section" id="condition-and-function-type-triggers">
+<h2><a class="toc-backref" href="#id41">条件和函数类型触发器</a></h2>
+<p>由于历史原因，两个截然不同的结构都称为&quot;触发器&quot;。第一种可能更恰当地称为条件类型触发器，第二种可能更适当地称为函数类型触发器。例如，在CNS中，典型的状态控制器可能看起来像</p>
+<pre class="literal-block">
+[State 1234, 5]
+type = ChangeState
+trigger1 = time = 0
+value = 0
+</pre>
+<p>整行&quot;trigger1 = time = 0&quot;是条件类型的触发器。如果表达式&quot;time = 0&quot;的计算结果为非零值，则将执行ChangeState控制器。如果表达式&quot;time = 0&quot;求值为零，则不执行ChangeState控制器。因此，条件是零还是非零会影响控制器是否被触发。</p>
+<p>另一方面，表达式中出现的单词&quot;time&quot;是函数类型触发器。它返回一个值，即玩家处于状态1234的时间。请注意，函数类型触发器不会&quot;触发&quot;任何东西。它只是提供一个可以在表达式中作用的值。</p>
+<p>为了进一步说明差异，让我们考虑一个不同的状态控制器：</p>
+<pre class="literal-block">
+[State 1234, 5]
+type = VarSet
+trigger1 = 1
+v = 0
+value = time + 5
+</pre>
+<p>注意，条件类型触发器&quot;trigger1 = 1&quot;现在其中不包含任何函数类型触发器。由于表达式&quot;1&quot;始终为1，因此将在每帧触发控制器。为了确定为var0分配什么值，对表达式&quot;time + 5&quot;求值。功能类型触发器&quot;时间&quot;返回玩家的状态时间。然后加5并将结果存储在var0中。</p>
+<p>函数类型触发器的完整列表可以在trigger.html中找到。</p>
+<p>通常，从上下文中可以清楚看出这两种类型的触发器中的哪一种是有意义的。如有歧义，将使用术语&quot;条件类型触发器&quot;和&quot;功能类型触发器&quot;。</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id42">触发重定向</a></h2>
+<p>在上面的示例中，时间触发器返回了玩家的状态时间。但是有时，您可能希望检查玩家目标或玩家父母（如果玩家是助手）等的状态时间。这可以通过在触发名称之前加上一个关键字来完成，该关键字指示应返回其信息。此过程称为触发器重定向。例如，</p>
+<p>5 + (parent, time)</p>
+<p>返回5 +玩家伙伴的状态时间。</p>
+<p>重定向关键字的完整列表如下：</p>
+<ul>
+<li><p class="first">parent</p>
+<p>将触发器重定向到玩家的伙伴。 （玩家必须是一个助手。）</p>
+</li>
+<li><p class="first">root</p>
+<p>将触发器重定向到root。</p>
+</li>
+<li><p class="first">helper</p>
+<p>将触发器重定向到找到的第一个助手。请参阅触发器文档中的相关触发器&quot;NumHelper&quot;。</p>
+</li>
+<li><p class="first">helper(ID)</p>
+<p>ID应该是格式正确的表达式，其结果为正整数。然后将触发器重定向到具有相应ID号的帮助程序。</p>
+</li>
+<li><p class="first">target</p>
+<p>将触发器重定向到找到的第一个目标。</p>
+</li>
+<li><p class="first">target(ID)</p>
+<p>ID应该是格式正确的表达式，其结果为非负整数。然后将触发器重定向到具有相应targetID的目标。 targetID在HitDef控制器的&quot;ID&quot;参数中指定。</p>
+</li>
+<li><p class="first">partner</p>
+<p>将触发器重定向到玩家的伙伴。普通帮手和中立玩家不视为对手。请参阅触发器文档中的相关触发器&quot;numpartner&quot;。</p>
+</li>
+<li><p class="first">enemy</p>
+<p>将触发器重定向到找到的第一个对手。普通帮手和中立玩家不视为对手。请参阅触发器文档中的相关触发器&quot;numenemy&quot;。</p>
+</li>
+<li><p class="first">enemy(n)</p>
+<p>n应该是一个格式正确的表达式，其结果为非负整数。触发器被重定向到第n个对手。</p>
+</li>
+<li><p class="first">enemyNear</p>
+<p>将触发器重定向到最近的对手。</p>
+</li>
+<li><p class="first">enemyNear(n)</p>
+<p>n应该是一个格式正确的表达式，其结果为非负整数。触发器被重定向到最近的第n个对手。</p>
+</li>
+<li><p class="first">playerID(ID)</p>
+<p>n应该是一个格式正确的表达式，其结果为非负整数。触发器将重定向到唯一ID等于ID的玩家。请参阅触发器文档中的&quot;ID&quot;和&quot;PlayerExistID&quot;触发器。</p>
+</li>
+</ul>
+<p>如果将触发器重定向到无效的目的地（例如，如果不存在则将其重定向到帮助者），则返回bottom。</p>
+<p>注意：不支持递归重定向（例如&quot;root,target,time&quot;）。</p>
+</div>
+<div class="section" id="bottom">
+<h2><a class="toc-backref" href="#id43">底部（bottom）</a></h2>
+<p>表达式中有几种无法恢复的错误。例如，可以尝试将其除以0，评估负数的平方根或尝试将触发器重定向到不存在的目标。在这种情况下，使用bottom作为优雅地完成表达式求值的方法。如果bottom出现在表达式中的任何位置（以下两个要注意的例外：请参见<a class="reference internal" href="#special-forms">特殊形式</a>），则整个表达式的值将变为bottom。例如，考虑以下表达式：</p>
+<pre class="literal-block">
+5 + fvar(0) ** 0.5
+</pre>
+<p>如果在求值时fvar（0）等于-1，则表达式将变为5 +底部，产生底部。</p>
+<p>条件类型的触发器将bottom视为0。因此，生成错误的表达式将永远不会触发触发器。因此，例如</p>
+<pre class="literal-block">
+type = ChangeState
+trigger1 = helper, statetype = A
+value = 0
+</pre>
+<p>如果不存在帮助器，则将永远不会执行ChangeState控制器，因为表达式&quot;helper, statetype = A&quot;的求和结果为底部，即0。</p>
+<p>通常，生成底部时会在MUGEN的调试控制台上显示警告。这是因为底部的存在表明逻辑上可能存在错误或模棱两可。例如，在上面的ChangeState示例中，如果不存在帮助程序，则语句&quot;helper, statetype = A&quot;是虚空的，并且不清楚应将其视为是还是否。</p>
+<div class="section" id="special-forms">
+<h3><a class="toc-backref" href="#id44">特殊形式</a></h3>
+<p>IfElse和Cond触发器以特殊方式处理bottom。这两个触发器均采用以下形式：</p>
+<pre class="literal-block">
+&lt;trigger_name&gt;(&lt;exp_cond&gt;,&lt;exp_true&gt;,&lt;exp_false&gt;)
+</pre>
+<p>&lt;exp_cond&gt;是一个条件表达式，取决于它是否为非零，它控制要返回哪个&lt;exp_true&gt;或&lt;exp_false&gt;。如果在未返回的表达式中产生了bottom，则它不会传播到表达式的其余部分。例如，考虑表达式<tt class="docutils literal">IfElse(time &gt; 0, 1.0/time, 2))</tt>。如果time&gt;0，则表达式的值为<tt class="docutils literal">1.0/time</tt>，这是有效的float值。如果time = 0，则表达式的值为2，即使未使用的分支除以0并因此产生bottom。</p>
+<p>但是，即使上面的IfElse触发器从不返回底部，它仍然具有令人讨厌的功能：除以0仍会向调试输出生成警告。这是因为IfElse会评估其所有参数，甚至是未使用的参数。相比之下，Cond将仅评估其实际使用的参数。因此，如果将表达式重写为<tt class="docutils literal">Cond(time &gt; 0, 1.0/time,
+2)</tt>，则当time为0时，永远不会对参数<tt class="docutils literal">1.0/time</tt>求值，因此不会生成警告。</p>
+<p>您可能想知道何时使用Cond和IfElse。答案是您几乎总是要使用Cond，除非&lt;exp_true&gt;或&lt;exp_false&gt;之一具有所需的副作用。换句话说，如果要在始终需要执行的分支之一中进行变量赋值，而无论&lt;exp_cond&gt;,的值如何，则都需要使用IfElse。否则，应使用Cond，尤其是为了隔离bottom。</p>
+</div>
+</div>
+<div class="section" id="avoiding-warnings">
+<h2><a class="toc-backref" href="#id45">避免警告</a></h2>
+<p>几种常见的错误情况通常会在字符中产生大量警告。以下是一些最常见的情况以及如何避免它们。</p>
+<ul>
+<li><p class="first">Coercion of floats to ints</p>
+<p>如果MUGEN在某个地方需要一个整数（例如var号），但提供了浮点数，则MUGEN会将整数转换为浮点数。但是，它将抱怨，因为这可能代表您的错误。要摆脱该警告，请使用floor（）或ceil（）向int提供显式转换，以表明您知道自己在做什么。</p>
+</li>
+<li><p class="first">Nonexistent trigger redirection targets</p>
+<p>如果您重定向到一个不存在的目标，例如没有目标时的帮助程序，则会生成bottom，并记录一条警告。这是因为表达式在逻辑上是模棱两可的。您可以通过在重定向之前检查目标的存在来避免警告。所以，</p>
+<pre class="literal-block">
+trigger1 = helper(1234), time &gt; 20
+</pre>
+<p>如果助手1234不存在，则会生成警告，但是</p>
+<pre class="literal-block">
+trigger1 = numhelper(1234) &gt; 0
+trigger1 = helper(1234), time &gt; 20
+</pre>
+<p>不会。这是因为第一行trigger1行导致评估在尝试重定向之前中止。</p>
+<p>或者，您可以使用Cond触发器隔离可能产生警告的代码。假设我们想要一个表达式，它给出了helper（1234）的生命（如果存在），或者给出了玩家的生命。然后我们可以写</p>
+<pre class="literal-block">
+Cond(numhelper(1234) &gt; 0, (helper(1234), life), life)
+</pre>
+<p>（不需要在<tt class="docutils literal">helper(1234), life</tt>周围加上额外的括号，但可以提高可读性。）</p>
+</li>
+<li><p class="first">Missing required animations/sprites</p>
+<p>这不是表达问题。添加动画/精灵！</p>
+</li>
+</ul>
+</div>
+<div class="section" id="expressions-in-trigger-arguments">
+<h2><a class="toc-backref" href="#id46">触发器参数中的表达式</a></h2>
+<p>大多数函数类型触发器不带参数，也可以带参数列表中的参数。例如，时间触发器不带参数，而ifelse触发器带三个参数</p>
+<p>ifelse(exp1,exp2,exp3)</p>
+<p>其中exp1，exp2和exp3均为有效表达式。在这种情况下，exp1，exp2和exp3都被认为是单独的子表达式，因此间隔可以出现在每个子表达式的最右端。参数列表的评估顺序是从左到右。</p>
+<p>由于语法不规则，某些旧的函数类型触发器无法将表达式作为其参数。因此，它们无法以标准方式集成到表达式中。对于这种类型的非标准触发器，触发器只能与某些运算符和参数集一起出现（在trigger.doc中概述）。特别是，这些触发器不能将表达式作为其参数。例如，</p>
+<pre class="literal-block">
+trigger1 = AnimElem = (1+1)
+</pre>
+<p>这是无效的表达式。</p>
+<p>旧式的函数类型触发器仅以&quot;触发器，关系运算符，自变量&quot;形式出现在&quot;子句&quot;中。为了表达式评估的目的，这些子句被视为单个单元（特别是单个无效触发器）。这意味着，除其他事项外，运算符优先级的概念不适用于出现在旧式函数类型触发器子句中的运算符。例如，在</p>
+<pre class="literal-block">
+trigger1 = AnimElem = 5 + 4
+</pre>
+<p>该表达式分为三个单元：</p>
+<pre class="literal-block">
+ AnimElem=5    +    4
+|__________|  |_|  |_|
+</pre>
+<p>&quot;AnimElem = 5&quot;单元被视为无效触发器的名称，因此+运算符没有优先于出现在名称&quot;AnimElem = 5&quot;中的 =。换句话说，该表达式的含义类似于&quot;执行名为‘AnimElem = 5’的触发器，然后将4加到结果中。&quot;</p>
+<p>一些老式的函数类型触发器具有可表达的替换。这些如下：</p>
+<ul class="simple">
+<li>AnimElem, 被 AnimElemTime 取代</li>
+<li>TimeMod, 被 the % operator 取代</li>
+<li>ProjHit, ProjContact, ProjGuarded; 被 ProjHitTime,
+ProjContactTime, 和 ProjGuardedTime取代</li>
+</ul>
+<p>有关不规则触发器的完整列表，请参见trigger.html。不规则的触发器标有***。</p>
+</div>
+<div class="section" id="expressions-in-state-and-state-controller-parameters">
+<h2><a class="toc-backref" href="#id47">状态和状态控制器参数中的表达式</a></h2>
+<p>在大多数情况下，statedef或状态控制器的任何参数都可以是表达式。例外是以字符串形式给出的参数。例如，命中属性，防护标志等不能指定为表达式。另外，ignorehitpause和持久参数（在所有控制器中）都是不规则的，因为它们不能采用表达式。</p>
+<p>状态控制器参数是在控制器被触发时评估的，除非控制器再次被触发，否则不会随后重新评估。以逗号分隔列表形式给出的参数从左到右进行评估。为了实现对控制器参数的持续评估，必须连续触发控制器。</p>
+<p>对于某些控制器（例如HitDef），使用连续触发并非总是明智的选择，因为这会降低性能并可能导致不良行为。在这种情况下，程序员可能希望尝试尽可能长时间地延迟触发HitDef，以便在使用HitDef参数之前对其进行评估。</p>
+</div>
+<div class="section" id="organizing-for-efficiency">
+<h2><a class="toc-backref" href="#id48">为效率而组织 Organizing for efficiency</a></h2>
+<p>表达式处理不会给现代计算机带来负担，因此代码的可读性比表达式的微优化更为重要。但是，遵循某些良好做法将提高效率，而不会损害清晰度。</p>
+<p>MUGEN按以下顺序评估状态控制器的条件类型触发器：首先，它从上到下评估triggerall。如果任何triggeralls评估为0，则跳过其余的触发器，评估继续进行到下一个控制器。如果所有triggeralls评估为非零，则引擎从上到下开始评估trigger1。如果其中任何一个评估为0，则评估跳到第一个触发器2，依此类推。如果块中的所有触发器（除triggerall外）的评估结果均非零，则评估状态控制器参数并触发控制器。</p>
+<p>换句话说，触发器的逻辑评估是短路的。在类似C的表示法中，此设置可能表示为</p>
+<pre class="literal-block">
+triggerall,1 &amp;&amp; triggerall,2 &amp;&amp; ... &amp;&amp; ((trigger1,1 &amp;&amp; trigger1,2
+  &amp;&amp; ...) || (trigger2,1 &amp;&amp; trigger2,2 &amp;&amp; ...) || ... )
+</pre>
+<p>其中（例如）trigger1,2表示第二行trigger1行; trigger2,1表示第一行trigger2；则此触发组的逻辑评估将像C中那样被短路。</p>
+<p>由于有了这个系统，通过组织表达式可以获得可观的效率提高，从而使条件类型的触发器尽可能简单且数量尽可能少。可以将大部分&quot;工作&quot;卸载到状态控制器参数，这些参数仅在触发时评估一次，而不是播放器处于该状态的每一帧。例如，</p>
+<pre class="literal-block">
+[State -1]
+type = ChangeState
+trigger1 = command = &quot;a&quot;
+trigger1 = power &lt; 1000
+value = 3000
+
+[State -1]
+type = ChangeState
+trigger1 = command = &quot;a&quot;
+trigger1 = power &gt;= 1000
+value = 3001
+
+[State -1]
+type = ChangeState
+trigger1 = command = &quot;a&quot;
+trigger1 = power &gt;= 2000
+value = 3002
+</pre>
+<p>可以更紧凑地表示为</p>
+<pre class="literal-block">
+[State -1]
+type = ChangeState
+trigger1 = command = &quot;a&quot;
+value = 3000 + (power &gt;= 1000) + (power &gt;= 2000)
+</pre>
+<p>您还可以通过将最有可能为假的triggeralls放置在triggerall块的顶部来帮助引擎。同样，trigger1块应该是最有可能触发的块，但是在trigger1块本身内，最有可能评估为0的触发器应置于最高位置。对于具有许多包含重复条件的触发器的状态控制器，最好将控制器分成两个单独的块，每个块都有自己的触发器集。</p>
+<p>如果您有一个复杂的条件被用作许多连续状态控制器的触发条件，则可以选择将条件的值保存在变量中，然后将该变量用作后续控制器的触发条件。例如，</p>
+<pre class="literal-block">
+trigger1 = (command=&quot;abc&quot; &amp;&amp; command!=&quot;holddown&quot; &amp;&amp; power&gt;=1000) ||
+           (command=&quot;abc&quot; &amp;&amp; command!=&quot;holddown&quot; &amp;&amp; var(5)) ||
+           ((command != &quot;abc&quot; || command = &quot;holddown&quot;) &amp;&amp; power&gt;=2000)
+</pre>
+<p>可以写成（假设var（0）可用）：</p>
+<pre class="literal-block">
+trigger1 = (var(0):=(command=&quot;abc&quot; &amp;&amp; command !=&quot;holddown&quot;) &amp;&amp; power&gt;=
+         1000) || (var(0) &amp;&amp; var(5)) || (!var(0) &amp;&amp; power&gt;=2000)
+</pre>
+<p>在这里，您必须权衡排除常见子表达式的可读性和使用:=运算符的可读性。</p>
+</div>
+</div>
+</div>
+</body>
+</html>

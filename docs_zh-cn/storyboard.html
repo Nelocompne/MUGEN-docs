@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>剧本（Storyboard）文档</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="storyboard-documentation">
+<h1 class="title">剧本文档</h1>
+
+<p>M.U.G.E.N, (c) Elecbyte 1999-2009</p>
+<p>Documentation for version 1.0 (2009)</p>
+<p>Updated 29 June 2009</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id1">总览</a></li>
+<li><a class="reference internal" href="#terminology" id="id2">术语</a></li>
+<li><a class="reference internal" href="#getting-started" id="id3">入门</a><ul>
+<li><a class="reference internal" href="#cutscenes-events" id="id4">过场动画事件</a></li>
+<li><a class="reference internal" href="#trying-it-out" id="id5">尝试一下</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viewing-storyboards" id="id6">查看情节提要</a></li>
+<li><a class="reference internal" href="#storyboard-basics" id="id7">分镜脚本基础</a></li>
+<li><a class="reference internal" href="#testing-your-storyboard" id="id8">测试故事板</a></li>
+<li><a class="reference internal" href="#parameter-reference" id="id9">参数参考</a><ul>
+<li><a class="reference internal" href="#info-parameter-reference" id="id10">信息参数参考</a></li>
+<li><a class="reference internal" href="#scenedef-parameter-reference" id="id11">SceneDef参数参考</a></li>
+<li><a class="reference internal" href="#scene-parameter-reference" id="id12">场景参数参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h1><a class="toc-backref" href="#id1">总览</a></h1>
+<p>MUGEN中的故事板由动画，文本，音乐和/或声音（以场景形式）的组合组成。故事板可用于制作过场动画，例如游戏介绍，角色结局，字幕等。</p>
+</div>
+<div class="section" id="terminology">
+<h1><a class="toc-backref" href="#id2">术语</a></h1>
+<dl class="docutils">
+<dt>过场动画cutscene</dt>
+<dd>您实际看到（和听到）的内容。</dd>
+<dt>事件event</dt>
+<dd>触发过场动画播放的原因。</dd>
+<dt>故事板storyboard</dt>
+<dd>.def文件定义您在过场动画中看到的内容。</dd>
+</dl>
+<p>例如，在<em>结束事件</em>期间，将播放<em>结束过场动画</em>。该<em>结束的过场动画</em>使用ending.def<em>故事板storyboard</em>。</p>
+</div>
+<div class="section" id="getting-started">
+<h1><a class="toc-backref" href="#id3">入门</a></h1>
+<div class="section" id="cutscenes-events">
+<h2><a class="toc-backref" href="#id4">过场动画事件</a></h2>
+<p>过场动画可能会在全局范围内发生。这些过场动画的情节提要在system.def中定义，并适用于游戏中的所有角色。此集合中的过场动画称为“系统过场动画”。
+  There are several global events when cutscenes may be played. The storyboards for these cutscenes are defined in system.def, and applies to all characters within the game.  The cutscenes in this set are called the &quot;system cutscenes&quot;.</p>
+<dl class="docutils">
+<dt>游戏标志Game Logo</dt>
+<dd>启动MUGEN时播放一次</dd>
+<dt>游戏介绍Game Intro</dt>
+<dd>在游戏标志后播放。</dd>
+<dt>默认结局Default Ending</dt>
+<dd>在您用没有用户定义的结尾的角色击败游戏后播放。</dd>
+<dt>片尾字幕Credits</dt>
+<dd>在结束过场动画后播放。</dd>
+<dt>游戏结束Game Over</dt>
+<dd>如果在继续屏幕上选择&quot;否&quot;，则播放。</dd>
+</dl>
+<p>另一套过场动画特定于每个字符，并且在每个角色的.def文件中定义。这些被称为&quot;角色过场动画&quot;。例如，功夫男的角色过场动画在 chars/kfm/kfm.def中定义。</p>
+<dl class="docutils">
+<dt>介绍Character Intro</dt>
+<dd>在街机模式中选择角色后播放一次。</dd>
+<dt>角色结尾Character Ending</dt>
+<dd>在街机模式下击败游戏后播放。如果定义了过场动画，则默认的结尾（其中会显示通用的祝贺消息）将不会播放。</dd>
+</dl>
+</div>
+<div class="section" id="trying-it-out">
+<h2><a class="toc-backref" href="#id5">尝试一下</a></h2>
+<p>在命令行中，键入：</p>
+<blockquote>
+mugen -r kfm</blockquote>
+<p>这将启动 &quot;KFM&quot;主题（有关主题的更多信息，请阅读readme.txt）。立即，您将看到游戏徽标，然后是游戏简介。游戏介绍结束后，您将进入标题屏幕。如果启动Arcade模式并选择Kung Fu Man，将播放其角色简介，然后战斗开始。如果您输掉了比赛并在继续屏幕上选择&quot;否&quot;，则将进行过场动画，您将返回到标题屏幕。如果您获胜，将播放功夫曼的角色结局，然后显示结局片数。</p>
+<p>这些就是每个情节提要文件以KFM主题命名的名称。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Game Logo</td>
+<td>data/kfm/logo.def</td>
+</tr>
+<tr><td>Game Intro</td>
+<td>data/kfm/intro.def</td>
+</tr>
+<tr><td>Default Ending</td>
+<td>(none)</td>
+</tr>
+<tr><td>Credits</td>
+<td>data/kfm/credits.def</td>
+</tr>
+<tr><td>Game Over</td>
+<td>data/kfm/gameover.def</td>
+</tr>
+<tr><td>Character Intro</td>
+<td>chars/kfm/intro.def</td>
+</tr>
+<tr><td>Character Ending</td>
+<td>chars/kfm/ending.def</td>
+</tr>
+</tbody>
+</table>
+<p>系统过场动画的情节提要文件名在 data/kfm/system.def.中指定。</p>
+</div>
+</div>
+<div class="section" id="viewing-storyboards">
+<h1><a class="toc-backref" href="#id6">查看剧本</a></h1>
+<p>要播放故事板文件，请使用MUGEN的-storyboard命令行选项。语法为：</p>
+<blockquote>
+mugen -storyboard &lt;storyboard filename&gt;</blockquote>
+<p>例如，要播放 data / kfm / intro.def，请输入：</p>
+<blockquote>
+mugen -storyboard data/kfm/intro.def</blockquote>
+<p>情节提要搜索目录的默认目录为 data/，因此您可以根据需要省略&quot;data/&quot;部分。以下还将播放 data/kfm/intro.def：</p>
+<blockquote>
+mugen -storyboard kfm/intro.def</blockquote>
+<p>此功能对于在构建情节提要时快速进行测试很有用。</p>
+</div>
+<div class="section" id="storyboard-basics">
+<h1><a class="toc-backref" href="#id7">分镜脚本基础</a></h1>
+<p>这是一个简单的情节提要的示例，仅显示一张图片5秒钟。如果您还不熟悉精灵和动画，请在继续操作之前先查阅spr和air文档。</p>
+<pre class="literal-block">
+;----------------------------------------------------------
+[Info]
+localcoord = 640,480   ;此情节提要用于640x480尺寸的屏幕
+
+[SceneDef]
+spr = sprite.sff       ;要使用的sprite文件的文件名
+
+[Scene 0]
+; 层数
+layerall.pos = 319,239 ;所有图层的默认位置
+layer0.anim =  0       ;要显示的动画动作编号
+; 总时间
+end.time = 300         ;300 ticks = 5秒
+
+;动画使用
+[Begin Action 0]
+0,0, 0,0, -1
+;----------------------------------------------------------
+</pre>
+<p>情节提要必须始终包含[​​SceneDef]组。在此组中，您必须指定要使用的Sprite文件的名称。此Sprite文件必须与情节提要文件存在于同一目录中。子画面文件应包含情节提要所需的所有子画面。</p>
+<p>情节提要被分解成场景。您如何选择划分情节提要取决于您自己。在上面的示例中，只有一个场景，即[场景0]组。所有场景都必须以类似于[Scene ?]的组开始，其中问号(?)可以是任何标识符字符串。通常，场景从0开始按数字顺序标记。</p>
+<p>场景最多由10个动画对象组成。这些对象中的每一个都存在于其自己的图层上，并且这些图层彼此重叠。层的编号从0到9，其中0在底部，9在顶部。例如，第0层的动画在第1层的另一个动画的下面，第1层的动画在第2层的动画下面，依此类推。每个动画对象都必须使用&quot;layerX.anim&quot;参数来引用动画动作，其中X是层号。每个动作必须在同一情节提要文件中定义。</p>
+<p>上面的简单示例只有一层。它的绘制位置由&quot;layerall.pos&quot;参数的值确定，动画的动作编号是&quot;layer0.anim&quot;参数的值。在这种情况下，动作编号为0。在[Scene 0]组之后立即定义动作0。</p>
+<p>一个重要的参数是&quot;end.time&quot;。这是结束场景的时间，以刻度为单位。一tick等于一秒的1/60。当一个场景结束时，它继续显示下一个场景。如果没有更多的场景，则情节提要回放将结束。在示例中，&quot;end.time&quot;是300个滴答声，与5秒相同。由于只有一个场景，因此情节提要同时结束。</p>
+<p>下一个示例将显示图片的幻灯片显示以及顶部覆盖的文字。同样，这只有一个场景。</p>
+<pre class="literal-block">
+;----------------------------------------------------------
+[Info]
+localcoord = 640,480   ;此情节提要用于640x480尺寸的屏幕
+
+[SceneDef]
+spr = sprite.sff       ;要使用的sprite文件的文件名
+font0 = myfont.def     ;用于文本的字体文件的文件名
+
+[Scene 0]
+; 层数
+layerall.pos = 319,239 ;所有图层的默认位置
+layer0.anim =  0       ;幻灯片图片的动画动作编号
+layer1.text = "Hello"  ;要显示的文本
+layer1.font = 0        ;使用font0
+; 总时间
+end.time = 600         ;600滴答声= 10秒
+
+;用于图片的动画
+[Begin Action 0]
+0,0, 0,0, 120
+0,1, 0,0, 120
+0,2, 0,0, 120
+0,3, 0,0, 120
+0,4, 0,0, 120
+;----------------------------------------------------------
+</pre>
+<p>请注意，现在有2层。第0层用于图片的幻灯片显示，第1层用于叠加标题。如果您认为幻灯片是您的度假旅行图片，则标题可能是带有文字&quot;My summer vacation&quot;的图像。</p>
+<p>新的&quot;fadein.time&quot;和&quot;fadeout.time&quot;参数分别指定淡入和淡出时间，以刻度为单位。</p>
+<p>第三个示例显示了多个场景，每个场景之间都有屏幕淡入淡出。此外，它还可以播放音乐和声音效果。</p>
+<pre class="literal-block">
+;----------------------------------------------------------
+[Info]
+localcoord = 640,480
+
+[SceneDef]
+spr = sprite.sff
+snd = sound.snd
+
+[Scene 0]
+; 渐变参数
+fadein.time = 30       ;30滴答声（0.5秒）用于淡入
+fadeout.time = 30      ;30滴答声
+; 层数
+layerall.pos = 319,239
+layer0.anim =  0
+; 音乐
+bgm = mysong.s3m       ;音乐文件名
+; 总时间
+end.time = 120
+
+;用于场景0的动画
+[Begin Action 0]
+0,0, 0,0, -1
+
+[Scene 1]
+; 渐变参数
+fadein.time = 30       ;30滴答声（0.5秒）用于淡入
+fadeout.time = 30      ;30滴答声
+; 层数
+layerall.pos = 160,120
+layer0.anim =  10
+; 总时间
+end.time = 120
+
+;用于场景1的动画
+[Begin Action 10]
+10,0, 0,0, -1
+
+[Scene 2]
+; 渐变参数
+fadein.time = 30       ;30滴答声（0.5秒）用于淡入
+fadeout.time = 30      ;30滴答声
+; 层数
+layerall.pos = 160,120
+layer0.anim =  20
+; 声音
+sound0.value = 0,1     ;播放声音0,1
+sound0.starttime = 60  ;在场景开始后的60滴答声中开始播放声音
+; 总时间
+end.time = 120
+
+;用于场景2的动画
+[Begin Action 20]
+20,0, 0,0, -1
+;----------------------------------------------------------
+</pre>
+<p>第一个场景中有一个&quot;bgm&quot;参数。这样会在场景开始时播放音乐文件&quot;mysong.s3m&quot;，并且音乐将继续播放直到情节提要的结尾。在这种情况下，应将mysong.s3m与情节提要文件放在同一目录中。</p>
+<p>有关Scenes和SceneDefs的参数的完整详细信息，请参见下面标题为&quot;SceneDef参数参考&quot;和&quot;Scene参数参考&quot; 的部分。</p>
+</div>
+<div class="section" id="testing-your-storyboard">
+<h1><a class="toc-backref" href="#id8">测试故事板</a></h1>
+<p>本节介绍了一些测试故事板的技巧。</p>
+<p>在回放情节提要时，您可能会发现暂停和逐帧操作很有用。暂停和帧步按钮分别是键盘上的“暂停”和“滚动锁定”。仅当MUGEN在调试模式下运行时，才启用这些键。如果情节提要中有与音乐同步的动画，则不建议您使用暂停功能，因为暂停可能会破坏同步。</p>
+<p>当编写包含多个场景的长故事板时，您可能希望跳过已完成的场景以查看较新的场景。为此，请在您的SceneDef组中添加一行：</p>
+<pre class="literal-block">
+[SceneDef]
+spr = sprite.sff       ;要使用的sprite文件的文件名
+startscene = 0         ; <-添加行
+</pre>
+<p>将0更改为您要从其开始故事板的任何场景编号。例如，如果您正在处理第10个场景，并且想在测试过程中跳过前9个场景，请输入数字10。请注意，跳过一个场景将导致该场景中的音乐无法播放。</p>
+</div>
+<div class="section" id="parameter-reference">
+<h1><a class="toc-backref" href="#id9">参数参考</a></h1>
+<div class="section" id="info-parameter-reference">
+<h2><a class="toc-backref" href="#id10">信息参数参考</a></h2>
+<dl class="docutils">
+<dt>可选参数：</dt>
+<dd><dl class="first last docutils">
+<dt>localcoord = <em>width</em>, <em>height</em> (int, int)</dt>
+<dd>这以像素为单位指定绘图画布的尺寸。如果画布尺寸与窗口分辨率不匹配，它将缩放以适合。如果省略，则默认为320,240。</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="scenedef-parameter-reference">
+<h2><a class="toc-backref" href="#id11">SceneDef参数参考</a></h2>
+<dl class="docutils">
+<dt>必填参数：</dt>
+<dd><dl class="first last docutils">
+<dt>spr = <em>filename</em> (string)</dt>
+<dd>这是在情节提要中使用的Sprite（.sff）文件的文件名。</dd>
+</dl>
+</dd>
+<dt>可选参数：</dt>
+<dd><dl class="first last docutils">
+<dt>snd = <em>filename</em> (string)</dt>
+<dd>这是在情节提要中使用的声音（.snd）文件的名称。</dd>
+<dt>fontX = <em>filename</em> (string)</dt>
+<dd>这组参数最多可以加载10种字体，以便在情节提要中使用。您可以使用<em>X</em>作为字体编号来指定多个字体文件。 <em>X</em>对于从0到9的值有效。首先在与情节提要def文件相同的目录中搜索字体文件。如果无法从该目录加载名为<em>filename</em>的字体，则引擎将尝试从 font/目录加载它。</dd>
+<dt>startscene = <em>scene_number</em> (int)</dt>
+<dd>此参数主要用于测试目的。如果指定，将跳过第一个<em>scene_number</em>个场景。有效值是从0到场景总数减去1。如果省略，则默认为0。</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="scene-parameter-reference">
+<h2><a class="toc-backref" href="#id12">场景参数参考</a></h2>
+<p>请注意，时间以滴答度数为单位，其中60个滴答度等于一秒。请注意，某些可选参数的默认值取决于场景编号。例如，如果省略了&quot;clearcolor&quot;参数，则与在随后的场景中省略时相比，第一个场景中的默认值将有所不同。</p>
+<dl class="docutils">
+<dt>必填参数：</dt>
+<dd><dl class="first last docutils">
+<dt>end.time = <em>t</em> (int)</dt>
+<dd><em>t</em>是场景结束的时间，以相对于场景开始时间的滴答度数表示。如果当前场景之后还有另一个场景，则它将在当前场景结束时开始。否则，整个情节提要将结束。</dd>
+</dl>
+</dd>
+</dl>
+<p>基本可选参数：</p>
+<blockquote>
+<dl class="docutils">
+<dt>fadein.time = <em>duration</em> (int)</dt>
+<dd><em>持续时间</em>是场景开始时淡入屏幕的时间长度（以刻度为单位）。请注意，fadein.time不会影响场景的结束时间。</dd>
+<dt>fadein.col = <em>r</em>, <em>g</em>, <em>b</em> (int, int, int)</dt>
+<dd>此参数与fadein.time配对。 <em>r</em>, <em>g</em>, <em>b</em>代表开始淡入淡出颜色的R，G和B值。持续时间的有效值是从0（无褪色）到end.time的值。<em>r</em>, <em>g</em>, <em>b</em>三元组的有效值仅是0,0,0（从黑色淡入）和255,255,255（从白色淡入）。当前不支持其他淡入色。如果省略，则持续时间默认为0（无淡入淡出），<em>r</em>, <em>g</em>, <em>b</em>为0,0,0（从黑色淡入淡出）。</dd>
+<dt>fadeout.time = duration (int)</dt>
+<dd>与fadein参数相似，除了它可以使场景淡出。</dd>
+<dt>fadeout.col = <em>r</em>, <em>g</em>, <em>b</em> (int, int, int)</dt>
+<dd>与fadein参数相似，除了它可以使场景淡出。</dd>
+<dt>clearcolor = <em>r</em>, <em>g</em>, <em>b</em> (int, int, int)</dt>
+<dd>这是在绘制每个刻度之前用于清除屏幕的颜色。如果r设置为-1，则不会清除屏幕。如果在第一个场景中省略，r默认为-1。如果在连续的场景中省略，则<em>r</em>, <em>g</em>, <em>b</em>将默认为前一个场景的值。例如，如果您在第一个场景中将clearcolor设置为0,0,0，则如果希望它们都使用相同的颜色值，则无需为连续的场景指定参数。</dd>
+<dt>layerall.pos = <em>x</em>, <em>y</em> (int, int)</dt>
+<dd>这是将所有图层绘制到的默认位置。如果在第一个场景中省略，则默认为0,0。如果在连续的场景中省略，则该值默认为前一个场景的值。请注意，此参数不会影响背景对象。</dd>
+<dt>layerX.anim = <em>actionno</em> (int)</dt>
+<dd><p class="first">layerX。*参数控制要绘制到屏幕上的动画和文本。layerX.anim指定动画。<em>X</em>的值控制图层的绘制优先级。例如，具有层<em>X</em> = 0下面将另一个与被绘制<em>X</em> = 1。有效值为<em>X</em>是从0至99，共100层。</p>
+<p class="last"><em>actionno</em>指定将显示动作编号为<em>actionno</em>的动画。如果省略此参数，则不会绘制动画。</p>
+</dd>
+<dt>layerX.text = <em>text</em> (string)</dt>
+<dd><p class="first">此参数指定将在屏幕上绘制的文本。如果需要在<em>文本</em>中使用换行符，请将其括在引号中，并使用 \n指定换行符转义序列，例如<tt class="docutils literal">layerX.text = &quot;This is one one <span class="pre">line.\nThis</span> is on a second line.&quot;</tt></p>
+<p>必须将layerX.text参数与layerX.font参数配对。</p>
+<p class="last">您不能在同一图层上使用文本和动画。</p>
+</dd>
+<dt>layerX.font = <em>font_no</em>, <em>bank</em>, <em>align</em>, <em>r</em>, <em>g</em>, <em>b</em> (int, int, int, int, int, int)</dt>
+<dd><p class="first">此参数指定用于呈现图层文本的字体。</p>
+<p><em>font_no</em>是[SceneDef]中字体的编号。</p>
+<p><em>bank</em>是字体的颜色库（仅位图字体）。</p>
+<p><em>align</em>是文本对齐方式：1表示左对齐的文本，0表示居中，-1表示右对齐的文本。</p>
+<p class="last"><em>r</em>, <em>g</em>, <em>b</em>指定字体的颜色。值是从0到255。</p>
+</dd>
+<dt>layerX.textdelay = <em>delay</em> (int)</dt>
+<dd>此参数控制每个字母在屏幕上的显示速度。文本一次在屏幕上呈现一个字母，等待<em>delay</em>在每个字母之间滴答作响。 <em>delay</em>默认为0（立即显示所有文本）。</dd>
+<dt>layerX.offset = <em>offx</em>, <em>offy</em> (int, int)</dt>
+<dd><em>offx</em>, <em>offy</em>是将图层绘制到的x，y位置偏移量。将此参数的值添加到&quot;layerall.pos&quot;参数的值中，以确定绘图位置。如果省略，则默认为0,0。</dd>
+<dt>layerX.starttime = <em>t</em> (int, int)</dt>
+<dd><em>t</em>是开始绘制图层的时间。如果省略，则默认为0。</dd>
+<dt>layerX.endtime = <em>t</em> (int, int)</dt>
+<dd><em>t</em>是停止绘制图层的时间。如果省略，则默认为场景的结尾。</dd>
+<dt>soundX.value = <em>group_no</em>, <em>sound_no</em> (int, int)</dt>
+<dd>此参数指定场景中要播放的声音。 <em>group_no</em>和<em>sound_no</em>对应于您在播放器的snd文件中分配每种声音的标识对。<em>X</em>的有效值为0到99（每个场景最多100个声音）。</dd>
+<dt>soundX.starttime = <em>t</em> (int)</dt>
+<dd>控制何时播放声音。 <em>t</em>是开始播放声音的时间。 <em>t</em>默认为0。</dd>
+<dt>soundX.volumescale = <em>volume_scale</em> (double)</dt>
+<dd>对于100％的体积，<em>volume_scale</em>是100；对于50％的体积，volume_scale是50，依此类推。默认值为100。当前，不支持使声音变大。</dd>
+<dt>soundX.pan = <em>p</em> (int)</dt>
+<dd>这是声音的位置偏移。0在中央播放声音。负值向左播放。正值将其向右播放。默认为0。有效值的<em>p</em>是-127到127。</dd>
+<dt>bgm = <em>filename</em> (string)</dt>
+<dd>如果指定，则名为<em>filename</em>的音乐文件将在当前场景的开头开始播放。如果在第一个场景中省略，则不会播放BGM。如果在连续的场景中省略，则前一个场景的背景音乐将继续播放。如果<em>filename</em>是一个空字符串，则当前正在播放的BGM将停止。BGM文件应与情节提要文件放置在同一目录中。</dd>
+<dt>bgm.loop = <em>loop</em> (boolean)</dt>
+<dd>将<em>loop</em>设置为1可使背景音乐循环播放，将0设置为防止循环播放。默认值为0。</dd>
+</dl>
+</blockquote>
+<p>高级可选参数：</p>
+<blockquote>
+<dl class="docutils">
+<dt>window = <em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em> (int, int, int, int)</dt>
+<dd>这将定义情节提要的绘图窗口。<em>x1</em>, <em>y1</em> 是窗口左上角的x，y坐标，而<em>x2</em>, <em>y2</em> 代表右下角。在此窗口外绘制的任何内容都不会被看到。请注意，此参数不会影响背景类型对象的绘制窗口。如果在第一个场景中省略，则这些值将默认为屏幕的完整大小。如果在连续的场景中省略，则这些值将默认为先前场景的值。</dd>
+<dt>bg.name = <em>bgname</em> (string)</dt>
+<dd>如果指定了此参数，则可以使用背景对象。<em>bgname</em>是在背景定义组之前添加的字符串。例如，如果<em>bgname</em>为 &quot;Scene04bg&quot;，则您的背景定义组必须命名为 &quot;Scene04bgDef&quot;，并且以下背景元素必须以 &quot;Scene04bgDef&quot;开头。 data/kfm/intro.def和 data/kfm/credits.def是使用此参数的示例。请注意，背景对象不受 &quot;window&quot;参数的影响。背景对象的所有元素都绘制在所有 &quot;layerX&quot;动画对象的下方，但 &quot;layer&quot;参数设置为1的元素除外。</dd>
+</dl>
+</blockquote>
+</div>
+</div>
+</div>
+</body>
+</html>

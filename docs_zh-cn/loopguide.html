@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>BGM循环点</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="bgm-loop-points">
+<h1 class="title">BGM循环点</h1>
+
+<p>BGM循环点允许音乐像真实的街机游戏一样无间断地重复播放音乐。概念很简单：如果您的歌曲示意性地看起来像</p>
+<pre class="literal-block">
+A B B B B ...
+</pre>
+<p>其中<tt class="docutils literal">A</tt>是前奏部分（可能不存在），<tt class="docutils literal">B</tt>是重复部分，则在<tt class="docutils literal">B</tt>的开头和结尾设置循环点将使<tt class="docutils literal">B</tt>无限期重复。</p>
+<p>由于音乐文件格式非常不同，因此没有一种方法可以指定最自然的循环点。因此，确切解释循环点参数的方式取决于特定的插件。对于WAV，OGG和MP3之类的流音频格式，最自然地根据音频流的样本指定循环点。对于MOD或MIDI等跟踪器类型的文件，更自然的指定循环点的方法可能是小节，节拍或模板编号。</p>
+<p>对于流音频文件，可以通过在音频编辑器中打开文件并寻找音乐在其自身重复的确切点来识别循环点。用耳朵获得大致的环路点位置，然后通过查看环路起点和终点的波形形状来直观地对其进行微调。如果可能，您应该将循环点放在音乐的安静部分的零交叉处。如果循环结束恰好发生在文件的末尾，则可以将loopend = -1指定为快捷方式。但是，对于有损压缩的流音频，最好在文件的末尾精确循环，因为可能会产生可听见的伪像。最佳实践是选择一个内部回路，如下图所示：</p>
+<pre class="literal-block">
+A---- B---- B---- B--
+           ^     ^
+           |_____|
+</pre>
+<p>另一种选择是跨越B的开头：</p>
+<pre class="literal-block">
+A---- B---- B----
+         ^    ^
+         |____|
+</pre>
+<p>尽管前面的基本描述适用于所有流音频文件，但对于MP3而言，细节更为复杂。</p>
+<div class="section" id="finding-loop-points-for-mp3-files">
+<h1>查找MP3文件的循环点</h1>
+<p>由于编码器填充，使用MP3文件可能会比较棘手。每个MP3编码器在进行编码时都会在音频的开头和结尾插入一些静音。这对BGM循环有两个有害影响：采样数与原始音频不同（由于起始填充），并且如果您尝试在文件末尾循环（由于末尾填充），则将有一个静默间隙。 。</p>
+<p>基于<a class="reference external" href="http://lame.sourceforge.net">LAME</a>的编码器支持无缝编码，这意味着它们会将额外的元数据写入文件中，从而提供真实音频数据的精确开始和结束。这允许兼容的解码器在播放文件时修剪无声填充。如果您不知道文件是否使用LAME编码，则可以使用<a class="reference external" href="http://phwip.wordpress.com">LAME tag reader</a>查看LAME标签是否存在。 mpg123解码器支持在LAME标签中存储具有无缝信息的文件的无缝播放。</p>
+<p>当您打开音频编辑器中的MP3时，音频编辑器可能会或可能不会识别LAME标签。您将需要查阅编辑器的文档，或者进行一些实验以了解其功能。如果您的文件是用LAME编码的，但是您的编辑器不支持LAME标记，那么您必须通过减去编码器延迟来手动更正采样位置。 （使用LAME tag reader查找编码器延迟。）</p>
+<p>警告：某些编辑器可能会尝试通过检测静音而不是通过读取LAME标签来删除编码器填充。此过程的结果不可预测，因此您不应使用此类编辑器来查找循环点。</p>
+<p>使用无间隙解码器（如mpg123），可能出现以下情况：</p>
+<ol class="arabic simple">
+<li>LAME编码，在编辑器中使用原始音频：从原始音频派生的循环点可靠，loopend = -1 可以正常工作。</li>
+<li>LAME编码，在编辑器中使用MP3，可识别LAME的编辑器：从编辑器派生的循环点可靠，loopend = -1 可以正常工作。</li>
+<li>LAME编码，在不支持LAME的编辑器中使用MP3在编辑器中：必须通过减去编码器延迟来校正从编辑器派生的循环点。 loopend = -1 可以正常工作。</li>
+<li>非LAME编码，在编辑器中使用原始音频：从原始音频派生的循环点不可靠。如果您有某种方法可以找到编码器延迟，则必须添加编码器延迟。使用loopend = -1将留有间隔。要消除间隙，您必须找到一个可剪掉端部填充物的环端。</li>
+<li>非LAME编码，在编辑器中使用MP3：从编辑器派生的循环点是可靠的。使用loopend = -1将留有间隔。要消除间隙，您必须找到一个可剪掉端部填充物的环端。</li>
+<li>在试图检测静音的编辑器中使用任何MP3而不是读取LAME标签：永远不可靠！</li>
+</ol>
+<p>使用没有gapless功能的mp3插件，仅可能出现方案4-6。</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<html>
+<head>
+	<title>M.U.G.E.N - 制作你的2D战斗游戏</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+
+<body>
+
+<center><font size=+3>M.U.G.E.N&trade;<br>1.1 Beta 1</font><br>
+<br>
+(c) Elecbyte 1999-2013<br><br>
+<a href="http://elecbyte.com">elecbyte.com</a>
+</center>
+
+<hr size="1" width="300">
+
+<ul>
+<li><a href="readme.txt"><b>自述文件和许可（README and License）</b></a></li>
+<li><a href="history.html"><b>更新历史（Update History）</b></a></li>
+</ul>
+
+<div class="contents topic" id="contents">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id1">概述</a></li>
+<li><a class="reference internal" href="#contents-and-files" id="id2">目录和文件</a></li>
+<li><a class="reference internal" href="#documentation" id="id3">文档</a></li>
+</ul>
+</div>
+
+<br>
+<div class="section" id="overview">
+<h2>概述</h2>
+
+<p>如果您是从旧版本的M.U.G.E.N升级而来，请阅读<a href="upgrading.html">Upgrade Notes</a>.</p>
+
+<p>M.U.G.E.N是一款2D格斗游戏引擎，它可以让你创建商业品质的格斗游戏。几乎所有的东西都可以自定义，从单个角色到舞台(stages)，以及游戏的外观和感觉。</p>
+
+<p>下载M.U.G.E.N后，解压到新的文件夹中，双击mugen.exe即可运行。</p>
+
+<p>大多数为M.U.G.E.N创建的内容往往以单个角色、舞台（stages）或主题（motifs）的形式分发。组装游戏很简单，只要下载你选择的内容，并配置M.U.G.E.N来了解它。</p>
+
+<p>M.U.G.E.N是专为没有或很少有编程经验，但有一定艺术天赋和学习耐心的人设计的。当然，有一定的编程背景确实会让你有一点头绪。不过，如果你只是想玩玩下载的内容，你只需要知道如何解压文件和编辑文本文件即可。</p>
+
+<p>以下是M.U.G.E.N.中的部分功能：</p>
+<ul>
+<li>可自定义标题画面、角色选择画面、血条栏等（life and bars）、游戏音效、字体等。</li>
+<li>角色可以有任何数量的声音和精灵（sprites），大小受电脑内存的限制。</li>
+<li>有多种分辨率可供选择，从320x240到1920x1080的全高清。</li>
+<li>过场动画（Cutscenes）。</li>
+</ul>
+
+<p>游戏引擎</p>
+<ul>
+<li>每个角色最多使用7个按钮</li>
+<li>常规动作、特殊动作、超级动作等。</li>
+<li>发射（Projectiles）和特效。</li>
+<li>移动终止和连击，多段式移动和投掷。</li>
+<li>你的角色能做什么是由脚本语言（和你的想象力）定义的。</li>
+</ul>
+
+<p>M.U.G.E.N免费用于非商业用途。如果您有其他需求，请向我们咨询。你可以在README文件中阅读完整的许可证文本。</p>
+
+</div>
+
+<div class="section" id="contents-and-files">
+<h2>目录和文件</h2>
+
+<h3>文件目录</h3>
+<table>
+<thead>
+<tr>
+  <td>文件或目录</td><td>用途</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>mugen.exe</td>
+  <td>M.U.G.E.N可执行主程序</td>
+</tr>
+<tr>
+  <td>chars/</td>
+  <td>包含角色文件的目录</td>
+</tr>
+<tr>
+  <td>data/mugen.cfg</td>
+  <td>首选项和设置（文本文件）</td>
+</tr>
+<tr>
+  <td>data/select.def</td>
+  <td>角色和舞台（stage）配置（文本文件）</td>
+</tr>
+<tr>
+  <td>data/ other files </td>
+  <td>主题（Motif）文件</td>
+</tr>
+<tr>
+  <td>docs/</td>
+  <td>文档</td>
+</tr>
+<tr>
+  <td>font/</td>
+  <td>字体文件的目录</td>
+</tr>
+<tr>
+  <td>old_tools/</td>
+  <td>M.U.G.E.N.旧版本中的工具</td>
+</tr>
+<tr>
+  <td>sound/</td>
+  <td>包含音乐文件的目录</td>
+</tr>
+<tr>
+  <td>stages/</td>
+  <td>包含舞台（stage）文件的目录</td>
+</tr>
+</tbody>
+</table>
+
+<h3>全局文件类型</h3>
+这些扩展名的文件可以在M.U.G.E.N目录的各个子目录中找到。
+<table>
+<thead>
+<tr>
+  <td>文件扩展名</td><td>类型</td>
+</tr>
+</thead>
+<tbody>
+<tr><td>air</td><td>动画 (文本)</td></tr>
+<tr><td>def</td><td>定义文件 —— 根据文件名(文本)有各种用途</td></tr>
+<tr><td>fnt</td><td>字体文件 —— 旧版本; 新字体文件分别是 .fnt 和 .sff</td></tr>
+<tr><td>sff</td><td>精灵（Sprite）文件</td></tr>
+<tr><td>snd</td><td>声音文件</td></tr>
+</tbody>
+</table>
+
+<h3>角色文件</h3>
+角色文件作为子目录位于 chars/ 目录中。
+对于不同的角色，文件的名称可能不同。
+<table>
+<thead>
+<tr>
+  <td>文件例子</td><td>类型</td>
+</tr>
+</thead>
+<tbody>
+<tr><td>player.air</td><td>动画 (文本)</td></tr>
+<tr><td>player.cmd</td><td>角色命令和移动定义（move definitions）（文本）</td></tr>
+<tr><td>player.cns</td><td>角色状态和行为（文本）</td></tr>
+<tr><td>player.def</td><td>角色（文本）使用的基本信息和文件名</td></tr>
+<tr><td>player.sff</td><td>角色精灵（sprites）</td></tr>
+<tr><td>player.snd</td><td>角色声音</td></tr>
+</tbody>
+</table>
+
+<h3>主题（Motif）文件</h3>
+主题（Motifs）文件位于 data/ 的子目录中
+<table>
+<thead>
+<tr>
+  <td>文件</td><td>类型</td>
+</tr>
+</thead>
+<tbody>
+<tr><td>common1.cns</td><td>所有角色通用的行为信息（文本）</td></tr>
+<tr><td>common1.snd</td><td>所有角色都可以使用的音效</td></tr>
+<tr><td>fight.def</td><td>定义战斗界面的外观，即生命条（lifebars）等（文本）</td></tr>
+<tr><td>fight.sff</td><td>战斗画面中使用的精灵（Sprites）</td></tr>
+<tr><td>fight.snd</td><td>战斗画面中使用的声音</td></tr>
+<tr><td>fightfx.air</td><td>战斗中效果的动画数据，如击中火花。</td></tr>
+<tr><td>fightfx.sff</td><td>精灵（Sprite）战斗效果数据</td></tr>
+<tr><td>select.def</td><td>定义游戏中包括哪些角色和舞台（stages）</td></tr>
+<tr><td>system.def</td><td>定义系统界面的外观，例如标题和角色选择界面</td></tr>
+<tr><td>system.sff</td><td>用于系统界面的精灵（Sprites）</td></tr>
+<tr><td>system.snd</td><td>用于系统界面的声音</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<div class="section" id="documentation">
+<h2>文档</h2>
+
+<h3>参考</h3>
+M.U.G.E.N. 技术参考。
+<ul>
+<li><a href="air.html"><b>AIR 格式</b></a></li>
+<li><a href="bgs.html"><b>背景 / 舞台（stage） 文档</b></a></li>
+<li><a href="cns.html"><b>CNS 格式</b></a></li>
+<li><a href="coordspace.html"><b>坐标空间注释</b></a></li>
+<li><a href="fonts.html"><b>字体</b></a></li>
+<li><a href="localization.html"><b>语言和本地化</b></a></li>
+<li><a href="loopguide.html"><b>循环BGM指南</b></a></li>
+<li><a href="sprmake2.html"><b>精灵制作（SpriteMaker） 工具</b></a></li>
+<li><a href="spr.html"><b>精灵标准（Sprite standard）</b></a></li>
+<li><a href="sctrls.html"><b>状态控制器参考</b></a></li>
+<li><a href="storyboard.html"><b>剧本（Storyboard）文档</b></a></li>
+<li><a href="trigger.html"><b>触发器（Trigger）列表</b></a></li>
+<li><a href="mconsole.html"><b>M.U.G.E.N 控制台（Console）</b></a></li>
+</ul>
+
+<h3>教程</h3>
+新加入M.U.G.E.N？从我们的教程开始吧。
+<ul>
+<li><a href="tutorial1.html"><b>角色教程 1</b></a></li>
+<li><a href="tutorial2.html"><b>角色教程 2</b></a></li>
+<li><a href="tutorial3.html"><b>角色教程 3</b></a></li>
+<li><a href="tutorial4.html"><b>角色教程 4</b></a></li>
+<li><a href="bg-tut.html"><b>舞台（Stage） / 背景教程</b></a></li>
+</ul>
+
+<h3>升级说明</h3>
+
+<ul>
+<li><a href="upgrading.html"><b>Upgrade Notes</b></a> - 从过去的M.U.G.E.N版本升级而来。</li>
+</ul>
+
+</div>
+
+</body>
+</html>

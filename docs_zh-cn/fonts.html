@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>字体文档</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<div class="section" id="font-documentation">
+<h1><a class="toc-backref" href="#id1">字体文档</a></h1>
+<p>M.U.G.E.N, (c) Elecbyte 1999-2009</p>
+<p>Documentation for version 1.0 (2009)</p>
+<p>Updated 18 September 2009</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#font-documentation" id="id1">字体文档</a></li>
+<li><a class="reference internal" href="#overview" id="id2">概述</a></li>
+<li><a class="reference internal" href="#terminology" id="id3">术语</a></li>
+<li><a class="reference internal" href="#fnt-v2-def-file" id="id4">FNT v2 def 文件</a><ul>
+<li><a class="reference internal" href="#bitmap-fonts" id="id5">位图字体</a></li>
+<li><a class="reference internal" href="#ascii-character-reference" id="id6">ASCII字符参考</a></li>
+<li><a class="reference internal" href="#truetype-fonts" id="id7">TrueType字体</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="overview">
+<h1><a class="toc-backref" href="#id2">概述</a></h1>
+<p>M.U.G.E.N 1.0中的字体由带有&quot;def&quot;扩展名的定义文件和随附的sff或True Type字体文件组成。字体的这种格式称为FNT v2。</p>
+<p>在M.U.G.E.N 1.0之前的版本中，字体表示为扩展名为&quot;fnt&quot;的单个二进制文件。此格式称为FNT v1。 M.U.G.E.N 1.0与两种字体格式兼容。</p>
+<p>本文档介绍FNT v2字体的结构和格式。</p>
+</div>
+<div class="section" id="terminology">
+<h1><a class="toc-backref" href="#id3">术语</a></h1>
+<dl class="docutils">
+<dt>Character</dt>
+<dd>单个字母，数字或符号。</dd>
+<dt>Glyph</dt>
+<dd>单个字符的可视化。</dd>
+<dt>Bitmap font</dt>
+<dd>一种字体，其字形完全由精灵表示。位图字体的受支持集中的每个字符都映射到一个精灵，该精灵是该字符的字形。</dd>
+<dt>TrueType font</dt>
+<dd>一种字体，其字形由描述如何呈现每个字形的矢量表示。 TrueType字体通常在Microsoft Windows和其他操作系统中用于为用户界面呈现抗锯齿（平滑）字体。</dd>
+<dt>Color bank</dt>
+<dd>位图字体的调色板，该调色板将颜色方案应用于字形。字体可能包含一个或多个颜色库。</dd>
+<dt>Color bank number</dt>
+<dd>标识特定颜色库的正数。</dd>
+</dl>
+</div>
+<div class="section" id="fnt-v2-def-file">
+<h1><a class="toc-backref" href="#id4">FNT v2 def 文件</a></h1>
+<p>FNT v2格式的字体的必需组成部分是字体定义文件，该文件是扩展名为&quot;def&quot;的文本文件。字体可能伴随着与def文件位于同一目录中的第二个文件。该文件是什么取决于字体的类型。</p>
+<p>FNT v2字体可以是位图字体或TrueType字体。</p>
+<div class="section" id="bitmap-fonts">
+<h2><a class="toc-backref" href="#id5">位图字体</a></h2>
+<p>带有内嵌注释的位图字体定义文件示例如下所示。</p>
+<pre class="literal-block">
+[FNT v2]
+; FNT v2 version number.  Don't change this.
+fntversion = 2,00
+; Name of this font.
+name = &quot;4x6 variable&quot;
+; This font contains the full ASCII character set.
+; All letters are uppercase.
+
+[Def]
+; This is a bitmap font
+Type = bitmap
+; Size of font: width, height.  Width is used for spaces.
+Size = 3,6
+; Spacing between font glyphs: width, height.
+Spacing = 1,0
+; Drawing offset: x, y.
+Offset = 0,1
+; Filename of the sff containing the glyphs.  Use sff v2 only.
+File = f-4x6.sff
+
+; Note: All units are in pixels.
+; Text rendered with bitmap fonts may be in ASCII only.
+; See work/font/f-4x6/f-4x6.def for information on creating the sff.
+</pre>
+<p>位图字体仅支持ASCII字符集中的字符。不支持扩展的ASCII集。有关ASCII字符集的表格，请参见下面的&quot;ASCII字符参考&quot;。</p>
+<p>位图字体必须附带一个SFF文件，其中包含字形的精灵。字体中的每个字符都映射到一个以0，&lt;ASCII码&gt;索引的精灵，其中&lt;ASCII码&gt;是该字符的相应ASCII码。例如，字符‘A’（ASCII代码65）映射为sprite 0,65。</p>
+<p>没有相应精灵的任何字符都不会被渲染。</p>
+<p>位图字体可能包含一个或多个颜色库。每个色库映射到存储在SFF中的调色板，并以0，&lt;色库号&gt;索引，其中&lt;色库号&gt;是正数。如果在字体渲染期间指定了无效的颜色库，则将使用SFF中第一个精灵的调色板。</p>
+</div>
+<div class="section" id="ascii-character-reference">
+<h2><a class="toc-backref" href="#id6">ASCII字符参考</a></h2>
+<p>可打印字符的范围是32-126。只有可打印的字符需要表示为精灵。</p>
+<pre class="literal-block">
+=========  =========  =========  =========
+Char  Dec  Char  Dec  Char  Dec  Char  Dec
+---------  ---------  ---------  ---------
+(nul)   0  (sp)   32  &#64;      64  `      96
+(soh)   1  !      33  A      65  a      97
+(stx)   2  &quot;      34  B      66  b      98
+(etx)   3  #      35  C      67  c      99
+(eot)   4  $      36  D      68  d     100
+(enq)   5  %      37  E      69  e     101
+(ack)   6  &amp;      38  F      70  f     102
+(bel)   7  '      39  G      71  g     103
+(bs)    8  (      40  H      72  h     104
+(ht)    9  )      41  I      73  i     105
+(nl)   10  *      42  J      74  j     106
+(vt)   11  +      43  K      75  k     107
+(np)   12  ,      44  L      76  l     108
+(cr)   13  -      45  M      77  m     109
+(so)   14  .      46  N      78  n     110
+(si)   15  /      47  O      79  o     111
+(dle)  16  0      48  P      80  p     112
+(dc1)  17  1      49  Q      81  q     113
+(dc2)  18  2      50  R      82  r     114
+(dc3)  19  3      51  S      83  s     115
+(dc4)  20  4      52  T      84  t     116
+(nak)  21  5      53  U      85  u     117
+(syn)  22  6      54  V      86  v     118
+(etb)  23  7      55  W      87  w     119
+(can)  24  8      56  X      88  x     120
+(em)   25  9      57  Y      89  y     121
+(sub)  26  :      58  Z      90  z     122
+(esc)  27  ;      59  [      91  {     123
+(fs)   28  &lt;      60  \      92  |     124
+(gs)   29  =      61  ]      93  }     125
+(rs)   30  &gt;      62  ^      94  ~     126
+(us)   31  ?      63  _      95  (del) 127
+=========  =========  =========  =========
+</pre>
+</div>
+<div class="section" id="truetype-fonts">
+<h2><a class="toc-backref" href="#id7">TrueType字体</a></h2>
+<p>带有内嵌注释的示例TrueType字体定义文件如下所示：</p>
+<pre class="literal-block">
+[FNT v2]
+; FNT v2 version number.  Don't change this.
+fntversion = 2,00
+; Name of this font.
+name = &quot;Arial&quot;
+; Font author
+author = &quot;Microsoft&quot;
+
+[Def]
+; This is a truetype font.
+Type = truetype
+; Size of font: width, height.  Only height is used for truetype fonts.
+Size = 18,36
+; Spacing between font glyphs.  Only height is used for truetype fonts.
+Spacing = 1,1
+; Drawing offset: x, y.
+Offset = 0,0
+; Filename of the font to load.  Will search Windows font directory if not in current directory.
+File = arial.ttf
+; Preferred blending mode: 0 - none, 1 - blended.
+Blend = 1
+
+; Note: All units are in pixels.
+; Text rendered with truetype fonts may be ASCII or UTF-8
+</pre>
+<p>TrueType字体定义必须随附TrueType字体文件，该文件的扩展名通常为.ttf或.ttc。如果TrueType字体文件与定义文件位于同一目录中，则将加载它。否则，M.U.G.E.N将尝试从Windows字体目录中加载字体文件。</p>
+</div>
+</div>
+</div>
+</body>
+</html>

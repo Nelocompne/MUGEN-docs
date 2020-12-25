@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>AIR格式和标准</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="the-air-format-and-standard">
+<h1 class="title">AIR格式和标准</h1>
+
+<p>M.U.G.E.N, (c) Elecbyte 1999-2010</p>
+<p>Documentation for version 1.1 (2010)</p>
+<p>Updated 30 November 2010</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">介绍</a></li>
+<li><a class="reference internal" href="#the-format" id="id2">格式</a><ul>
+<li><a class="reference internal" href="#optional-parameters" id="id3">可选参数</a></li>
+<li><a class="reference internal" href="#interpolation" id="id4">插值</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#character-reserved-action-numbers" id="id5">角色保留动作编号</a></li>
+<li><a class="reference internal" href="#recommended-action-numbers" id="id6">建议行动编号</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1><a class="toc-backref" href="#id1">介绍</a></h1>
+<p>AIR是一种文本文件格式，用于描述一组动画。AIR格式在整个M.U.G.E.N中被广泛使用，用于对角色，背景，生命条等进行动画处理。</p>
+<p>动画（在M.U.G.E.N中特别称为动画动作）描述了要显示的单个精灵（sprites）序列。角色的动画文件（.air）可以包含尽可能多的动画动作。</p>
+</div>
+<div class="section" id="the-format">
+<h1><a class="toc-backref" href="#id2">格式</a></h1>
+<p>这是.air文件中的典型条目。
+  接下来，我们将说明格式。</p>
+<pre class="literal-block">
+; Standing Animation
+[Begin Action 000]
+Clsn2Default: 2
+ Clsn2[0] = -10,  0, 10,-79
+ Clsn2[1] =  -4,-92,  6,-79
+0,1, 0,0, 7
+0,2, 0,0, 7
+0,3, 0,0, 7
+0,4, 0,0, 50
+0,5, 0,0, 7
+0,6, 0,0, 7
+0,7, 0,0, 7
+0,8, 0,0, 60
+</pre>
+<p>使用分号（;）进行注释。它们可以在任何地方使用，并且在同一行中的分号之后的所有内容都将被忽略。</p>
+<dl class="docutils">
+<dt><tt class="docutils literal">[Begin Action n]</tt></dt>
+<dd>这定义了一个动作。 数字n称为动作编号。 每个动作必须具有唯一的动作编号，以便与其他动作区分开。 您可以有许多操作，但是请记住，有保留的操作编号。 这些数字及其相关的操作在下面列出。</dd>
+<dt><tt class="docutils literal">Clsn2Default: 2</tt></dt>
+<dd>这表示正在定义两个碰撞箱，它们将为Clsn定义下面的所有条目定义。在这种情况下，对于这个动作中的每个精灵。如果你不想有一个默认的碰撞箱，那么将Clsn2Default改为Clsn2。你必须把Clsn定义放在精灵条目之前。每个精灵条目都可以有自己的碰撞箱。Clsn2指的是普通的碰撞框，Clsn1指的是 &quot;attacking&quot;框。你在进行攻击动作（如拳打脚踢或特殊动作）时使用攻击框。要定义碰撞箱，使用AirEdit，一个包含在M.U.G.E.N开发工具集的程序。</dd>
+<dt><tt class="docutils literal">0,3, 0,0, 7</tt></dt>
+<dd><p class="first">看起来像这样的条目称为&quot;动画元素（animation element）&quot;，或简称为&quot;元素（element）&quot;。
+  第一个数字是精灵组编号。
+  第二个数字是精灵图像编号。
+  制作 .sff 文件时，可以将这些数字分配给精灵。</p>
+<p>因此，组＃0和图像＃3是使用sprmaker定义的，其条目为<tt class="docutils literal">0,3, mypic.png, 40, 40</tt>.</p>
+<p>元素的第3和第4个数字表示相对于精灵位置的X和Y偏移。 例如，对<tt class="docutils literal"><span class="pre">15,-10</span></tt>将使子画面的位置向前移动15个像素，并向上移动10个像素。 此偏移受缩放操作（scaling operations）影响，但不受旋转（rotation）影响。</p>
+<p class="last">第5个数字是在移动到下一个元素之前显示元素的时间长度，以游戏标记为单位。 以正常游戏速度在一秒钟内有60个游戏滴答声（game-ticks）。 对于第5个数字，如果希望该元素无限期显示（或直到切换到其他操作），则可以指定&quot;-1&quot;。 如果选择执行此操作，则仅在操作的最后一个元素上执行此操作。</p>
+</dd>
+</dl>
+<p>动作的&quot;循环时间（looptime）&quot;是每个元素的所有时间的总和。 基本上，这是游戏提示中动作的总长度。 如果最后一个元素的时间为&quot;-1&quot;，则循环时间将视为无限。 我们称其为&quot;no loop&quot;。 具有有限循环时间的动作将在显示完最后一个元素后返回到第一个元素，并保持循环播放，直到您切换到另一个动作为止。</p>
+<p>在上面的示例操作中，循环时间为：
+7 + 7 + 7 + 50 + 7 + 7 + 7 + 60 = 152 ticks</p>
+<pre class="literal-block">
+; Standing Animation
+[Begin Action 000]
+Clsn2Default: 2
+ Clsn2[0] = -10,  0, 10,-79
+ Clsn2[1] =  -4,-92,  6,-79
+0,1, 0,0, 7
+0,2, 0,0, 7
+Loopstart
+0,3, 0,0, 7
+0,4, 0,0, 50
+0,5, 0,0, 7
+0,6, 0,0, 7
+0,7, 0,0, 7
+0,8, 0,0, 60
+</pre>
+<p>用单词<tt class="docutils literal">Loopstart</tt>添加一行将使动画从下一行的元素开始循环播放。 在上面的示例中，当显示Sprite 0,8的元素时，下一个要显示的元素将是Sprite 0,3的元素。</p>
+<p>在测试动画时，您可能会发现暂停和帧前进功能很有用。 要暂停，请点击&quot;Pause&quot;按钮。 要按一个游戏滴答（game-tick）进行游戏，请按Scroll Lock。 进帧（Frame-advance）仅在游戏暂停时有效。</p>
+<div class="section" id="optional-parameters">
+<h2><a class="toc-backref" href="#id3">可选参数</a></h2>
+<p>对于这个条目：</p>
+<pre class="literal-block">
+15,1, 0,0, 5
+</pre>
+<p>如果要 水平和/或垂直 翻转精灵，则需要使用&quot;翻转（flip）&quot;参数：V代表垂直翻转，H代表水平翻转。 这些参数将排在第6位。 例如：</p>
+<pre class="literal-block">
+15,1, 0,0, 5, H   ;&lt;-- 水平翻转
+15,2, 0,0, 5, V   ;&lt;-- 垂直翻转
+15,3, 0,0, 5, VH  ;&lt;-- 这将双向翻转，即。旋转180度
+</pre>
+<p>对于某些击打火花，您可能希望使用颜色附加来绘制精灵，使其具有透明效果。 这称为透明度混合。 颜色加法和减法的参数分别是<tt class="docutils literal">A</tt> 和 <tt class="docutils literal">S</tt>，并且应作为第7行。 例如：</p>
+<pre class="literal-block">
+15,4, 0,0, 5, ,A   ;&lt;-- 颜色添加（省略翻转参数）
+15,4, 0,0, 5, H, S ;&lt;-- 水平翻转并进行颜色减法
+</pre>
+<p>If you wish to specify alpha values for color addition, use the
+parameter format <tt class="docutils literal"><span class="pre">AS???D???</span></tt>, where <tt class="docutils literal"><span class="pre">???</span></tt> are replaced with values of the
+source and destination alpha respectively. Values range from 0 (low)
+to 256 (high). For example, <tt class="docutils literal">AS64D192</tt> stands for &quot;Add Source_64 to
+Dest_192&quot;. Also, <tt class="docutils literal">AS256D256</tt> is equivalent to just <tt class="docutils literal">A</tt>. A shorthand
+for <tt class="docutils literal">AS256D128</tt> is <tt class="docutils literal">A1</tt>.</p>
+<pre class="literal-block">
+15,4, 0,0, 5, ,A1  ;&lt;-- 为目标颜色添加到50%深色
+15,4, 0,0, 5, ,AS128D128 ;&lt;-- Mix 50% source with 50% dest
+</pre>
+<p>要缩放精灵，请分别使用x比例和y比例的第8和第9个参数，例如，这将分别将精灵缩放1.5和2：</p>
+<pre class="literal-block">
+15,4, 0,0, 5, ,A, 1.5,2
+</pre>
+<p>要绕其轴旋转精灵，请在第10个参数中以度为单位指定角度：</p>
+<pre class="literal-block">
+15,4, 0,0, 5, ,A, 1,1, 45
+</pre>
+<p>注：1.1之前的M.U.G.E.N版本中不使用比例和角度参数。</p>
+</div>
+<div class="section" id="interpolation">
+<h2><a class="toc-backref" href="#id4">插值</a></h2>
+<p>某些参数可以从一个元素插值到下一个元素。插值支持的参数有偏移、混合、比例和角度。</p>
+<p>M.U.G.E.N 1.1及更高版本支持插值。</p>
+<p>目前只支持线性插值。</p>
+<p>语法：</p>
+<pre class="literal-block">
+Interpolate &lt;type&gt;
+</pre>
+<p>where <tt class="docutils literal">&lt;type&gt;</tt> is one of <tt class="docutils literal">Offset</tt>, <tt class="docutils literal">Blend</tt>, <tt class="docutils literal">Scale</tt> or <tt class="docutils literal">Angle</tt>.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal">Offset</tt></dt>
+<dd>插值偏移。</dd>
+<dt><tt class="docutils literal">Blend</tt></dt>
+<dd>插值透明度混合参数。两个元素必须具有相同的透明度函数，即 <tt class="docutils literal">A</tt>.
+  要对完全不透明的元素进行插值，请使用 <tt class="docutils literal">AS256D0</tt>.</dd>
+<dt><tt class="docutils literal">Scale</tt></dt>
+<dd>插值比例。</dd>
+<dt><tt class="docutils literal">Angle</tt></dt>
+<dd>插值角度。</dd>
+</dl>
+<p>可以在两个元素之间插入一条或多条<tt class="docutils literal">插值（Interpolate）</tt>线，以便在它们之间进行插值。在循环动画中，第一个元素之前的<tt class="docutils literal">插值（Interpolate）</tt>线将用于从最后一个元素插值到第一个元素。</p>
+<p>以下示例将插值0,0和100,0之间的偏移，以及1,1和1.5,1.5之间的比例：</p>
+<pre class="literal-block">
+Interpolate Offset
+Interpolate Scale
+20,0, 0,0, 60, , , 1,1
+Interpolate Offset
+Interpolate Scale
+20,0, 100,0, 60, , , 1.5,1.5
+</pre>
+<p>以下示例为旋转对象设置旋转周期为60个刻度的动画：</p>
+<pre class="literal-block">
+20,0, 0,0, 59, , , 1,1, 0
+Interpolate Angle
+20,0, 0,0, 1, , , 1,1, 354
+</pre>
+</div>
+</div>
+<div class="section" id="character-reserved-action-numbers">
+<h1><a class="toc-backref" href="#id5">角色保留动作编号</a></h1>
+<p>M.U.G.E.N的公共状态引擎 (data/common1.cns) 需要在角色中显示多个动画动作（如果没有显示所有需要的动画，则会记录警告）。还有一些动作是可选的，如果你的角色中出现了这些动作就会被利用。</p>
+<p>如果您不确定这些操作应该是什么样子，请查看chars/kfm/kfm.air.</p>
+<p>下面未列出的5000-5999范围内的所有操作编号都是为将来可能使用而保留的，因此请避免将这些编号用于自定义操作。</p>
+<p>数字之外的&quot;opt&quot;表示动画是可选的。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="32%" />
+<col width="59%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Number</td>
+<td>Description</td>
+<td>Comments</td>
+</tr>
+<tr><td>0</td>
+<td>Standing</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5</td>
+<td>Stand turning</td>
+<td>Must have finite looptime</td>
+</tr>
+<tr><td>6</td>
+<td>Crouch turning</td>
+<td>Must have finite looptime</td>
+</tr>
+<tr><td>10</td>
+<td>Stand to crouch</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>11</td>
+<td>Crouching</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>12</td>
+<td>Crouch to stand</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>20</td>
+<td>Walking forwards</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>21</td>
+<td>Walking backwards</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>40</td>
+<td>Jump start (on ground)</td>
+<td>Shown just before player leaves ground</td>
+</tr>
+<tr><td>41</td>
+<td>Jump neutral (upwards)</td>
+<td>Shown when player is going up</td>
+</tr>
+<tr><td>42</td>
+<td>Jump forwards (upwards)</td>
+<td>Shown when player is going up-towards</td>
+</tr>
+<tr><td>43</td>
+<td>Jump back (upwards)</td>
+<td>Shown when player is going up-back</td>
+</tr>
+<tr><td>44  opt</td>
+<td>Jump neutral (downwards)</td>
+<td>Activated when Y-velocity &gt; -2</td>
+</tr>
+<tr><td>45  opt</td>
+<td>Jump fwd (downwards)</td>
+<td>Same as above</td>
+</tr>
+<tr><td>46  opt</td>
+<td>Jump back (downwards)</td>
+<td>Same as above</td>
+</tr>
+<tr><td>47</td>
+<td>Jump landing</td>
+<td>Shown as player lands on ground</td>
+</tr>
+<tr><td>100</td>
+<td>Run fwd/hop forward</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>105</td>
+<td>Hop back</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>120</td>
+<td>Start guarding (stand)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>121</td>
+<td>Start guarding (crouch)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>122</td>
+<td>Start guarding (air)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>130</td>
+<td>Guard (stand)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>131</td>
+<td>Guard (crouch)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>132</td>
+<td>Guard (air)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>140</td>
+<td>Stop guarding (stand)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>141</td>
+<td>Stop guarding (crouch)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>142</td>
+<td>Stop guarding (air)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>150</td>
+<td>Guarding a hit (stand)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>151</td>
+<td>Guarding a hit (crouch)</td>
+<td>Finite looptime</td>
+</tr>
+<tr><td>152</td>
+<td>Guarding a hit (air)</td>
+<td>No loop</td>
+</tr>
+<tr><td>170 opt</td>
+<td>Lose</td>
+<td>(See Note 1)</td>
+</tr>
+<tr><td>175 opt</td>
+<td>Time Over drawgame</td>
+<td>(See Note 1)</td>
+</tr>
+<tr><td>180 opt</td>
+<td>Win</td>
+<td>No loop (181-189 for multiple) (See Note 1)</td>
+</tr>
+<tr><td>190 opt</td>
+<td>Intro</td>
+<td>No loop (See Note 1)</td>
+</tr>
+<tr><td>195 opt</td>
+<td>Taunt</td>
+<td>Finite looptime (See Note 1)</td>
+</tr>
+<tr><td>5000</td>
+<td>Stand/Air Hit high (light)</td>
+<td>Looptime around 10-20</td>
+</tr>
+<tr><td>5001</td>
+<td>Stand/Air Hit high (medium)</td>
+<td>&quot;     (See Note 2)</td>
+</tr>
+<tr><td>5002</td>
+<td>Stand/Air Hit high (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5005</td>
+<td>Stand Recover high (light)</td>
+<td>No loop (See Note 3)</td>
+</tr>
+<tr><td>5006</td>
+<td>Stand Recover high (medium)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5007</td>
+<td>Stand Recover high (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5010</td>
+<td>Stand/Air Hit low (light)</td>
+<td>Looptime around 10-20</td>
+</tr>
+<tr><td>5011</td>
+<td>Stand/Air Hit low (medium)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5012</td>
+<td>Stand/Air Hit low (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5015</td>
+<td>Stand Recover low (light)</td>
+<td>No loop</td>
+</tr>
+<tr><td>5016</td>
+<td>Stand Recover low (medium)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5017</td>
+<td>Stand Recover low (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5020</td>
+<td>Crouch Hit (light)</td>
+<td>Looptime around 10-20</td>
+</tr>
+<tr><td>5021</td>
+<td>Crouch Hit (medium)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5022</td>
+<td>Crouch Hit (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5025</td>
+<td>Crouch Recover (light)</td>
+<td>No loop</td>
+</tr>
+<tr><td>5026</td>
+<td>Crouch Recover (medium)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5027</td>
+<td>Crouch Recover (hard)</td>
+<td>&quot;</td>
+</tr>
+<tr><td>5030</td>
+<td>Stand/Air Hit back</td>
+<td>Looptime around 10-20</td>
+</tr>
+<tr><td>5035 opt</td>
+<td>Stand/Air Hit transition</td>
+<td>Looptime around 5-15 (See Note 3)</td>
+</tr>
+<tr><td>5040</td>
+<td>Air Recover</td>
+<td>No loop</td>
+</tr>
+<tr><td>5050</td>
+<td>Air Fall</td>
+<td>No loop</td>
+</tr>
+<tr><td>5060 opt</td>
+<td>Air Fall (coming down)</td>
+<td>No loop</td>
+</tr>
+<tr><td>5070</td>
+<td>Tripped</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5080</td>
+<td>LieDown Hit (stay down)</td>
+<td>(See Note 4)</td>
+</tr>
+<tr><td>5090</td>
+<td>LieDown Hit (hit up into air)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5100</td>
+<td>Hitting ground from fall</td>
+<td>Looptime around 3</td>
+</tr>
+<tr><td>5160</td>
+<td>Bounce into air</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5170</td>
+<td>Hit ground from bounce</td>
+<td>Looptime around 3 or 4</td>
+</tr>
+<tr><td>5110</td>
+<td>LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5120</td>
+<td>Get up from LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5140 opt</td>
+<td>LieDead (first rounds)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5150 opt</td>
+<td>LieDead (final round)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5200</td>
+<td>Fall-recovery near ground</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5210</td>
+<td>Fall-recovery in mid-air</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5300</td>
+<td>Dizzy</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5500 opt</td>
+<td>&quot;Continue?&quot; screen</td>
+<td>If omitted, plays dizzy anim</td>
+</tr>
+<tr><td>5510 opt</td>
+<td>&quot;Yes&quot; to &quot;Continue&quot;</td>
+<td>If omitted, plays first win anim (not yet implemented)</td>
+</tr>
+<tr><td>5520 opt</td>
+<td>&quot;No&quot; to &quot;Continue&quot;</td>
+<td>(not yet implemented)</td>
+</tr>
+</tbody>
+</table>
+<p>可选的弹出动画（见注5）：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="34%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Number</td>
+<td>Description</td>
+<td>Comments</td>
+</tr>
+<tr><td>5051 opt</td>
+<td>Air fall -- hit up</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5061 opt</td>
+<td>Coming down from hit up</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5081 opt</td>
+<td>LieDown Hit (stay down)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5101 opt</td>
+<td>Bounce from ground into air</td>
+<td>Looptime around 3</td>
+</tr>
+<tr><td>5161 opt</td>
+<td>Bounce into air</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5171 opt</td>
+<td>Hit ground from bounce</td>
+<td>Looptime around 3 or 4</td>
+</tr>
+<tr><td>5111 opt</td>
+<td>LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5121 opt</td>
+<td>Get up from LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5151 opt</td>
+<td>LieDead (first rounds)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5156 opt</td>
+<td>LieDead (final round)</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>可选的上对角线（Up-Diagonal）动画（见注6）：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="34%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Number</td>
+<td>Description</td>
+<td>Comments</td>
+</tr>
+<tr><td>5052 opt</td>
+<td>Air fall -- hit up</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5062 opt</td>
+<td>Coming down from hit up</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5082 opt</td>
+<td>LieDown Hit (stay down)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5102 opt</td>
+<td>Bounce from ground into air</td>
+<td>Looptime around 3</td>
+</tr>
+<tr><td>5162 opt</td>
+<td>Bounce into air</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5172 opt</td>
+<td>Hit ground from bounce</td>
+<td>Looptime around 3 or 4</td>
+</tr>
+<tr><td>5112 opt</td>
+<td>LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5122 opt</td>
+<td>Get up from LieDown</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5152 opt</td>
+<td>LieDead (first rounds)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>5157 opt</td>
+<td>LieDead (final round)</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>注1：这些实际上不必只使用规定的数字。 如果是</dt>
+<dd>一个建议的数字而不是一个M.U.G.E.N。如有必要，可随意使用其他行动编号。</dd>
+</dl>
+<p>注2：如果省略了中击和重击，则默认为轻击</p>
+<dl class="docutils">
+<dt>注3：&quot;No loop&quot;表示最后一帧的时间为 -1</dt>
+<dd>
+  对于恢复动画，每次恢复的第一帧应该是相应命中的最后一帧。例如，如果动作5000有第5000,0和5000,1帧，
+  那么动作5005应该从第5000,1帧开始。但在第一帧动画命中之前，将锁定该动画的恢复。
+  如果有 Stand/Air 打击过渡动画，则Air恢复和Air降落的第一帧应该是过渡动画的最后一帧。</dd>
+<dt>注4： Stand/Air 命中过渡动画在</dt>
+<dd>每次命中动画进入（或进入）空中后播放，但在&quot;空中恢复（Air Recover）&quot;和&quot;空中坠落（Air Fall）&quot;动画之前播放。</dd>
+<dt>注5：如果你想让玩家在被击中时看起来像是在&quot;抽搐（twitching）&quot;，</dt>
+<dd>你可以循环倒立命中</dd>
+<dt>注6：这组动画中有6个是可选的。这是一组可替换的坠落动画，</dt>
+<dd>如果被HitDef击中，则使用&quot;Up&quot;作为animtype。</dd>
+<dt>注7：这组动画是可选的。这是一组可供选择的</dt>
+<dd>坠落动画，如果被HitDef以&quot;DiagUp&quot;作为动画类型时使用。</dd>
+</dl>
+</div>
+<div class="section" id="recommended-action-numbers">
+<h1><a class="toc-backref" href="#id6">建议行动编号</a></h1>
+<p>你不必完全遵循这一点，但它应该作为指导方针。一般来说，CNS中的状态应该与它们使用的动画具有相同的数字，以减少混淆。</p>
+<p>您可能需要留出动画和状态编号的空间。这为您提供了根据需要添加更多操作的空间（某些攻击可以使用多个状态和动画）。例如，站立轻踢（Standing
+Light Kick）和站立强踢（Standing Strong Kick）的动作编号分别为200和210。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Number</td>
+<td>Description</td>
+</tr>
+<tr><td>0-199</td>
+<td><em>reserved</em></td>
+</tr>
+<tr><td>200-299</td>
+<td>Standing attacks</td>
+</tr>
+<tr><td>300-399</td>
+<td>More standing attacks, running attacks</td>
+</tr>
+<tr><td>400-499</td>
+<td>Crouch attacks</td>
+</tr>
+<tr><td>500-599</td>
+<td>More crouch attacks</td>
+</tr>
+<tr><td>600-699</td>
+<td>Air attacks</td>
+</tr>
+<tr><td>700-799</td>
+<td>More air attacks</td>
+</tr>
+<tr><td>800-999</td>
+<td>Unused - use if you need more states</td>
+</tr>
+<tr><td>1000-2999</td>
+<td>All special attacks</td>
+</tr>
+<tr><td>3000-4999</td>
+<td>All hyper attacks</td>
+</tr>
+<tr><td>5000-5999</td>
+<td><em>reserved</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

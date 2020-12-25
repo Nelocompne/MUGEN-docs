@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>背景 / 舞台（stage） 文档</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<div class="section" id="background-stage-documentation">
+<h1><a class="toc-backref" href="#id1">背景 / 舞台（stage） 文档</a></h1>
+<p>M.U.G.E.N, (c) Elecbyte 1999-2010</p>
+<p>Documentation for version 1.1 (2010)</p>
+<p>Updated 28 July 2010</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#background-stage-documentation" id="id1">背景 / 舞台（stage） 文档</a></li>
+<li><a class="reference internal" href="#overview" id="id2">概述</a></li>
+<li><a class="reference internal" href="#description-of-stage-settings" id="id3">舞台（stage）设置的描述</a><ul>
+<li><a class="reference internal" href="#info-group" id="id4"><tt class="docutils literal">信息</tt> 组</a></li>
+<li><a class="reference internal" href="#camera-group" id="id5"><tt class="docutils literal">相机</tt> 组</a></li>
+<li><a class="reference internal" href="#playerinfo-group" id="id6"><tt class="docutils literal">玩家信息</tt> 组</a></li>
+<li><a class="reference internal" href="#bound-group" id="id7"><tt class="docutils literal">界边缘（Bound）</tt> 组</a></li>
+<li><a class="reference internal" href="#stageinfo-group" id="id8"><tt class="docutils literal">舞台（Stage）信息</tt> 组</a></li>
+<li><a class="reference internal" href="#shadow-group" id="id9"><tt class="docutils literal">阴影</tt> 组</a></li>
+<li><a class="reference internal" href="#reflection-group" id="id10"><tt class="docutils literal">反射</tt> 组</a></li>
+<li><a class="reference internal" href="#music-group" id="id11"><tt class="docutils literal">音乐</tt> 组</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#description-of-background-elements" id="id12">背景元素说明</a><ul>
+<li><a class="reference internal" href="#format-of-background-elements" id="id13">背景元素的格式</a></li>
+<li><a class="reference internal" href="#static-background-element-parameters" id="id14">静态背景元素参数</a></li>
+<li><a class="reference internal" href="#animated-background-elements" id="id15">动画背景元素</a></li>
+<li><a class="reference internal" href="#parallaxing-background-elements" id="id16">视差背景元素</a></li>
+<li><a class="reference internal" href="#advanced-parameters" id="id17">进阶参数</a></li>
+<li><a class="reference internal" href="#other-background-element-types" id="id18">其他背景元素类型</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#background-controllers" id="id19">后台控制器</a></li>
+<li><a class="reference internal" href="#simple-example" id="id20">简单的例子</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="overview">
+<h1><a class="toc-backref" href="#id2">概述</a></h1>
+<p>M.U.G.E.N中的背景由一个或多个背景元素以及零个或多个背景控制器组成。 这些与舞台设置相结合以产生在M.U.G.E.N中使用的舞台的外观和功能。</p>
+<p>舞台设置控制一般参数，例如舞台大小，摄影机移动，角色和摄影机相对于舞台的起始位置，阴影强度，地板反射等。大多数格斗游戏在整个背景下都保持这些背景参数的一致值 它们的组成阶段，尤其是在阶段大小和摄影机移动方面。</p>
+<p>背景元素是显示在屏幕上的图形数据的单个单元。 舞台的所有可见部分均由背景元素组成。 每个背景元素都有其精灵数据，透明度，位置，平铺，相对于相机的滚动速度以及动画（如果适用）的单独设置。 滚动相机时，&quot;视差（Parallaxing）&quot;元素会添加光栅效果。 背景元素可以是任何大小，尽管实际上，背景通常是由几个中等大小的元素拼凑而成的。</p>
+<p>背景控制器将对背景元素执行其他操作，例如更改其位置或速度，使其不可见或不可见等。背景控制器的应用包括使角色在背景中来回漫步，碎片飞越屏幕， 或在设定的时间在背景中进行更改（例如，当角色在船上战斗时进入洞穴）。 通常，后台控制器可以允许您为舞台创建更高级的效果或优化某些动画以减少内存消耗，尽管许多舞台完全不需要任何控制器也可以很好地工作。</p>
+<p>创建舞台时，必须确保屏幕上的可见区域始终被背景元素&quot;覆盖（covered）&quot;。 在背景中留下孔会在该位置引起镜厅（hall-of-mirrors）效果。 启用<tt class="docutils literal">debugbg</tt>参数会将所有孔填充为明亮的洋红色阴影，这将有助于您定位和修复它们。</p>
+<p>除了分阶段使用外，在M.U.G.E.N中，背景对象还用于所有系统屏幕（例如标题屏幕和字符选择屏幕）的背景，以及用于故事板。 这些类型的背景分别称为&quot;系统背景（system backgrounds）&quot;和&quot; 剧本背景（storyboard backgrounds）&quot;。 用于舞台的背景对象称为&quot;舞台背景（stage backgrounds）&quot;。 除了它们的预期用途外，不同类型的背景之间基本上没有区别。 本文档介绍了舞台设置以及背景对象格式。</p>
+</div>
+<div class="section" id="description-of-stage-settings">
+<h1><a class="toc-backref" href="#id3">舞台（stage）设置的描述</a></h1>
+<p>舞台设置定义背景与舞台的关系。 舞台设置必须与背景位于同一舞台文件中。 设置由几组组成。 他们是：</p>
+<p>（除非明确标记为&quot;可选（optional）&quot;，否则所有参数都是必需的）</p>
+<div class="section" id="info-group">
+<h2><a class="toc-backref" href="#id4"><tt class="docutils literal">信息</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">name</tt> = <em>stage_name</em></dt>
+<dd>此参数设置阶段的名称。 该参数必须用双引号引起来。</dd>
+<dt><tt class="docutils literal">displayname</tt> = <em>display_name</em></dt>
+<dd>此参数设置要在阶段选择列表中显示的名称。 该参数必须用双引号引起来。 如果省略，则默认为<em>stage_name</em>。</dd>
+<dt><tt class="docutils literal">versiondate</tt> = <em>version</em></dt>
+<dd>此参数设置舞台的版本。 接受的格式可以是日期（MM，DD，YYYY）或x.xx版本号，例如 1.23。 该参数仅供参考，目前未被引擎使用。</dd>
+<dt><tt class="docutils literal">mugenversion</tt> = <em>mugen_version</em></dt>
+<dd><p class="first">此参数设置舞台专用的M.U.G.E.N的目标版本号。 有效值为<tt class="docutils literal">2002,02,14</tt>、<tt class="docutils literal">1.0</tt> 或 <tt class="docutils literal">1.1</tt>。 默认为<tt class="docutils literal">2002,02,14</tt></p>
+<p class="last">版本号<tt class="docutils literal">2002,02,14</tt>将摄影机移动限制在舞台坐标空间的整个单位上，而<tt class="docutils literal">1.0</tt>及更高版本允许摄影机位置采用小数值。</p>
+</dd>
+<dt><tt class="docutils literal">author</tt> = <em>author_name</em></dt>
+<dd>此参数设置阶段作者的名称。 该参数必须用双引号引起来。 该参数仅供参考，目前未被引擎使用。</dd>
+</dl>
+</div>
+<div class="section" id="camera-group">
+<h2><a class="toc-backref" href="#id5"><tt class="docutils literal">相机</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">startx</tt> = <em>pos_x</em></dt>
+<dd>设置相机的起始<tt class="docutils literal">x</tt>位置。 应该设置为0。</dd>
+<dt><tt class="docutils literal">starty</tt> = <em>pos_y</em></dt>
+<dd>设置相机的起始<tt class="docutils literal">y</tt>位置。 应该设置为0。</dd>
+<dt><tt class="docutils literal">boundleft</tt> = <em>min_x</em></dt>
+<dd>这是相机可以移动到的最小<tt class="docutils literal">x</tt>值。 它必须是负数。 调整此值以限制相机可滚动的距离。</dd>
+<dt><tt class="docutils literal">boundright</tt> = <em>max_x</em></dt>
+<dd>这是相机可以移动到的最大<tt class="docutils literal">x</tt>值。 它必须是积极的。 调整此值以限制相机可以滚动多远。</dd>
+<dt><tt class="docutils literal">boundhigh</tt> = <em>min_y</em></dt>
+<dd>控制相机可以移动到的最小<tt class="docutils literal">y</tt>值。 它必须是负数。 调整此值以限制相机可以滚动多远。</dd>
+<dt><tt class="docutils literal">boundlow</tt> = <em>max_y</em></dt>
+<dd>控制相机可以移动到的最大<tt class="docutils literal">y</tt>值。 必须始终将其设置为0。</dd>
+<dt><tt class="docutils literal">tension</tt> = <em>h_dist</em></dt>
+<dd>这是玩家开始跟随相机之前，玩家从左右边缘可获得的水平距离。</dd>
+<dt><tt class="docutils literal">tensionhigh</tt> = <em>top_dist</em> ; (Version 1.1 and higher)</dt>
+<dd>这是玩家开始跟随相机之前，玩家从顶部边缘可以获得的垂直距离。 使用<tt class="docutils literal">张力高（tensionhigh）</tt>和<tt class="docutils literal">张力低（tensionlow）</tt>参数会激活基于版本1.1中引入的边缘张力的垂直滚动方法。 如果指定了<tt class="docutils literal">张力高（tensionhigh）</tt>和<tt class="docutils literal">张力低（tensionlow）</tt>，则将忽略<tt class="docutils literal">垂直（verticalfollow）</tt>跟随和<tt class="docutils literal">地板张力（floortension）</tt>。</dd>
+<dt><tt class="docutils literal">tensionlow</tt> = <em>bottom_dist</em> ; (Version 1.1 and higher)</dt>
+<dd>这是玩家开始跟随相机之前，玩家从底边缘可以获得的垂直距离。</dd>
+<dt><tt class="docutils literal">verticalfollow</tt> = <em>closeness</em></dt>
+<dd>此值影响摄像机跟随最高玩家的垂直移动。 应将其设置为0到1。值为0表示相机根本不会向上移动。 值越高，摄像机跟踪越高的玩家越近。 值为1将使摄像机尽可能靠近玩家。 如果使用<tt class="docutils literal">张力高（tensionhigh）</tt>和<tt class="docutils literal">张力低（tensionlow）</tt>，则忽略此参数。</dd>
+<dt><tt class="docutils literal">floortension</tt> = <em>v_dist</em></dt>
+<dd>这是相机开始向上移动以跟随他之前，最高玩家必须离开地板的最小垂直距离（给出为正值）。 此参数仅在<tt class="docutils literal">垂直（verticalfollow）</tt>跟随摄像机滚动模式下使用。 如果使用<tt class="docutils literal">张力高（tensionhigh）</tt>和<tt class="docutils literal">张力低（tensionlow）</tt>，则忽略此参数。</dd>
+<dt><tt class="docutils literal">overdrawhigh</tt> = <em>top_pixels</em> ; (Version 1.0 and higher)</dt>
+<dd>见下文。</dd>
+<dt><tt class="docutils literal">overdrawlow</tt> = <em>bottom_pixels</em> ; (Version 1.0 and higher)</dt>
+<dd>可能绘制的超出屏幕顶部和底部的像素数。透支指定在EnvShake期间可以看到多少。当屏幕的外观比舞台的外观高时，也会使用透支像素。</dd>
+<dt><tt class="docutils literal">cuthigh</tt> = <em>top_pixels</em> ; (Version 1.0 and higher)</dt>
+<dd>见下文。</dd>
+<dt><tt class="docutils literal">cutlow</tt> = <em>bottom_pixels</em> ; (Version 1.0 and higher)</dt>
+<dd>当屏幕长宽比舞台长宽短时，可从绘图中切出的进入屏幕顶部和底部的像素数。这些参数提出了一个指导原则，实际切割的像素数取决于长宽比的差异。如果忽略<tt class="docutils literal">cuthigh</tt>和<tt class="docutils literal">cutlow</tt>，则引擎将尝试猜测一组合理的值。</dd>
+<dt><tt class="docutils literal">startzoom</tt> = <em>start_zoom_scale</em> ; (Version 1.1 and higher)</dt>
+<dd>这指定了阶段的初始比例因子。如果没有影响摄像机的字符，则此参数的效果最为明显。默认为 1。</dd>
+<dt><tt class="docutils literal">zoomout</tt> = <em>zoom_out_scale</em> ; (Version 1.1 and higher)</dt>
+<dd>这指定了相机完全缩小时舞台的比例因子。请注意，较小的数字可使相机缩小更多，例如<tt class="docutils literal">zoomout = .5</tt>指定摄像机可以向外放大2倍。默认为1。</dd>
+<dt><tt class="docutils literal">zoomin</tt> = <em>zoom_in_scale</em> ; (Version 1.1 and higher)</dt>
+<dd>此选项指定相机完全放大时舞台的比例因子。默认为1。</dd>
+</dl>
+</div>
+<div class="section" id="playerinfo-group">
+<h2><a class="toc-backref" href="#id6"><tt class="docutils literal">玩家信息</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">p1startx</tt> = <em>x_start</em></dt>
+<dd>设置玩家1的起始<tt class="docutils literal">x</tt>位置。</dd>
+<dt><tt class="docutils literal">p1starty</tt> = <em>y_start</em></dt>
+<dd>设置玩家1的起始<tt class="docutils literal">y</tt>位置。</dd>
+<dt><tt class="docutils literal">p2startx</tt> = <em>x_start</em></dt>
+<dd>设置玩家2的起始<tt class="docutils literal">x</tt>位置。</dd>
+<dt><tt class="docutils literal">p2starty</tt> = <em>y_start</em></dt>
+<dd>设置玩家2的起始<tt class="docutils literal">y</tt>位置。</dd>
+<dt><tt class="docutils literal">p1facing</tt> = <em>facing_flag</em></dt>
+<dd>控制玩家1在开始时面对的方式。设为 1 朝右，或 -1 朝左。</dd>
+<dt><tt class="docutils literal">p2facing</tt> = <em>facing_flag</em></dt>
+<dd>控制玩家2在开始时面对的方式。设为 1 朝右，或 -1 朝左。</dd>
+<dt><tt class="docutils literal">leftbound</tt> = <em>x_min</em></dt>
+<dd>设置所有玩家的最小允许<tt class="docutils literal">x</tt>位置。</dd>
+<dt><tt class="docutils literal">rightbound</tt> = <em>x_max</em></dt>
+<dd>设置所有玩家的最大允许<tt class="docutils literal">x</tt>位置。</dd>
+</dl>
+</div>
+<div class="section" id="bound-group">
+<h2><a class="toc-backref" href="#id7"><tt class="docutils literal">界边缘（Bound）</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">screenleft</tt> = <em>min_dist_left</em></dt>
+<dd>玩家与屏幕左边缘之间的最小允许距离。必须是积极的。</dd>
+<dt><tt class="docutils literal">screenright</tt> = <em>min_dist_right</em></dt>
+<dd>玩家与屏幕右边缘之间的最小允许距离。必须是积极的。</dd>
+</dl>
+</div>
+<div class="section" id="stageinfo-group">
+<h2><a class="toc-backref" href="#id8"><tt class="docutils literal">舞台（Stage）信息</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">zoffset</tt> = <em>v_dist</em></dt>
+<dd><em>v_dist</em>是地面到屏幕顶部的垂直距离，以像素为单位。 <tt class="docutils literal">zoffset</tt>参数的名称不合适，但出于兼容性目的而保留不变。</dd>
+<dt><tt class="docutils literal">zoffsetlink</tt> = <em>elem_ID</em></dt>
+<dd>如果指定了此参数，则它将<tt class="docutils literal">zoffset</tt>值链接到具有指定ID号的背景元素的<tt class="docutils literal">y</tt>位置。例如，您可以使用<tt class="docutils literal">sin.y</tt>参数将该值链接到虚拟元素（请参见<a class="reference internal" href="#other-background-element-types">其他背景元素类型</a>），以使字符以正弦曲线的方式上下摆动。</dd>
+<dt><tt class="docutils literal">autoturn</tt> = <em>turn_flag</em></dt>
+<dd>将此参数保留为1可使字符自动转向彼此。将此设置为另一个值将导致不良行为。</dd>
+<dt><tt class="docutils literal">resetBG</tt> = <em>reset_flag</em></dt>
+<dd>如果设置为1，背景将在两轮之间重置。如果设置为0，背景将继续播放。</dd>
+<dt><tt class="docutils literal">localcoord</tt> = <em>width</em>, <em>height</em></dt>
+<dd>舞台坐标空间的尺寸。默认为320、240（如果省略）。</dd>
+<dt><tt class="docutils literal">xscale</tt> = <em>xscale</em></dt>
+<dd>偏移，速度，精灵（sprites）和动画的水平缩放因子。</dd>
+<dt><tt class="docutils literal">yscale</tt> = <em>yscale</em></dt>
+<dd>偏移，速度，精灵（sprites）和动画的垂直缩放因子。</dd>
+</dl>
+</div>
+<div class="section" id="shadow-group">
+<h2><a class="toc-backref" href="#id9"><tt class="docutils literal">阴影</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">intensity</tt> = <em>darkness_val</em> ;(optional) (int)</dt>
+<dd>这可控制阴影的暗度。有效值的范围是0（最浅）到256（最暗）。如果省略，则默认为128。</dd>
+<dt><tt class="docutils literal">color</tt> = <em>r,g,b</em> ;(optional) (deprecated)</dt>
+<dd>从M.U.G.E.N 1.1开始不再支持此参数，并且将忽略该参数。</dd>
+<dt><tt class="docutils literal">yscale</tt> = <em>scale_y</em> ;(optional) (float)</dt>
+<dd>这是阴影的垂直比例因子。使用较大的<em>scale_y</em>可使阴影更长。您可以使用负<em>scale_y</em>使阴影落在播放器的另一侧。如果省略，则默认为<tt class="docutils literal">0.4</tt>。</dd>
+<dt><tt class="docutils literal">fade.range</tt> = <em>top_y, bot_y</em> ;(optional) (int, int)</dt>
+<dd>使用此参数可以设置阴影可见的范围。当玩家离地面越来越远时，它用于创建阴影褪色的效果。第一个值是高级别，第二个值是中间级别。两者都代表玩家的y坐标。如果玩家在高级别之上，则阴影是不可见的；而在中游级别之下，则阴影是完全可见的。阴影在两个级别之间逐渐消失。如果省略，则默认为无效（阴影始终完全可见）。请注意，y坐标值为负，并且 TOP_Y 应小于 BOT_Y 。</dd>
+<dt><tt class="docutils literal">xshear</tt> = <em>shear</em> ;(optional) (float)</dt>
+<dd>指定要应用于阴影的水平剪切量。正值会将阴影剪切到屏幕左侧。预设为<tt class="docutils literal">0</tt>。</dd>
+</dl>
+</div>
+<div class="section" id="reflection-group">
+<h2><a class="toc-backref" href="#id10"><tt class="docutils literal">反射</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">reflect</tt> = <em>reflect_flag</em> ;(optional)</dt>
+<dd>设置<tt class="docutils literal">reflect</tt>为1启用反射阴影，设置为0禁用反射阴影。反射阴影会产生&quot;光亮的地板（shiny floor）&quot;效果。如果省略，则默认为0。</dd>
+</dl>
+</div>
+<div class="section" id="music-group">
+<h2><a class="toc-backref" href="#id11"><tt class="docutils literal">音乐</tt> 组</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">bgmusic</tt> = <em>bgm_filename</em> ;(optional)</dt>
+<dd>
+  <em>bgm_filename</em>是在舞台上播放的音乐文件的名称。音乐文件通常放在<tt class="docutils literal">sound/</tt>目录中。将<em>bgm_filename</em>保留为空白将不会播放音乐。如果音乐文件不存在，将不会播放音乐。要播放CD音频，请在轨道号后面加上&quot;.da&quot;。使用音轨号0将播放随机音频音轨。例如，要播放音乐CD中的音轨3，请使用<tt class="docutils literal">bgmusic = 3.da</tt>。如果省略，则默认为无音乐。</dd>
+<dt><tt class="docutils literal">bgvolume</tt> = <em>volume_offset</em> ;(optional)</dt>
+<dd>此参数调整正在播放的BGM的音量。 0是正常值，负值表示柔和，正值表示声音更大（仅适用于mp3，mod和CDA）。有效值为-255到255。如果省略，则默认为0。</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="description-of-background-elements">
+<h1><a class="toc-backref" href="#id12">背景元素说明</a></h1>
+<p>背景由一个[BGDef]组和一个或多个[BG]组组成。 [BG]组称为背景元素。</p>
+<p>阶段的<tt class="docutils literal">DEF</tt>文件中仅需要一个<tt class="docutils literal">BGDef</tt>组。格式示例：</p>
+<pre class="literal-block">
+[BGDef]
+spr = my_stage.sff
+debugbg = 0
+</pre>
+<p>将<tt class="docutils literal">my_stage.sff</tt>替换为包含舞台的精灵（sprite）数据的<tt class="docutils literal">SFF</tt>文件的名称。 <tt class="docutils literal">SFF</tt>文件应与阶段<tt class="docutils literal">DEF</tt>放在同一目录（即，<tt class="docutils literal">stages/</tt>）。如果<tt class="docutils literal">debugbg</tt>设置为1，则在绘制阶段之前将屏幕清除为品红色。这使得背景中的&quot;漏洞（holes）&quot;更加明显。为了提高运行时速度，请在释放分发阶段之前将 <tt class="docutils literal">debugbg = 0</tt> </p>
+<p>创建<tt class="docutils literal">BGDef</tt>定义后，<tt class="docutils literal">DEF</tt>文件中位于其下方的所有内容都被视为属于<tt class="docutils literal">BGDef</tt>部分。在<tt class="docutils literal">BGDef</tt>部分中，您应该指定一个或多个背景元素。背景元素是按照它们在<tt class="docutils literal">DEF</tt>文件中出现的顺序绘制的（后面的元素在前面的元素上绘制），因此应首先定义最后一个元素。</p>
+<div class="section" id="format-of-background-elements">
+<h2><a class="toc-backref" href="#id13">背景元素的格式</a></h2>
+<p>指定静态背景元素的示例如下。</p>
+<pre class="literal-block">
+[BG my_element_name]
+type = normal
+spriteno = 0,0
+start = 0,0
+delta = .5, .5
+mask = 0
+</pre>
+<p>本示例在初始位置0,0显示背景SFF文件中的精灵0,0。对于摄影机的每个移动单位，子画面将移动0.5个舞台单位。</p>
+<p>每个背景元素均由以标题<tt class="docutils literal">[BG my_element_name]</tt>开头的组定义。应将<tt class="docutils literal">my_element_name</tt>替换为唯一的描述性名称，因为错误消息中将显示组标题。</p>
+<p>在组头后面的各行中指定参数。</p>
+</div>
+<div class="section" id="static-background-element-parameters">
+<h2><a class="toc-backref" href="#id14">静态背景元素参数</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">type</tt> = <em>normal</em>  ; (required) (string)</dt>
+<dd>这指定此背景元素是静态子画面。</dd>
+<dt><tt class="docutils literal">spriteno</tt> = <em>groupno, imageno</em>  ; (required) (int, int)</dt>
+<dd><em>groupno, imageno</em>指定SFF中要为此背景元素显示的精灵。</dd>
+<dt><tt class="docutils literal">layerno</tt> = <em>layer</em>  ; (optional) (int)</dt>
+<dd>如果<em>layer</em>为0，则背景元素将绘制在字符后面。如果<em>layer</em>为1，则元素将绘制在字符前面。在每一层中，背景元素是按照它们在<tt class="docutils literal">DEF</tt>文件中出现的顺序从前到后绘制的。预设为<tt class="docutils literal">0</tt>。</dd>
+<dt><tt class="docutils literal">start</tt> = <em>x,y</em>  ; (optional) (float, float)</dt>
+<dd>指定背景元素相对于屏幕顶部中心的起始位置。正<em>x</em>值正确；反之亦然。 <em>y</em>的正值下降。该值以阶段单位给出，对应于通常使用的像素单位。默认为<tt class="docutils literal">0,0</tt>。</dd>
+<dt><tt class="docutils literal">delta</tt> = <em>dx,dy</em> ; (optional) (float, float)</dt>
+<dd>指定背景元素应为摄像机在水平和垂直方向上移动的每个像素分别滚动多少个像素。设置<tt class="docutils literal">delta=1,1</tt>将导致背景元素以与相机相同的速度移动。 <cite>1,1</cite>是角色脚下地面的适当值。对于距离较远的元素，请使用较小的<tt class="docutils literal">增量（delta）</tt>值来创建深度错觉。同样，前景中的元素（<tt class="docutils literal">layerno = 1</tt>）通常应被赋予大于1的<tt class="docutils literal">增量（delta）s</tt>。默认值为<tt class="docutils literal">1,1</tt>。</dd>
+<dt><tt class="docutils literal">mask</tt> = <em>mask</em>  ; (optional) (boolean)</dt>
+<dd>如果<em>mask</em>设置为<tt class="docutils literal">1</tt>，则不会绘制精灵的颜色0。用于绘制非矩形的对象。出于性能原因，不需要时应将<tt class="docutils literal">mask</tt>设置为<tt class="docutils literal">0</tt>。对于RGB精灵，将忽略此参数。通常默认为0。由于历史原因，如果将<tt class="docutils literal">trans</tt>参数设置为<tt class="docutils literal">add</tt>或<tt class="docutils literal">sub</tt>，则<em>mask</em>将默认为 <tt class="docutils literal">1</tt>。</dd>
+<dt><tt class="docutils literal">tile</tt> = <em>x_tile,y_tile</em> ; (optional) (int, int)</dt>
+<dd>指定背景元素是否分别在 水平和 / 或垂直 方向上重复（&quot;平铺（tiled)&quot;）。值为0表示无平铺，值为1表示无限平铺，任何大于1的值都将导致元素平铺该次数。如果省略此行，将不执行平铺。</dd>
+<dt><tt class="docutils literal">tilespacing</tt> = <em>x_spacing,y_spacing</em> ; (optional) (int, int)</dt>
+<dd>如果启用了平铺，则此行指定在水平和垂直方向分别在平铺的各个实例之间放置的空间。如果未启用平铺，则无效。 <tt class="docutils literal">tilespacing</tt>默认为<tt class="docutils literal">0,0</tt>。</dd>
+</dl>
+</div>
+<div class="section" id="animated-background-elements">
+<h2><a class="toc-backref" href="#id15">动画背景元素</a></h2>
+<p>指定动画背景元素的格式与普通背景元素几乎完全相同。差异描述如下。</p>
+<pre class="literal-block">
+[BG my_animated_element]
+type = anim
+actionno = 55
+</pre>
+<p><tt class="docutils literal">spriteno</tt>以外的所有其他参数与静态背景元素相同。</p>
+<p>首先，要设置动画元素，必须指定一种<tt class="docutils literal">anim</tt>类型。其次，必须指定一个&quot;动作编号（action number）&quot; (<tt class="docutils literal">actionno</tt>)。这将替换用于普通背景元素的<tt class="docutils literal">spriteno</tt>参数。 <tt class="docutils literal">actionno</tt>的值必须用于<tt class="docutils literal">DEF</tt>文件中定义的动画。在此示例中，由于<tt class="docutils literal">actionno</tt>为55，所以必须以类似于以下方式定义Action 55：</p>
+<pre class="literal-block">
+[Begin Action 55]
+0,0,0,0,5
+0,1,0,0,5
+</pre>
+<p>
+  该格式与在<tt class="docutils literal">AIR</tt>文件中指定动画的格式相同，因此此处将省略详细信息。<tt class="docutils literal">动作（Action）</tt>定义可以放置在原始<tt class="docutils literal">[BGDef]</tt>组之下的任何位置。典型的策略是在元素所属的元素之后立即定义动作，或者在<tt class="docutils literal">[BGDef]</tt>组的开始或结尾将所有阶段的动作收集在一起。</p>
+<p>请注意，您在动画中指定的每个精灵都有自己的轴（在<tt class="docutils literal">SFF</tt>文件中指定）。在动画播放期间，每个子画面的轴将对齐以与背景元素本身的轴相对应。</p>
+<p>与<tt class="docutils literal">normal</tt>-type的元素相比，<tt class="docutils literal">anim</tt>-type元素的<tt class="docutils literal">tilespacing</tt>参数的效果不同。对于<tt class="docutils literal">normal</tt>元素，此参数的x值指定第一个图块的右边缘和第二个图块的左边缘之间的水平距离。对于<tt class="docutils literal">anim</tt>元素，x值指定第一个图块的<em>左（left）</em>边缘和第二个图块的左边缘之间的水平距离。这同样适用于y值。产生差异的原因是，动画的大小不一定恒定。使用<tt class="docutils literal">tile</tt>参数的<tt class="docutils literal">anim</tt>-type元素需要<tt class="docutils literal">tilespacing</tt>。</p>
+<p>动画元素始终具有<tt class="docutils literal">mask = 1</tt>，并且不能设置为非遮罩。</p>
+</div>
+<div class="section" id="parallaxing-background-elements">
+<h2><a class="toc-backref" href="#id16">视差背景元素</a></h2>
+<p>视差背景元素会给看起来朝上或朝下的元素带来深度错觉。视差背景元素可以由<tt class="docutils literal">spriteno</tt>参数指定的单个精灵（sprite）组成。在1.1版及更高版本中，可以通过指定<tt class="docutils literal">actionno</tt>来对视差元素进行动画处理，就像在普通动画背景元素中一样。动画视差可能无法与<tt class="docutils literal">xscale</tt>参数一起使用。</p>
+<p>格式的示例如下：</p>
+<pre class="literal-block">
+[BG my_parallax_element]
+type = parallax
+spriteno = 10, 0
+width = 300, 600
+scalestart = 1,1
+scaledelta = 0,.001
+</pre>
+<p>另一个例子：</p>
+<pre class="literal-block">
+[BG my_parallax_element]
+type = parallax
+spriteno = 10, 0
+xscale = 1,1.5
+yscalestart = 100 ;Deprecated!
+yscaledelta = 1.2 ;Deprecated!
+</pre>
+<p>参数说明如下：</p>
+<dl class="docutils">
+<dt><tt class="docutils literal">width</tt> = <em>top_width, bottom_width</em>  ; (int, int)</dt>
+<dd><em>top_width</em>和<em>bottom_width</em>分别指定梯形的顶部和底部宽度，该高度与所使用的精灵高度相同。子画面将变形以匹配梯形的形状和大小。 <em>top_width</em>与<em>bottom_width</em>的比率会影响相机水平移动时的剪切量。如果未对子图进行透视变形的预处理，请使用<tt class="docutils literal">width</tt>。由于历史原因，将忽略SFF中指定的x轴。将子画面的水平中心用作x轴。</dd>
+<dt><tt class="docutils literal">xscale</tt> = <em>top_xscale, bottom_xscale</em>  ; (float, float) (deprecated)</dt>
+<dd><p class="first"><em>top_xscale</em>和<em>bottom_xscale</em>分别缩放背景元素的顶部和底部边缘的水平增量，以创建水平剪切效果。例如，<tt class="docutils literal">delta = .75, .75</tt> amd <tt class="docutils literal">xscale = 1, 2</tt>指定小精灵的顶部将以每个摄影机单位移动.75 * 1 = <tt class="docutils literal">.75</tt>舞台单位，并且底部将以.75 * 2 = <tt class="docutils literal">1.5</tt>移动每个摄影机单位的舞台单位。本示例假定子图形轴位于子图形的顶部。</p>
+<p><tt class="docutils literal">xscale</tt>或<tt class="docutils literal">width</tt>是必需的，但不能同时使用。如果精灵已经过透视变形的预处理，请使用<tt class="docutils literal">xscale</tt>。硬件加速渲染将在极端剪切角处具有视觉伪像。</p>
+<p class="last">使用<tt class="docutils literal">xscale</tt>时，可能无法使用动画视差。</p>
+</dd>
+<dt><tt class="docutils literal">yscalestart</tt> = <em>yscalestart</em>  ; (float) (deprecated)</dt>
+<dd><p class="first">该不推荐使用的参数控制在照相机垂直移动时元素的垂直比例的变化。通用的<tt class="docutils literal">scalestart</tt>和<tt class="docutils literal">scaledelta</tt>高级参数代替了它的功能。</p>
+<p class="last"><em>yscalestart</em>是相机处于地面水平时精灵的垂直比例的倒数，以百分比表示。例如，值100对应于比例因子1，值50对应于比例因子2。该值默认为100。</p>
+</dd>
+<dt><tt class="docutils literal">yscaledelta</tt> = <em>yscaledelta</em>  ; (float) (deprecated)</dt>
+<dd><p class="first">指定每个向下移动的摄像机单位要从倒置比例因子中增加的数量，以百分比表示。最终比例因子使用以下公式计算：</p>
+<pre class="literal-block">
+scale = 1 / (yscalestart/100 + yscaledelta/100 * camera_y)
+</pre>
+<p>在上面的示例中，如果摄像机向上移动一个单位，则比例因子将为 1 / (1.00 + .012 * -1) = 1.012 ，如果摄像机向上移动另一单位，则比例将为 1 / (1.00 + .012 * -2) = 1.025 ，依此类推。</p>
+<p class="last"><tt class="docutils literal">yscalestart</tt>和<tt class="docutils literal">yscaledelta</tt>参数的不直观行为是赞成使用<tt class="docutils literal">scalestart</tt>和<tt class="docutils literal">scaledelta</tt>参数而弃用这些参数的原因。</p>
+</dd>
+<dt>注:</dt>
+<dd><p class="first">静态元素的其他参数对视差元素也有效，但<tt class="docutils literal">tilespacing</tt>除外。此外，<em>y_tile</em>被忽略，并强制为0。</p>
+<p>在动画视差元素中指定角度的结果是不确定的。</p>
+<p class="last">软件渲染器不支持动画视差。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="advanced-parameters">
+<h2><a class="toc-backref" href="#id17">进阶参数</a></h2>
+<p>这些可选参数可以添加到任何背景元素。</p>
+<dl class="docutils">
+<dt><tt class="docutils literal">trans</tt> = <em>trans</em> ; (optional) (string)</dt>
+<dd><p class="first">指定要在子画面上执行的透明度混合的类型。透明模式为<tt class="docutils literal">default</tt>, <tt class="docutils literal">none</tt>, <tt class="docutils literal">add</tt>, <tt class="docutils literal">sub</tt>。它们分别指定默认行为（default behavior,），无透明性（no transparency），颜色加法（color addition）和颜色减法（color subtraction）。<tt class="docutils literal">default</tt> 和 <tt class="docutils literal">none</tt>两者都不会导致在没有透明度混合的情况下绘制非动画元素。对于动画背景元素，<tt class="docutils literal">default</tt>将使用特定于动画的透明度，而 <em>trans</em> 的其他值将覆盖动画中的透明度标志。如果指定了<tt class="docutils literal">add</tt>，则<tt class="docutils literal">alpha</tt>参数可用于控制混合。默认为<tt class="docutils literal">default</tt>。</p>
+</dd>
+<dt><tt class="docutils literal">alpha</tt> = <em>src_alpha,dst_alpha</em> ; (optional) (int, int)</dt>
+<dd>当<tt class="docutils literal">trans = add</tt>时，指定源和目标混合贡献。可接受的值为<tt class="docutils literal">0</tt>到<tt class="docutils literal">256</tt>。默认值为<tt class="docutils literal">256,256</tt>。</dd>
+<dt><tt class="docutils literal">id</tt> = <em>id_number</em>  ; (int)</dt>
+<dd>这指定了背景元素的ID号。多个元素可以共享相同的ID号。 ID号的目的是允许后台控制器指定它们在哪个元素上进行操作。预设为0。</dd>
+<dt><tt class="docutils literal">positionlink</tt> = <em>link_flag</em>  ; (boolean)</dt>
+<dd>将<tt class="docutils literal">positionlink</tt>设置为1可以将该元素的位置锁定为<tt class="docutils literal">DEF</tt>文件中紧接在其前面的元素的位置。如果设置为1，则将当前元素的<tt class="docutils literal">start</tt>参数值视为相对于前一个元素位置的偏移量。在这种情况下，<tt class="docutils literal">delta</tt>参数将无效。这对于使大量元素一致移动很有用；如果您编辑positionlink链中第一个元素的起始值和增量值，则效果将在链中的所有元素中可见。预设为0。</dd>
+<dt><tt class="docutils literal">maskwindow</tt> = <em>x1,y1,x2,y2</em>  ; (int, int, int, int) (Version 1.1 and higher)</dt>
+<dd>指定背景元素的遮罩窗口。从概念上讲，遮罩窗口是屏幕上包含小精灵的矩形框。位于盒子外面的子画面的任何部分都不会被绘制。 <em>x1,y1</em>指定窗口左上角的坐标，<em>x2,y2</em>指定窗口右下角的坐标。这些坐标是相对于舞台原点（屏幕的顶部中间）的。这些坐标是&quot;端点专用（endpoint exclusive）&quot;的，即，将不会绘制沿窗口底部和右侧边缘的像素。如果省略，将不执行窗口遮罩。</dd>
+<dt><tt class="docutils literal">window</tt> = <em>x1,y1,x2,y2</em>  ; (int, int, int, int) (deprecated)</dt>
+<dd>包含此不建议使用的参数是出于兼容性考虑，并不能保证在所有缩放情况下均无法正常使用该参数。它指定一个遮罩窗口，其坐标相对于屏幕的右上角。坐标包括端点。</dd>
+<dt><tt class="docutils literal">windowdelta</tt> = <em>window_dx,window_dy</em>  ; (float, float)</dt>
+<dd>指定遮罩窗口的移动增量。它的工作方式类似于背景元素本身的<tt class="docutils literal">delta</tt>参数。默认为<tt class="docutils literal">0,0</tt>。</dd>
+<dt><tt class="docutils literal">velocity</tt> = <em>vel_x, vel_y</em>  ; (float, float)</dt>
+<dd>指定背景元素的初始<tt class="docutils literal">x</tt>和<tt class="docutils literal">y</tt>速度（默认为0）。 <tt class="docutils literal">VelSet</tt>后台控制器也包含此功能。</dd>
+<dt><tt class="docutils literal">scalestart</tt> = <em>scale_x, scale_y</em>  ; (float, float)</dt>
+<dd>起始规模。默认为<tt class="docutils literal">1,1</tt>。</dd>
+<dt><tt class="docutils literal">scaledelta</tt> = <em>scale_dx, scale_dy</em>  ; (float, float)</dt>
+<dd>与<tt class="docutils literal">delta</tt>参数类似，这是为相机移动的每个单位更改元素比例的数量。默认为<tt class="docutils literal">0,0</tt>。</dd>
+<dt><tt class="docutils literal">zoomdelta</tt> = <em>dzoom</em> ; (float)</dt>
+<dd>指定相机缩放影响元素比例的量。值为0表示元素在缩放过程中不会改变大小，而值为1表示元素的缩放比例与摄影机缩放相同。默认为<tt class="docutils literal">1</tt>。</dd>
+<dt><tt class="docutils literal">sin.x</tt> = <em>amplitude, period, phase</em>  ; (float, float, float)</dt>
+<dd>指定元素在<tt class="docutils literal">x</tt>方向上的正弦运动。第一个参数是振幅，第二个参数是游戏滴答声中运动的周期，第三个参数指定正弦运动的初始相移（默认为0，即元素将在其正好中间开始正弦范围）。此参数基本上由<tt class="docutils literal">SinX</tt>后台控制器取代。</dd>
+<dt><tt class="docutils literal">sin.y</tt> = <em>amplitude, period, phase</em>  ; (float, float, float)</dt>
+<dd>与<tt class="docutils literal">sin.x</tt>参数相同，但在<tt class="docutils literal">y</tt>方向上起作用。</dd>
+</dl>
+</div>
+<div class="section" id="other-background-element-types">
+<h2><a class="toc-backref" href="#id18">其他背景元素类型</a></h2>
+<p>除了<tt class="docutils literal">normal</tt>，<tt class="docutils literal">anim</tt>和<tt class="docutils literal">parallax</tt>背景类型之外，还有<tt class="docutils literal">dummy</tt>类型。顾名思义，<tt class="docutils literal">dummy</tt>-type的背景没有关联的图形。伪元素的位置会像其他任何元素类型一样受到影响。具有<tt class="docutils literal">ID</tt>参数的虚拟元素可以充当<tt class="docutils literal">StageInfo</tt>组中<tt class="docutils literal">zoffsetlink</tt>参数的效果的占位符。</p>
+</div>
+</div>
+<div class="section" id="background-controllers">
+<h1><a class="toc-backref" href="#id19">后台控制器</a></h1>
+<p>后台控制器在内部计时器上运行，该计时器在回合开始时从0开始，并在每次游戏滴答时增加1。当计时器达到控制器的开始时间时，控制器将变为活动状态。当计时器达到控制器的结束时间时，控制器将停用。如果为控制器指定了正循环时间，则当达到循环时间时，控制器的内部计时器将重置为0。</p>
+<p>后台控制器必须分组在父<tt class="docutils literal">BGCtrlDef</tt>下。您可以使用多个<tt class="docutils literal">BGCtrlDef</tt>将控制器分为几组。 <tt class="docutils literal">[BGDef]</tt>和后台控制器的每个块都可以放在<tt class="docutils literal">DEF</tt>文件的<tt class="docutils literal">[BGDef]</tt>节中的任何位置。这些块的一般格式如下。</p>
+<pre class="literal-block">
+[BGCtrlDef my_controller_name]
+looptime = GLOBAL_LOOPTIME
+ctrlID = DEFAULTID_1, DEFAULTID_2, ...
+
+[BGCtrl my_controller_1]
+type = CONTROLLER_TYPE
+time = START_TIME, END_TIME, LOOPTIME
+ctrlID = ID_1, ID_2, ...
+(controller-specific parameters here)
+
+[BGCtrl my_controller_2]
+(etc.)
+</pre>
+<p><tt class="docutils literal">GLOBAL_LOOPTIME</tt>指定滴答声的数量，此后<tt class="docutils literal">BGCtrlDef</tt>应该重置其内部计时器以及它包含的所有<tt class="docutils literal">BGCtrls</tt>的内部计时器。要禁用循环时间，请将其设置为-1或省略该参数。</p>
+<p><tt class="docutils literal">DEFAULTID_1</tt>, <tt class="docutils literal">DEFAULTID_2</tt>等用于指定受任何未指定其自己的<tt class="docutils literal">ctrlID</tt>列表的<tt class="docutils literal">BGCtrl</tt>影响的背景元素的ID。您最多可以为此参数列出10个ID号。如果省略该行，则默认设置为影响所有背景元素。</p>
+<p><tt class="docutils literal">START_TIME</tt>, <tt class="docutils literal">END_TIME</tt>和<tt class="docutils literal">LOOPTIME</tt>分别是后台控制器应开始执行，停止执行和重置其内部计时器的时间。如果省略<tt class="docutils literal">LOOPTIME</tt>或将其设置为-1，则后台控制器将不会重置其自己的计时器。 （如果指定了<tt class="docutils literal">GLOBAL_LOOPTIME</tt>，则其计时器仍可以由其父<tt class="docutils literal">BGCtrlDef</tt>重置。）后台控制器将在<tt class="docutils literal">START_TIME</tt>和<tt class="docutils literal">END_TIME</tt>之间连续处于活动状态。 <tt class="docutils literal">START_TIME</tt>是必需的，但是如果省略<tt class="docutils literal">END_TIME</tt>，则它将默认为与<tt class="docutils literal">START_TIME</tt>相同的值（因此，控制器将仅激活1个刻度）。</p>
+<p><tt class="docutils literal">ID_1</tt>, <tt class="docutils literal">ID_2</tt>等指定此控制器要执行操作的背景元素的ID。如果指定，此列表将覆盖<tt class="docutils literal">BGCtrlDef</tt>中指定的默认列表。可指定的ID的最大数量为10。</p>
+<p>以下是<tt class="docutils literal">BGCtrl</tt>类型及其相关参数的列表。</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">null</tt></p>
+<p>顾名思义，此控制器不执行任何操作。当您要快速禁用控制器而不用注释整个内容时，它主要用于调试。只需将类型更改为<tt class="docutils literal">null</tt>并注释掉旧类型。该控制器没有其他参数。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Visible</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">value</tt> = <em>visible_flag</em></dt>
+<dd><p class="first last">设置元素的可见性状态。</p>
+</dd>
+</dl>
+<p>激活时，此控制器将受影响的背景元素设置为不可见（0）或可见（1）。看不见的元素仍然会流逝的时间（对于动画元素来说，即使看不见动画，动画也将继续进行）。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Enabled</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">value</tt> = <em>enabled_flag</em></dt>
+<dd><p class="first last">设置元素的启用状态。</p>
+</dd>
+</dl>
+<p>该控制器禁用（0）或启用（1）受影响的背景元素。禁用元素时，它是不可见的，并且时间不会流逝（因此，对于动画元素，禁用时任何动画都会暂停）。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">VelSet</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">x</tt> = <em>vel_x</em></dt>
+<dd><p class="first last">设置元素的<tt class="docutils literal">x</tt>速度。</p>
+</dd>
+<dt><tt class="docutils literal">y</tt> = <em>vel_y</em></dt>
+<dd><p class="first last">设置元素的<tt class="docutils literal">y</tt>速度。</p>
+</dd>
+</dl>
+<p>该控制器会将受影响的背景元素的 <tt class="docutils literal">x</tt>/<tt class="docutils literal">y</tt> 速度设置为指定值。速度以每个游戏周期的像素为单位。您可以指定 <tt class="docutils literal">x</tt> 和 <tt class="docutils literal">y</tt>参数之一或全部。如果省略任何一个，则该元素在该方向上的速度将保持不变。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">VelAdd</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">x</tt> = <em>vel_incr_x</em></dt>
+<dd><p class="first last">通过<em>vel_incr_x</em>更改元素的<tt class="docutils literal">x</tt>速度。</p>
+</dd>
+<dt><tt class="docutils literal">y</tt> = <em>vel_incr_y</em></dt>
+<dd><p class="first last">通过<em>vel_incr_y</em>更改元素的<tt class="docutils literal">y</tt>速度。</p>
+</dd>
+</dl>
+<p>该控制器会将指定的值添加到受影响的背景元素的<tt class="docutils literal">x</tt>/<tt class="docutils literal">y</tt>速度。您可以指定x和y参数之一或全部。如果省略任何一个，则该元素在该方向上的速度将保持不变。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">PosSet</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">x</tt> = <em>pos_x</em></dt>
+<dd><p class="first last">设置元素的<tt class="docutils literal">x</tt>位置。</p>
+</dd>
+<dt><tt class="docutils literal">y</tt> = <em>pos_y</em></dt>
+<dd><p class="first last">设置元素的<tt class="docutils literal">y</tt>位置。</p>
+</dd>
+</dl>
+<p>该控制器会将受影响的背景元素的<tt class="docutils literal">x</tt>/<tt class="docutils literal">y</tt>坐标设置为指定值。您可以指定<tt class="docutils literal">x</tt>和<tt class="docutils literal">y</tt>参数之一或全部。如果省略任何一个，则该元素在该轴上的坐标将保持不变。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">PosAdd</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">x</tt> = <em>x_displacement</em></dt>
+<dd><p class="first last">位移元素的<tt class="docutils literal">x</tt>坐标。</p>
+</dd>
+<dt><tt class="docutils literal">y</tt> = <em>y_displacement</em></dt>
+<dd><p class="first last">位移元素的<tt class="docutils literal">y</tt>坐标。</p>
+</dd>
+</dl>
+<p>该控制器会将受影响的背景元素的<tt class="docutils literal">x</tt>/<tt class="docutils literal">y</tt>坐标移动指定的值。您可以指定<tt class="docutils literal">x</tt> 和 <tt class="docutils literal">y</tt>参数之一或全部。如果省略任何一个，则该元素在该轴上的坐标将保持不变。</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Anim</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">value</tt> = <em>action_no</em></dt>
+<dd><p class="first last">将受影响的元素显示的动画更改为指定的动画编号。</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal">SinX</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">value</tt> = <em>amplitude, period, offset</em></dt>
+<dd><p class="first last">更改受影响元素在<tt class="docutils literal">x</tt>方向上的正弦运动的幅度，周期和相位偏移。这些值与对<tt class="docutils literal">sin.x</tt>背景元素参数的作用相同。</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal">SinY</tt></p>
+<dl class="docutils">
+<dt><tt class="docutils literal">value</tt> = <em>amplitude, period, offset</em></dt>
+<dd><p class="first last">更改受影响元素在<tt class="docutils literal">y</tt>方向上的正弦运动的幅度，周期和相位偏移。这些值与对<tt class="docutils literal">sin.y</tt>背景元素参数的作用相同。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="simple-example">
+<h1><a class="toc-backref" href="#id20">简单的例子</a></h1>
+<p>假设我们要使一个人在（-300,0）到（300,0）之间来回走动，就在主角后面。我们将使用后台控制器来完成此任务。</p>
+<p>首先，定义行走动画。假设角色的行走精灵为10,0到10,3，并且它们面向右。</p>
+<pre class="literal-block">
+; Walk right
+[Begin Action 10]
+10,0,0,0,6
+10,1,0,0,6
+10,2,0,0,6
+10,3,0,0,6
+
+; Walk left
+[Begin Action 11]
+10,0,0,0,6,H
+10,1,0,0,6,H
+10,2,0,0,6,H
+10,3,0,0,6,H
+</pre>
+<p>现在，从角色范围的最左端开始。</p>
+<pre class="literal-block">
+[BGDef]
+(...)
+
+[BG Peregrinator]
+type = anim
+actionno = 10
+id = 10
+start = -300, 0
+delta = 1,1
+</pre>
+<p>让我们给Peregrinator一个舒适的启动速度，每跳2像素。他走路的单向距离是600像素，这需要300个滴答声。总共要花他600滴答声才能往返。使用此知识，适当地设置后台控制器：由于整个情况每隔600个滴答重复一次，因此我们可以将全局循环时间设置为600。</p>
+<pre class="literal-block">
+[BGCtrlDef Peregrinator]
+; reset the whole deal every 600 ticks.
+looptime = 600
+ctrlID = 10
+
+; Set velocity of 2 pixels/sec rightward at time 0.
+[BGCtrl Walk Right]
+type = VelSet
+time = 0
+x = 2
+
+; Set velocity of 2 pixels/sec leftward at time 300.
+[BGCtrl Walk Left]
+type = VelSet
+time = 300
+x = -2
+</pre>
+<p>就是这样！通过让Peregrinator放慢速度并在步行的每个末端显示一个转弯动画，可以使步行看起来更好。这将需要使用<tt class="docutils literal">VelAdd</tt>和<tt class="docutils literal">Anim</tt>控制器。如果希望Peregrinator从一端到另一端以固定的间隔停止和开始，则可以创建更多的<tt class="docutils literal">VelSet</tt>和<tt class="docutils literal">Anim</tt>控制器，并具有各自的循环时间（以使行为以固定的间隔重复）。</p>
+</div>
+</div>
+</body>
+</html>

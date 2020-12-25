@@ -1,0 +1,454 @@
+﻿<HTML>
+<HEAD>
+<title>M.U.G.E.N 教程 1</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</HEAD>
+
+<BODY>
+
+<h1>我如何能...?  M.U.G.E.N 入门</h1>
+
+<h2>教程第 1 部分 - 入门：精灵</h2>
+
+<p>M.U.G.E.N, Elecbyte (c)1999-2009<br>
+Updated 17 September 2009
+</p><br>
+
+Tutorial <b>1</b> | <a href="tutorial2.html">2</a> |
+         <a href="tutorial3.html">3</a> | <a href="tutorial4.html">4</a>
+<hr>
+
+<br><h3>介绍</h3>
+<p>如果您想为M.U.G.E.N制作角色，则需要充分了解角色的每个组成部分的工作原理。因为直接进入技术文档可能会造成混淆，所以我们编写了一个教程来帮助您入门。随着您获得更多的了解，请确保经常参考文档。当您创建第一个角色时，可能会几次跌跌撞撞或被卡住，但就像其他任何事物一样，一旦您知道了基础知识，就会更容易，更快地取得进步。</p>
+
+<p>在本教程中，您将学习如何为角色制作调色板，以及如何将角色的精灵组合在一起。此外，您还将看到如何制作简单的动画动作。在本教程的第2部分中，您将看到如何为动画定义边界框，在第3和第4部分中，我们将定义简单的攻击。对于本教程，您需要一个图像编辑程序，例如GIMP，PhotoShop或PaintShop Pro。
+</p>
+
+<p>我们假定您至少具有文本编辑器，图形编辑，游戏概念以及如何在命令提示符下导航的基本知识。如果您不熟悉所有这些，建议您在初学者的书本或网站上进行一些阅读。如果您具有编程语言的背景知识，则可能会更容易理解我们的文档。好吧，现在开始吧。</p>
+
+<br><h3>1. 制作调色板</h3>
+<p>属于角色的所有子画面都必须是256色PNG文件。每个精灵都应具有相同的256色调色板，以便它们在游戏中正确显示。如果您有使用Photoshop的经验，那么以下部分将很简单。我们将假定您以真彩色图像（在Photoshop中称为RGB）开始。</p>
+
+<p>当将精灵转换为256色（也称为索引颜色）时，大多数绘画程序都会按照自己喜欢的方式制作调色板，并且对每个精灵将以不同的方式进行制作。在这里，我们将介绍如何制作标准调色板，以及如何将其应用于每个精灵。</p>
+
+<p>使用Photoshop, 选择图像->模式->索引颜色。</p>
+
+<img width="409" height="334" src="tutorial/pshop0.gif">
+
+<p>将会弹出一个窗口。在此窗口中，将调色板设置为“精确”。如果您使用的是Photoshop 5或更高版本，请不要单击“确定”。对于早期版本的Photoshop，单击“确定”，然后转换为RGB（“图像”->“模式”->“ RGB颜色”），然后再次单击“图像”->“模式”->“索引颜色”。</p>
+
+<img width="317" height="274" src="tutorial/pshop1.gif">
+
+<p>现在，在调色板下拉列表中选择“自定义”以打开“颜色表”窗口。下一步是确保子画面的背景色的颜色索引为0（我们将其称为&quot;颜色0&quot;）。在M.U.G.E.N中，颜色0为遮罩颜色。这意味着将不会绘制精灵的所有颜色为0的部分。</p>
+
+<table cellspacing="0" cellpadding="5" border="0">
+<tr><td width="360">
+  <img src="tutorial/color0.gif" width="228" height="165">
+</td></tr>
+<tr><td valign="top" width="360">
+  <font face="Arial" size="-1">
+    颜色索引0应该始终是背景色。实际颜色（不是索引值）取决于您。
+  </font>
+</td></tr>
+</table>
+
+<p>在Photoshop的颜色表编辑器中，将左上角的颜色（在Photoshop中为颜色索引0）设置为精灵的背景色。您将要确保颜色0是调色板中的唯一颜色，否则Photoshop将无法正确设置颜色索引。为此，您可以将旧的颜色0设置为原来的bg颜色（本质上将这两种颜色交换）。</p>
+
+<p>注意：如果您使用的M.U.G.E.N版本低于1.0，则首选的文件格式曾经是PCX而不是PNG。在Photoshop中，PCX文件的右下颜色为索引0。对于PNG文件，它为左上颜色。</p>
+
+<img src="tutorial/pshop2.png"/>
+<font face="Arial" size="-1"><p>
+  正确的调色板示例，背景色为0（左上方的绿色为绿色）。
+</p></font>
+
+<table cellspacing="0" cellpadding="5" border="0">
+<tr><td width="360">
+  <img src="tutorial/color0n.gif" width="80" height="120">
+</td><td width="360">
+  <img src="tutorial/color0y.gif" width="80" height="120">
+</td></tr>
+<tr><td valign="top" width="360">
+  <font face="Arial" size="-1">
+    使用不正确调色板的结果。
+  </font>
+</td><td valign="top" width="360">
+  <font face="Arial" size="-1">
+    使用正确调色板的结果。
+  </font>
+</td></tr>
+</table>
+
+<p>单击“保存”按钮以保存此调色板（在本教程中，我们将其称为player.act）。现在单击“确定”以将调色板应用于此图像，并将文件另存为PNG文件。</p>
+
+<p>下一步是将所有其他图像转换为您刚创建的这个调色板（player.act）。您可以使用以下方法：</p>
+
+<UL>
+  <LI>打开第一个图像，然后单击图像->模式->索引颜色。
+  <LI>从“调色板”列表中选择“自定义”，然后单击“加载”以选择刚制作的调色板文件（player.act）。单击确定，直到返回主窗口。
+  <LI>现在将其另存为PNG文件，并对其余图像重复上述操作。
+</UL>
+
+<p>在制作精灵时，调色板设计非常重要。尽管M.U.G.E.N允许您为每个精灵最多使用255种颜色，但是具有精心设计的调色板的字符不一定必须使用所有可用的颜色索引。使用有限数量的颜色不仅会减小PNG文件的大小，而且使以后创建备用调色板（不同的配色方案）变得更容易。使用少量的颜色（16到32），手工完成像素精灵艺术会更容易，但是当您使用大型调色板时​​，可能会变得乏味。另一方面，预渲染的精灵在较大的颜色范围内可能看起来更好，而所需的额外工作却很少。设计角色的调色板时，请牢记这些要点。
+</p>
+
+<br><h3>2. 如何开始制作角色？</h3>
+<p>转到 chars/ 目录，并为您的角色创建一个新目录。例如，我们将此角色称为“玩家”（用要称呼角色的任何角色替换“玩家”）。在这种情况下，创建一个名为 chars/player 的目录。
+
+<br><h3>3. 这个角色需要什么？</h3>
+<p>您需要将这些放在 chars/player 目录中：</p>
+<pre><code>player.air
+player.cmd
+player.cns
+player.def
+player.sff
+player.snd</code></pre>
+
+要查看每个文件的含义，请阅读M.U.G.E.N zip文件的 docs/ directory 中包含的<a href="overview.html">概述</a>。<br>
+在本教程中，您将创建sprite文件player.sff。
+
+<br><h3>4. 我如何开始制作这些文件？</h3>
+<p>您可以从头开始制作所有内容...，也可以使用我们的示例人物功夫男（KFM）开始。 KFM的角色目录位于chars/kfm/ 中，而他的工作文件位于 work/kfm/ 中。
+
+
+<br><h3>5. 好的，我有KFM。怎么办？</h3>
+
+<p>首先要做的是复制并重命名角色所需的文件。假设播放器的目录名称为&quot;player&quot;，则应复制以下文件：
+<pre><code>
+chars/kfm/kfm.air -> chars/player/player.air
+chars/kfm/kfm.cns -> chars/player/player.cns
+chars/kfm/kfm.cmd -> chars/player/player.cmd
+chars/kfm/kfm.def -> chars/player/player.def
+</pre></code>
+
+这些是什么文件？这4个文件均为文本格式，您可以在文本编辑器（例如MS-DOS EDIT或Windows写字板）中进行编辑。这是每个文件的清单，它们的作用以及相应的技术文档文件。
+<UL>
+<LI><b>.air</b> - 动画数据。这描述了如何将精灵动画化。
+    (<a href="air.html">AIR format</a>)
+<LI><b>.cns</b> - 常数和状态。在这里定义角色的状态机。这是角色行为的核心。
+    (<a href="cns.html">CNS format</a>, 
+     <a href="exp.html">Expressions</a>)
+<LI><b>.cmd</b> - 移动命令定义。 .cmd定义哪些输入移动命令触发哪些攻击状态。它与.cns文件一起使用，以定义您的角色如何响应键盘或操纵杆输入。 （请参阅kfm.cmd中的注释）
+<LI><b>.def</b> - 有关字符的文件和基本信息（请参阅kfm.def中的注释）
+</UL>
+
+要设置角色的基本信息，请使用文本编辑器打开player.def。将字段更改为适当的值。例如：</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre><code>
+; Player information
+[Info]
+name = "Player"             ;角色名称
+displayname = "Player"      ;要显示的字符名称
+versiondate = 09,09,2009    ;角色的版本日期（MM-DD-YYYY）
+mugenversion = 1.0          ;M.U.G.E.N角色的版本适用于
+author = "My Name"          ;角色作者姓名
+pal.defaults = 1,2,3,4      ;默认调色板按偏好顺序排列（最多4个）
+                            ;编号从1开始
+localcoord = 320,240        ;局部坐标空间的宽度和高度
+
+; 玩家文件
+[Files]
+cmd     = player.cmd        ;命令集
+cns     = player.cns        ;常数
+st      = player.cns        ;状态
+stcommon = common1.cns      ;常见状态（根据数据/或主题）
+sprite  = player.sff        ;精灵
+anim    = player.air        ;动画
+sound   =                   ;声音（如果没有则保留为空白）***暂时设置为空白***
+ai      = kfm.ai            ;AI提示数据（未使用）
+
+; 街机模式
+[Arcade]
+intro.storyboard =     ;***暂时设为空白***
+ending.storyboard =    ;***暂时设为空白***
+</code></pre></td></tr></table><br>
+
+<h4>制作精灵文件</h4>
+
+<p>现在让我们制作角色的精灵文件player.sff。它将包含角色使用的所有图形。 Sprite文件称为SFF，生成该文件的工具称为sprmake2（Sprite Maker 2的缩写-它是M.U.G.E.N 1.0之前使用的工具的较新版本）。
+</p>
+
+<p>现在，我们将集中精力制作静态动画。如果您已经拥有要使用的精灵，请准备好它们。假设您要使用的站立动画命名为 stand00.png - stand03.png ，它们位于 work/player/ 目录中。现在，在 work/player/ 中创建一个文本文件，并将其命名为 player-sff.def 。这是您将使用的文本文件的开头（注释行以分号开头）。</p>
+
+<br>
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre><code>
+[Output]
+ ;要创建的SFF文件的文件名（必需）。
+filename = chars/player/player.sff
+
+[Option]
+ ;将所有这些选项保留为默认值。不用担心他们现在做什么。
+sprite.compress.5 = lz5
+sprite.compress.8 = rle8
+sprite.compress.24 = none
+sprite.decompressonload = 0
+sprite.detectduplicates = 0
+sprite.autocrop = 1
+pal.detectduplicates = 1
+pal.discardduplicates = 1
+pal.reverseact = 0
+pal.reversepng = 0
+
+[Pal]
+ ;在这里您可以指定角色拥有的调色板。
+ ;1,1映射到配色方案1； 1,2至配色方案2，依此类推。
+ ;您最多可以有6个。
+1,1, stand00.png
+
+[Option]
+ ;此选项会强制您添加的所有精灵使用调色板1,1。
+ ;它有助于确保正确构建SFF文件。
+sprite.usepal = 1,1
+
+[Sprite]
+ ;在这里指定所有的精灵。
+ ;每行的前两个数字是组号和图像号。
+ ;这是用于唯一标识每个子画面的一对数字。
+ ;接下来指定文件名。
+ ;之后，最后两个数字是X和Y轴。
+ ;你将需要更改您自己的精灵的轴号。
+0, 0, stand00.png,  18,105
+0, 1, stand01.png,  18,104
+0, 2, stand02.png,  18,104
+0, 3, stand03.png,  18,104
+; 文件结尾
+</code></pre></td></tr></table><br>
+
+<p>您为每个精灵输入的组号和图像号用于在.air（动画）文件中进行访问。这只是您将与精灵关联的一对数字。例如，您将引用0,2，而不是引用stand02.pcx。</p>
+
+<p>组号0用于站立的框架。  您可以稍后在<a href="air.html"></a>AIR文档</a>中查看其他动画动作的建议编号。  图像编号仅指定特定组编号内的图像。您必须从子画面获取自己的X和Y轴。对于直立框架，它通常位于子画面中间的最底部。对于跳跃的精灵，轴通常位于角色站立时脚所在的位置。那通常是在精灵下方的中央。您可以通过运行M.U.G.E.N并在播放时按Ctrl-C来检查KFM的精灵。这将显示角色的边界框和轴。这是轴位置的一些示例。</p>
+
+<table cellspacing="0" cellpadding="5" border="0">
+<tr><td valign="bottom">
+  <img src="tutorial/axis0.gif" width="47" height="117">
+</td><td valign="bottom">
+  <img src="tutorial/axis1.gif" width="93" height="116">
+</td><td valign="bottom">
+  <img src="tutorial/axis2.gif" width="48" height="84">
+</td><td valign="bottom">
+  <img src="tutorial/axis3.gif" width="44" height="114">
+</td><td valign="bottom">
+  <img src="tutorial/axis4.gif" width="97" height="109">
+</td></tr>
+</table>
+
+<p>轴的位置非常重要。如果精灵之间的距离略微偏离，您将注意到您的精灵在周围“抖动”。如果您犯了更大的错误，您的子画面最终可能会出现在完全错误的位置。
+
+<p>准备好player.txt之后，请转到具有mugen.exe和sprmake2.exe等的目录，并通过在命令提示符处键入以下内容来创建player.sff：
+<pre><code>
+  sprmake2 work\player\player-sff.def
+</code></pre>
+如果遇到错误或没有播放player.sff，请检查player-sff.def文件是否有错误。</p>
+
+<br><h3>6. 我做了SFF。下一步是什么？</h3>
+
+<p>好的，既然您在player.sff中拥有站立的精灵，那么现在就可以对角色进行动画处理了。要制作站立式动画，您必须为其创建一个<i>动作</i>（一个<i>动作</i>是一段文本，描述了要显示的一个精灵序列）。在文本编辑器中打开player.air，让我们准备添加站立的动画动作。如果您的player.air是kfm.air的副本，则可以简单地编辑适当的动作组（站立动画的动作0）。</p>
+
+<p>是时候制作player.air了。如果您阅读过AIR文档，就会知道.air的格式为：
+<pre><code>
+Group number, image number, X offset, Y offset, game-ticks, [options]
+</code></pre>
+现在不用担心以Clsn2和Clsn2Default开头的行。</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre><code>
+; 站立动画
+[Begin Action 0]   ;动作0是站立的动画
+Clsn2Default: 2
+ Clsn2[0] = -10,  0, 10,-79
+ Clsn2[1] =  -4,-92,  6,-79
+0,3, 0,0, 7  
+;上一行表示使用精灵（0,3）（即组0，图像编号3）并将其显示7个游戏点。 
+;1个游戏滴答度是1/60秒，因此60个滴答度是1秒。 
+;组0图像3是stand03.pcx。
+0,2, 0,0, 7
+0,1, 0,0, 7
+0,0, 0,0, 7
+0,1, 0,0, 7
+0,2, 0,0, 7
+;文件结束
+</code></pre></td></tr></table><br>
+
+<p>现在，保存此文件，您就可以开始查看角色的外观了！</p>
+
+<br><h3>7. 检查你的动作</h3>
+<p>如果所有文件都放在正确的位置，则可以通过在命令提示符处键入以下内容来直接向M.U.G.E.N加载角色：</p>
+<pre><code>
+mugen player player
+</code></pre>
+
+<p>这是vs模式的快捷方式。现在，请不要担心屏幕顶部是否显示警告。警告表示您的角色有误或缺失。在这种情况下，您的角色可能缺少必需的精灵或动画动作。</p>
+
+<p>如果您发现精灵太高，好像它漂浮在地面上方，则必须将轴向上移动。只要记住角色在地面上时轴在地面上即可。同样，如果角色太向前，则将轴右移。一旦正确调整了所有精灵的轴，动画中的角色就不应滑动或坐立不安。</p>
+
+<p>如果您不小心输入了一个不存在的精灵组+图像编号，则不会绘制任何内容。因此，如果看到角色闪烁，则应返回并检查.air文件，以查看数字是否对应于用于构建.sff的数字。<p>
+
+<br><h3>8. 继续动作和精灵</h3>
+
+<p>制作站立架后，您可以继续行走，然后跳跃。现在，您已经了解了制作精灵和动作的基本知识，您应该继续从<a href="spr.html">spr.html</a>制作所需的精灵，并从<a href="air.html">AIR文档</a>中的“保留动作编号”制作所需的动作。完成后，屏幕顶部的所有警告均应消失。</p>
+
+<p>在本教程的第2部分中，您将能够定义角色的边界框，以便它们可以命中并命中其他角色。最后，我们将向您展示如何在.cns中定义一些攻击。</p>
+
+<!---------------------------------------------------------------->
+<br><hr>
+
+Tutorial <b>1</b> | <a href="tutorial2.html">2</a> |
+         <a href="tutorial3.html">3</a> | <a href="tutorial4.html">4</a>
+<p>Next is <b><a href="tutorial2.html">Tutorial Part 2</a></b>
+</p>
+</BODY></HTML>

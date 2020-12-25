@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>坐标空间注释</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref {
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref,
+h6 a.toc-backref {
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<div class="section" id="coordinate-space-notes">
+<h1><a class="toc-backref" href="#id1">坐标空间注释</a></h1>
+<p>M.U.G.E.N, (c) Elecbyte 1999-2009</p>
+<p>Documentation for version 1.0 (2009)</p>
+<p>Updated 18 September 2009</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#coordinate-space-notes" id="id1">坐标空间注释</a></li>
+<li><a class="reference internal" href="#overview" id="id2">概述</a><ul>
+<li><a class="reference internal" href="#terminology" id="id3">术语</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#characters" id="id4">字符</a></li>
+<li><a class="reference internal" href="#motifs" id="id5">主题</a></li>
+<li><a class="reference internal" href="#stages" id="id6">舞台</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="overview">
+<h1><a class="toc-backref" href="#id2">概述</a></h1>
+<p>M.U.G.E.N 1.0支持加载为不同坐标空间创建的资产。在运行时处理为不同坐标空间制作的字符，图案和阶段，以在单个公共坐标空间中进行交互。该公共坐标空间被称为&quot;游戏坐标空间（Game coordinate space）&quot;。从一个坐标空间到另一个坐标空间的转换称为&quot;平移（translation）&quot;。</p>
+<p>在M.U.G.E.N中，游戏坐标空间是在mugen.cfg中通过[Config]组的GameWidth和GameHeight参数指定的。</p>
+<p>坐标空间之间向量的平移缩放因子是目标坐标空间的宽度与源坐标空间的宽度之比。例如，为320x240坐标空间创建的字符将缩放4倍，以在1280x720坐标空间中操作。</p>
+<div class="section" id="terminology">
+<h2><a class="toc-backref" href="#id3">术语</a></h2>
+<dl class="docutils">
+<dt>Game coordinate space</dt>
+<dd>用于计算交互的公共坐标空间。将角色，主题和阶段的坐标和向量转换为用于交互的游戏坐标空间。</dd>
+<dt>Translation</dt>
+<dd>从一个坐标空间到另一个坐标空间的转换。</dd>
+<dt>Aspect ratio</dt>
+<dd>坐标空间的宽高比。也简称为&quot;方面&quot;。</dd>
+<dt>Game aspect</dt>
+<dd>游戏坐标空间的纵横比。</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="characters">
+<h1><a class="toc-backref" href="#id4">字符</a></h1>
+<p>字符的坐标空间在字符定义文件中由[Info]组的localcoord参数指定。</p>
+</div>
+<div class="section" id="motifs">
+<h1><a class="toc-backref" href="#id5">主题</a></h1>
+<p>图案的坐标空间在system.def文件中由[Info]组的localcoord参数指定。 1.0中主题的局限性在于它们无法适应不同于主题的游戏纵横比。</p>
+</div>
+<div class="section" id="stages">
+<h1><a class="toc-backref" href="#id6">舞台</a></h1>
+<p>舞台的坐标空间在system.def文件中由[StageInfo]组的localcoord参数指定。阶段包含其他参数，如果游戏方面比舞台的坐标空间方面短，则可以控制裁剪；如果游戏方面比阶段的高度高，则可以控制透支。</p>
+</div>
+</div>
+</body>
+</html>

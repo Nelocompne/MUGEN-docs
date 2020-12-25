@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>M.U.G.E.N 控制台（Console）</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="m-u-g-e-n-console">
+<h1 class="title">M.U.G.E.N 控制台（Console）</h1>
+
+<p>Mugen Console（mconsole）是M.U.G.E.N 1.1中的新功能。它允许用户执行各种命令，类似于Windows中的命令提示符。 mconsole是主要用于测试和调试的工具，不适用于正常的游戏玩法。</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#usage" id="id1">用法</a></li>
+<li><a class="reference internal" href="#commands" id="id2">指令</a><ul>
+<li><a class="reference internal" href="#clear" id="id3">clear</a></li>
+<li><a class="reference internal" href="#changestate" id="id4">changestate</a></li>
+<li><a class="reference internal" href="#clearclipboard" id="id5">clearclipboard</a></li>
+<li><a class="reference internal" href="#consoletoggle" id="id6">consoletoggle</a></li>
+<li><a class="reference internal" href="#forcestand" id="id7">forcestand</a></li>
+<li><a class="reference internal" href="#fps" id="id8">fps</a></li>
+<li><a class="reference internal" href="#framestep" id="id9">framestep</a></li>
+<li><a class="reference internal" href="#help" id="id10">help</a></li>
+<li><a class="reference internal" href="#lifereset" id="id11">lifereset</a></li>
+<li><a class="reference internal" href="#matchreset" id="id12">matchreset</a></li>
+<li><a class="reference internal" href="#maxpower" id="id13">maxpower</a></li>
+<li><a class="reference internal" href="#maxpowermode" id="id14">maxpowermode</a></li>
+<li><a class="reference internal" href="#pause" id="id15">pause</a></li>
+<li><a class="reference internal" href="#quit" id="id16">quit</a></li>
+<li><a class="reference internal" href="#roundreset" id="id17">roundreset</a></li>
+<li><a class="reference internal" href="#screenshot" id="id18">screenshot</a></li>
+<li><a class="reference internal" href="#setlife" id="id19">setlife</a></li>
+<li><a class="reference internal" href="#setroundtime" id="id20">setroundtime</a></li>
+<li><a class="reference internal" href="#showclsn" id="id21">showclsn</a></li>
+<li><a class="reference internal" href="#toggleai" id="id22">toggleai</a></li>
+<li><a class="reference internal" href="#togglelifebars" id="id23">togglelifebars</a></li>
+<li><a class="reference internal" href="#toggleplayer" id="id24">toggleplayer</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#id1">用法</a></h1>
+<p>可以通过按Control +波浪号（Ctrl +〜）键来激活和禁用Mconsole。控制台启用后，即可键入命令并由M.U.G.E.N.执行。例如，按F12键将获取当前屏幕的屏幕截图。要在控制台中执行相同的操作，只需键入'screenshot'（不带引号），然后按Enter。结果将与按F12键相同。</p>
+<p>MConsole将跟踪已执行的命令。要循环浏览命令的历史记录，请按向上或向下箭头。万一执行前需要更正或更改命令，则左右箭头将移动光标。</p>
+<p>mconsole仍在开发中，某些命令可能无法按预期运行。激活控制台后，玩家输入键将被禁用。</p>
+</div>
+<div class="section" id="commands">
+<h1><a class="toc-backref" href="#id2">指令</a></h1>
+<div class="section" id="clear">
+<h2><a class="toc-backref" href="#id3">clear</a></h2>
+<p>清理控制台面板。没有参数。</p>
+</div>
+<div class="section" id="changestate">
+<h2><a class="toc-backref" href="#id4">changestate</a></h2>
+<p>changestate &lt;player #&gt; &lt;state number&gt; 将玩家的状态更改为指定的状态（如果存在）。</p>
+<p>示例：要将玩家1更改为状态5000，请使用：changestate 1 5000</p>
+</div>
+<div class="section" id="clearclipboard">
+<h2><a class="toc-backref" href="#id5">clearclipboard</a></h2>
+<p>清除调试剪贴板。没有参数。</p>
+</div>
+<div class="section" id="consoletoggle">
+<h2><a class="toc-backref" href="#id6">consoletoggle</a></h2>
+<p>显示或隐藏控制台。没有参数。这与按Ctrl + 〜相同。</p>
+</div>
+<div class="section" id="forcestand">
+<h2><a class="toc-backref" href="#id7">forcestand</a></h2>
+<p>强制所有玩家进入待命状态。没有参数。这与使用Ctrl + I调试键相同。</p>
+</div>
+<div class="section" id="fps">
+<h2><a class="toc-backref" href="#id8">fps</a></h2>
+<p>在屏幕的右上角显示或隐藏FPS显示。没有参数。</p>
+</div>
+<div class="section" id="framestep">
+<h2><a class="toc-backref" href="#id9">framestep</a></h2>
+<p>显示输出的下一帧。仅在游戏暂停时有效。</p>
+</div>
+<div class="section" id="help">
+<h2><a class="toc-backref" href="#id10">help</a></h2>
+<p>显示有效命令列表。</p>
+</div>
+<div class="section" id="lifereset">
+<h2><a class="toc-backref" href="#id11">lifereset</a></h2>
+<p>重设所有玩家的生命和力量。这与调试模式处于活动状态时按空格键相同。</p>
+</div>
+<div class="section" id="matchreset">
+<h2><a class="toc-backref" href="#id12">matchreset</a></h2>
+<p>将比赛重新设置为第1轮。这与使用Shift + F4调试键相同。</p>
+</div>
+<div class="section" id="maxpower">
+<h2><a class="toc-backref" href="#id13">maxpower</a></h2>
+<p>将所有玩家的功率计提高到最大。这与使用F3调试键相同。</p>
+</div>
+<div class="section" id="maxpowermode">
+<h2><a class="toc-backref" href="#id14">maxpowermode</a></h2>
+<p>打开和关闭最大能量模式。这将导致所有玩家在开始时始终充满力量。这与使用Ctrl + Shift + F3调试键相同。</p>
+</div>
+<div class="section" id="pause">
+<h2><a class="toc-backref" href="#id15">pause</a></h2>
+<p>暂停游戏。这与使用暂停键相同，只是它将在任何屏幕上暂停。在战斗屏幕以外的其他屏幕上暂停可能会导致图形问题。</p>
+</div>
+<div class="section" id="quit">
+<h2><a class="toc-backref" href="#id16">quit</a></h2>
+<p>马上退出M.U.G.E.N ...非常迅速。</p>
+</div>
+<div class="section" id="roundreset">
+<h2><a class="toc-backref" href="#id17">roundreset</a></h2>
+<p>重置当前回合。这与使用F4调试键相同。</p>
+</div>
+<div class="section" id="screenshot">
+<h2><a class="toc-backref" href="#id18">screenshot</a></h2>
+<p>拍摄屏幕截图并将其保存到M.U.G.E.N可执行文件所在的位置。</p>
+</div>
+<div class="section" id="setlife">
+<h2><a class="toc-backref" href="#id19">setlife</a></h2>
+<p>设定特定玩家的寿命。
+setlife &lt;player #&gt; &lt;life&gt;</p>
+<p>示例：   setlife 1 1000</p>
+</div>
+<div class="section" id="setroundtime">
+<h2><a class="toc-backref" href="#id20">setroundtime</a></h2>
+<p>将舍入时间设置为指定时间。
+setroundtime &lt;timeleft&gt;</p>
+<p>示例：  setroundtime 20</p>
+</div>
+<div class="section" id="showclsn">
+<h2><a class="toc-backref" href="#id21">showclsn</a></h2>
+<p>循环显示冲突框，目标数据（包括剩余的juggle点）和NotHitBy属性。这与使用Ctrl + C调试键相同。</p>
+</div>
+<div class="section" id="toggleai">
+<h2><a class="toc-backref" href="#id22">toggleai</a></h2>
+<p>打开或关闭指定玩家的AI。这与使用Ctrl +＃调试键相同。
+toggleai &lt;player #&gt;</p>
+<p>示例：  如果玩家2的AI已开启，则&quot;toggleai 2&quot;将其关闭。</p>
+</div>
+<div class="section" id="togglelifebars">
+<h2><a class="toc-backref" href="#id23">togglelifebars</a></h2>
+<p>隐藏或显示生命线。没有参数。这与使用Ctrl + L调试键相同。</p>
+</div>
+<div class="section" id="toggleplayer">
+<h2><a class="toc-backref" href="#id24">toggleplayer</a></h2>
+<p>启用或禁用指定的播放器。这与使用Ctrl + Alt +＃调试键相同。</p>
+</div>
+</div>
+</div>
+</body>
+</html>

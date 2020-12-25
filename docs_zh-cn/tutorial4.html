@@ -1,0 +1,456 @@
+<HTML>
+<HEAD>
+<title>M.U.G.E.N 教程 4</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</HEAD>
+
+<BODY>
+
+<h1>
+  我如何能...?  M.U.G.E.N 入门</h1>
+<h2>教程第 4 部分 - 简单的攻击动作（第II部分）</h2>
+
+<p>M.U.G.E.N, Elecbyte (c)1999-2009<br>
+Updated 17 September 2009
+</p><br>
+
+Tutorial <a href="tutorial1.html">1</a> | <a href="tutorial2.html">2</a> | 
+         <a href="tutorial3.html">3</a> | <b>4</b>
+<hr>
+
+<br><h3>介绍</h3>
+<p>在教程3中，您了解了如何开始在播放器的 .cns中建立状态。在这里，您将看到如何使用HitDef控制器定义攻击参数。如果您的角色还没有<a href="air.html">AIR文档</a>中提供的所有必需的击中动画，则可能现在需要将KFM作为对手来测试您的角色（键入"mugen player kfm"）。</p>
+
+<br><h3>1. HitDef控制器基础知识</h3>
+
+<p>HitDef状态控制器是完成攻击状态的最后一个组件。您可以将其视为将命中属性分配给角色动画中的Clsn1（红色）框。它说盒子将如何击中对手。</p>
+
+<p>打开player.cns（或任何您命名角色的.cns文件）。在状态200中添加一些您在教程3中所做的事情：</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[StateDef 200]
+anim = 200
+ctrl = 0
+type = S
+movetype = A   ;***添加此行***
+physics = S
+velset = 0,0
+
+;***添加此新块***
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0    ;在时间= 0激活（状态开始）
+attr = S, NA           ;HitDef的属性（稍后说明）
+damage = 30            ;造成伤害点
+;***新区块结束***
+
+[State 200, 1]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+</pre></td></tr></table><br>
+
+<p>StateDef中的"movetype = A"行告诉MUGEN这是一种攻击状态。当您没有此行时，MUGEN将自动假定它为空闲状态。<b>这个很重要</b>。如果您忘记了这条线，您将无法击中对手。</p>
+
+<p>当执行HitDef控制器时，我们为您的角色说“已启用HitDef”。启用HitDef时，如果角色动画中的任何Clsn1框与对手动画中的任何Clsn2框接触，对手就会受到打击。如果按Ctrl-C打开冲突框显示，则在启用了HitDef的情况下，字符“ H”将出现在字符的右下角。</p>
+
+<p>HitDef控制器中的参数应该是不言自明的，但 "attr"参数除外。"attr"定义您的匹配项的属性。在这种情况下，值"S, NA"是指它是一个"<u>S</u>tanding, <u>N</u>ormal <u>A</u>ttack"。您总是必须告诉MUGEN您的匹配具有什么属性。在其他的例子，你可以有"<u>C</u>rouching, <u>S</u>pecial <u>A</u>ttack"，或"A, HT"为"<u>A</u>erial, <u>H</u>yper <u>T</u>hrow"。您可以在状态控制器文档的HitDef控制器中阅读"attr" 有关详细信息（还有很多其他参数，如果您还不了解它们，请不要担心）。在本教程的其余部分中，我们将对<a href="sctrls.html">状态控制器文档</a>（sctrls）进行更多引用。</p>
+
+<p>如果您现在尝试控制角色，您会发现攻击确实击中了对手，但效果并不理想。我们将一次添加一些参数，直到获得成功的匹配。从现在开始，我们的代码片段将仅显示HitDef控制器：</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 30
+pausetime = 12,12      ;***添加此行***
+hitsound = 5,0         ;***添加此行***
+guardsound = 6,0       ;***添加此行***
+sparkxy = 0,-70        ;***添加此行***
+</pre></td></tr></table><br>
+
+<p>尝试将MUGEN与这些播放器一起运行。您会立即注意到一些事情。一方面，当击中连接时，两个玩家都被惊呆了片刻。这是使用 "pausetime"参数的结果。第一个值是暂停角色的时间（以秒为单位），第二个值是暂停被击中的玩家的时间。尝试使用 "60,60", "60,10" 和"10,60" 之类的各种值来查看效果。</p>
+
+<img src="tutorial/atkx1.gif" width="144" height="120" alt="Attack hits!"><br>
+
+<p>“击中”和“后卫”参数确定击中与对手接触时播放的声音。"sparkxy" 定位击中连接时看到的火花（您将需要调整其值以适合角色的攻击）。就像我们要添加的其他参数一样，您应该在sctrls文档中查找这些参数以获取详细说明。您在本教程中看到的描述非常简短。</p>
+
+<p>您是否注意到这种攻击无法防范？</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 30
+guardflag = MA         ;***添加此行***
+pausetime = 12,12
+hitsound = 5,0
+guardsound = 6,0
+sparkxy = 0,-70
+</pre></td></tr></table><br>
+
+<p>"guardflag"参数确定对手如何防御您的角色的攻击。“MA”代表"<u>M</u>iddle+<u>A</u>ir"。这意味着您可以在站立，蹲下或在空中时保持身高以防它。如果您将其更改为“ M”，那么跳跃的对手将无法保护它。如果是“ HA”，则只有站立或跳跃的对手才能防守。</p>
+
+<p>让我们添加更多参数。</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 30
+guardflag = MA
+pausetime = 12,12
+hitsound = 5,0
+guardsound = 6,0
+sparkxy = 0,-70
+ground.type = High     ;***添加此行***
+ground.slidetime = 10  ;***添加此行***
+ground.hittime  = 12   ;***添加此行***
+ground.velocity = -5   ;***添加此行***
+air.velocity = -2,-3   ;***添加此行***
+</pre></td></tr></table><br>
+
+<p>现在，当您的角色命中时，对手会被击退。现在开始看起来更像是一次真正的攻击！</p>
+
+<p>"ground.type"确定对手被您的角色的攻击击中时将进入哪种动画类型。"ground.slidetime"是对手在被击中后将向后滑动的时间，而 "ground.hittime"是对手在恢复击中状态之前在获得击中状态下花费的时间。"ground.velocity"和"air.velocity"是对手被击中时获得的速度。对于"ground.velocity"，请尝试以下数字以查看效果："5", "-20", "-5,-5"和 "0,-5"。
+  "ground.type" determines what type of animation the opponent will
+go into when he's hit by your character's attack. "ground.slidetime"
+is how long the opponent will slide backwards after being hit, and
+"ground.hittime" is the time that the opponent will spend in the
+get-hit state before recovering. "ground.velocity" and "air.velocity"
+are the velocities the opponent gets when he's hit. For "ground.velocity",
+try numbers like these to see the effects: "5", "-20", "-5,-5" and "0,-5".</p>
+
+<br><h3>2. HitDef动画类型</h3>
+
+<p>除了使用 "ground.type"之外，您还可以使用 "animtype"来影响opponenet的动画动画：</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 30
+guardflag = MA
+pausetime = 12,12
+hitsound = 5,0
+guardsound = 6,0
+sparkxy = 0,-70
+animtype = Medium      ;***添加此行***
+ground.type = High
+ground.slidetime = 10
+ground.hittime  = 12
+ground.velocity = -5
+air.velocity = -2,-3
+</pre></td></tr></table><br>
+
+<p>如果 "ground.type"为 "High"，则 "animtype"的不同值将影响动画：</p>
+
+<table cellspacing="0" cellpadding="4" border="0">
+<tr>
+  <td>
+    <img src="tutorial/atkx-hil.gif" width="144" height="120" alt="light"><br>
+  </td>
+  <td>
+    <img src="tutorial/atkx-him.gif" width="144" height="120" alt="medium"><br>
+  </td>
+  <td>
+    <img src="tutorial/atkx-hih.gif" width="144" height="120" alt="hard"><br>
+  </td>
+</tr>
+<tr>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = light
+  </font></td>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = medium
+  </font></td>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = hard
+  </font></td>
+</tr>
+</table>
+
+<p>同样，对于 "ground.type = Low"：</p>
+
+<table cellspacing="0" cellpadding="4" border="0">
+<tr>
+  <td>
+    <img src="tutorial/atkx-lol.gif" width="144" height="120" alt="light"><br>
+  </td>
+  <td>
+    <img src="tutorial/atkx-lom.gif" width="144" height="120" alt="medium"><br>
+  </td>
+  <td>
+    <img src="tutorial/atkx-loh.gif" width="144" height="120" alt="hard"><br>
+  </td>
+</tr>
+<tr>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = light
+  </font></td>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = medium
+  </font></td>
+  <td align="center"><font face="Arial" size="-1">
+    animtype = hard
+  </font></td>
+</tr>
+</table>
+
+<br><h3>3. 跌落和 juggling</h3>
+
+<p>如果您希望对手摔倒，可以使用 "fall"参数。</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[State 200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 30
+guardflag = MA
+pausetime = 12,12
+hitsound = 5,0
+guardsound = 6,0
+sparkxy = 0,-70
+animtype = Medium
+ground.type = High
+ground.slidetime = 10
+ground.hittime  = 12
+ground.velocity = -1,-7;***修改此行***
+air.velocity = -2,-3
+fall = 1               ;***添加此行***
+</pre></td></tr></table><br>
+
+<p>如果您的对手被您的攻击击中，"fall = 1"行将使您的对手跌倒在地。这很简单。但是，您可能会遇到游戏问题。如果您站在舞台边缘附近，而对手则在边缘与边缘之间，您会发现您的角色可以在他跌倒时击中他。这称为"juggle"。问题是您可以一遍又一遍地玩弄对手直到他被答应为止。您可以将一行添加到StateDef以解决此问题。</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[StateDef 200]
+anim = 200
+ctrl = 0
+type = S
+movetype = A
+physics = S
+velset = 0,0
+juggle = 5     ;***添加此行***
+</pre></td></tr></table><br>
+
+<p>这是juggles的工作方式。它可以作为点数系统，从15个juggle点（或为"airjuggle"玩家变量设置的任何值）开始。如果您在攻击的StateDef中具有"juggle"参数，则每次您用该攻击击中对手时，juggle点将减少"juggle"参数的值。如果您当前的攻击会使juggle点减少到小于零，那么它将无法命中。当对手被"fall = 1"的HitDef击中时，将激活juggle系统。</p>
+
+<p>立即尝试控制您的角色并杂耍对手。请注意，在对手掉到地板上之前，您最多只能打3次。如果设置为 "juggle = 3"，则可以命中5次；如果设置为 "juggle = 2"，则可以命中7次，依此类推。</p>
+
+<p>要查看还剩下多少个juggle点，请按Ctrl-C打开碰撞箱显示。当您击中对手时，杂耍点的数量将显示在角色正下方的文本底部（粉红色，以"target"开头）的末尾。</p>
+
+<p>所有攻击都应在StateDef中具有一个juggle参数。如果您对一个攻击使用多个状态（我们将在以后的教程中介绍），那么仅在第一个状态的StateDef中应具有参数juggle。查看kfm.cns，看看可能有什么典型值。</p>
+
+<br><h3>4. 清单</h3>
+
+<p>设定新的攻击状态时，请注意以下事项：</p>
+
+在StateDef中：
+
+<ul>
+  <li>您的状态类型和物理设置正确吗？
+  <li>您是否有“ movetype = A”？
+  <li>您是否记得设置过"juggle"参数？
+  <li>您是否有 "ctrl = 0"？
+</ul>
+
+在HitDef中：
+<ul>
+  <li>是否正确设置了“ attr”参数？
+  <li>您是否正确定位了撞击火花？
+  <li>您是否合理设置了“ guardflag”参数？
+  <li>您的“ ground.hittime”设置为一个合理的数字吗？
+</ul>
+
+<br><h3>下一步是什么？</h3>
+
+<p>现在是阅读sctrls文档中其余HitDef参数的好时机。以下是您可能经常使用的其他一些功能的简短列表：</p>
+
+<ul>
+  <li>air.type, air.animtype, air.hittime等
+  <li>击中标志
+  <li>优先
+  <li>sparkno
+  <li>guard.velocity
+  <li>fall.recover
+</ul>
+
+<p>一旦适应了简单的攻击状态，就该学习如何使角色进入该状态了。我们将其保存以供以后的教程使用。如果要继续，请访问kfm.cmd。</p>
+
+<!---------------------------------------------------------------->
+<br><hr>
+
+Tutorial <a href="tutorial1.html">1</a> | <a href="tutorial2.html">2</a> | 
+         <a href="tutorial3.html">3</a> | <b>4</b>
+</BODY></HTML>

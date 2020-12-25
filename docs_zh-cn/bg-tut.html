@@ -1,0 +1,379 @@
+<HTML>
+<HEAD>
+<title>舞台（Stage） / 背景教程</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</HEAD>
+
+<BODY>
+
+<h1>
+  背景简介</h1>
+
+<p>M.U.G.E.N, Elecbyte (c)1999-2009<br>
+Updated 19 September 2009
+</p><br>
+
+<hr>
+
+<br><h3>介绍</h3>
+<p>在M.U.G.E.N中，背景的最明显用途是用于战斗中您在角色后面看到的内容（称为“舞台背景(stage background)”）。此外，从标题屏幕上看到的内容到对屏显示，情节提要过场动画等等，MUGEN几乎在其他任何地方都使用了背景。这些被称为“系统背景system backgrounds”。
+</p>
+
+<p>舞台背景是舞台数据文件中的背景，例如 stages/kfm.def。系统背景位于 data/system.def中。在本教程中，我们将介绍如何制作舞台背景，并且将看到如何将相同的过程应用于制作背景背景。
+</p>
+
+<br><h3>你需要知道的</h3>
+<p>本文档假定您已经熟悉如何创建SFF文件。要制作动画背景，您需要了解AIR文件。您可以阅读我们的前两个<a href="tutorial1.html">角色教程</a>，以掌握基础知识。
+</p>
+
+
+<br><h3>是什么构成背景？</h3>
+<p>M.U.G.E.N的背景包含以下元素：</p>
+<ul>
+<li>从背面到背面绘制的一个或多个背景精灵，带有或不带有遮罩，以及带有或不带有视差效果
+<li>这些精灵应如何相对于相机移动的规范
+<li>背景动画的动画数据
+<li>比赛场地的宽度和高度规格
+<li>舞台"ground level"的规范
+<li>更多其他设置
+<li>后台控制器定义可获得更高级的效果。
+</ul>
+
+
+<br><h3>入门</h3>
+
+<p>首先要确定的是要用于背景的坐标空间。这会影响您需要制作的精灵的分辨率。将[StageInfo]组中的localcoord参数设置为"320,240", "640,480", "1280,720" 或"1920,1080"之一。
+</p>
+
+<p>最简单的阶段将在后台仅包含一个元素。元素通常是精灵或动画。在这里，我们将从将精灵放入舞台开始。假设您有一个要用作背景图片的图像文件。在 stages/目录中创建一个名为stage1.sff的文件，此图像为 sprite 0,0。将轴放在图像底部边缘的中心。现在将 data/stage0.def 复制到 data/stage1.def 并在文本编辑器中打开 stage1.def。
+</p>
+
+<p>在[Info]组中，您可以自定义舞台的名称。阶段名称应用双引号引起来。
+</p>
+
+<p>要使阶段尽快启动并运行，只需转到[BGDef]组。将spr参数更改为指向stage1.sff，并将debugbg设置为1。现在转到[BG 0]组。确保将type参数设置为normal（因为这不是视差背景元素）。确保将spriteno参数设置为0,0。将layerno设置为0，以防止在字符前面绘制背景。最后，将开始参数设置为所需的背景开始位置。坐标是从屏幕底部边缘的中心开始测量的。如果按照建议将精灵0,0的轴放置在底部中心，则只需将start = 0, 0。
+</p>
+
+<p>可以为此BG元素设置其他参数。您在stage1.def中看到的注释提供了参数功能的描述。以下是您通常会使用的那些：
+</p>
+
+<p><tt>delta = xdelta, ydelta</tt><br>
+  xdelta和ydelta是比例因子：对于摄像机水平移动的每个像素，背景元素将移动xdelta像素，依此类推。如果只有一个背景图像，则通常需要将delta设置为1、1 。对后置背景元素使用较小的增量会在您具有多个元素时产生深度错觉。
+</p>
+
+<p>
+<tt>trans = none, add, add1 or sub</tt><br>
+控制背景元素的透明度。
+</p>
+
+<p>
+<tt>mask = 0 or 1</tt><br>
+如果有多个元素，请在前景元素上设置mask = 1，以防止为其绘制颜色0。如果不需要屏蔽，请确保将mask设置为0。
+</p>
+
+<tt><pre>tile = x, y
+tilespacing = x, y
+window = x1, y1, x2, y2
+</pre></tt>
+
+<p>除非使用的小图像要平铺以填充整个背景，否则应将平铺设置为0,0。
+</p>
+
+<p>您的[BG 0]部分将类似于以下内容（显示时无注释）：</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[BG 0]
+type = normal
+spriteno = 0, 0
+layerno = 0                
+start = 0, 185
+delta = 1, 1
+trans = none
+mask = 0
+velocity = 0, 0
+tile = 0, 0
+tilespacing = 0, 0
+window = 0,0, 319, 239
+</pre></td></tr></table><br>
+
+<p>最后，删除或注释掉[BG 1]块，因为我们没有任何其他背景元素。
+</p>
+
+<br><h3>设置阶段参数</h3>
+
+<p>现在是时候测试您的舞台了：<br>
+<tt>mugen kfm kfm -s stage1</tt>
+</p>
+
+<p>尝试走路和跳跃。根据子画面 0,0的尺寸，您可能看不到所有背景，或者最终滚动到背景的边缘并看到洋红色（设置debugbg = 1的结果）。要解决此问题并进一步自定义阶段，您可以调整下面列出的参数。
+</p>
+
+<p>在[Camera]组中，boundleft和boundright参数控制摄像机可以从其初始起始位置向左和向右滚动多远。您应该调整这些设置，以使相机无法滚动到背景的边缘。例如，如果背景图像的宽度为1000像素，而相机视图的宽度为640像素，则应将boundleft设置为-180并将boundright设置为180。
+</p>
+
+<p>同样，boundhigh和boundlow参数控制摄像机可以垂直滚动多远。大多数情况下，boundlow应保持为0。如果您的背景图像高750像素，屏幕高480像素，则boundhigh应该设置为-290。
+</p>
+
+<p>您现在可以暂时保留verticalfollow，地板张力和张力参数。这些用于根据stage0.def中的注释来调整摄像机的行为。
+</p>
+
+<p>[PlayerInfo]和[Scaling]组也可以暂时保留。
+</p>
+
+<p>[Bound]组包含参数screenleft和screenright，它们控制字符可以从屏幕边缘突出多少。这些参数通常设置为约15。
+</p>
+
+<p>[StageInfo]组包含zoffset，autoturn和resetBG参数。zoffset确定舞台的地面高度。当相机处于其初始位置时，以从屏幕顶部开始的像素为单位进行测量。您应该调整此值，以确保播放器实际站在图像的地面上。autoturn参数使玩家在必要时可以转身面对对方，并且应保留为1。resetBG参数（如果设置为1）会将舞台动画和背景控制器重置为其初始状态。由于在此示例中我们将不使用动画或背景控制器，因此可以不使用resetBG。
+</p>
+
+<p>[Shadow]组确定玩家阴影在舞台上的显示方式。播放器阴影只是播放器精灵的垂直缩放副本。yscale参数控制缩放因子（其中1表示没有缩放比例）。强度参数可以这样设置：intensity = I，其中I是阴影的暗度（介于0到256之间）。数字越高，阴影越暗。
+</p>
+
+<p>[Reflection]组可让您控制地板外观的光泽度。强度参数是反射的可见程度（范围从0到256）。数字越高，反射越大。
+</p>
+
+<p>一旦您的BG工作正常，请务必重新关闭debugbg。
+</p>
+
+<br><h3>添加更多元素</h3>
+
+<p>要添加另一个背景元素，只需复制并粘贴[BG 0]组，适当地重命名该组，然后为新元素设置参数。请记住要记住，元素是从后到前绘制的，顺序是它们在后台文件中出现的顺序。
+</p>
+
+<p>以下示例包含两个元素，BG Sky和BG Floor。“ BG天空”绘制在“ BG地板”后面，并且具有较小的增量值，使其看起来好像很远。</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[BG Sky]
+type = normal
+spriteno = 0, 0
+start = 0, 185
+delta = .25, .25
+
+[BG Floor]
+type = normal
+spriteno = 1, 0
+start = 0, 185
+delta = 1, 1
+</pre></td></tr></table><br>
+
+<br><h3>动画元素</h3>
+
+<p>动画背景元素的语法类似于普通的元素。“ type”参数是“ anim”而不是“ normal”，并且使用“ actionno”参数而不是“ spriteno”参数。动画BG始终被遮罩（这意味着精灵的颜色0为透明颜色），并且必须在同一文件中具有动画操作。
+</p>
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[BG Anim]
+type = Anim
+actionno = 10      ;数字此处...
+start = 50, 0
+delta = 1, 1
+
+[Begin Action 10]  ;应与此处的数字相同
+10,0, 0,0, 5
+10,1, 0,0, 5
+10,2, 0,0, 5
+</pre></td></tr></table><br>
+
+<br><h3>视差元素</h3>
+
+<p>视差BG元素可用于创建3D效果。视差元素的基本工作原理与普通（精灵）元素相似，不同之处在于视差元素具有随摄像机移动而水平倾斜的附加功能。
+</p>
+
+<p>
+  为了想象它是如何工作的，我们将以一个平面精灵为例。想象一下，当摄像机缓慢向左移动时，地板的顶部以相同的速度(delta=1)在屏幕上向右滚动。现在，假设地板的底部以两倍的速度滚动(delta=2)，使地板精灵在移动时倾斜。使用2D精灵可以创建3D效果！
+</p>
+
+<p>这是 stages/kfm.def的片段（KFM在MUGEN中的示例阶段）
+
+<table border="0" cellspacing="0" cellpadding="4" bgcolor="#DDDDDD" width="640">
+<tr><td>
+<pre>
+[BG Parallax Floor]
+type = parallax
+spriteno = 10,0
+start = 0, 181
+delta = .78, .75
+xscale = 1, 1.75
+yscalestart = 100
+yscaledelta = 1.2
+</pre></td></tr></table><br>
+
+<p>如您所见，"type"参数设置为"parallax"。其他大多数参数与普通BG元素相同（除非您不能使用 "trans"参数）。使视差起作用的行是 "xscale"参数。这些数字分别在子画面的顶部和底部缩放x-delta值。因此，对于  "xscale = 1, 1.75"，这意味着子画面的顶部以.78*1 = .78像素/摄影机单位移动。子画面的底部以.78*1.75 = 1.365 像素/摄影机单位移动。
+</p>
+
+<p>有两个可选参数："yscalestart"和 "yscaledelta"。这些创建3D幻觉的垂直部分。yscalestart是一个百分比，代表当摄像机的y位置（称为camera-y）处于地面水平时的起始垂直比例因子。yscaledelta是添加到摄像机向上移动的每个摄像机单元的比例因子的数量。在上面的示例中，如果摄像机向上移动一个单位，则比例因子将为101.2％，而如果向上移动另一单位，则比例将为102.4％，依此类推。您可以在kfm.def中尝试各种yscalestart和yscaledelta值以查看效果。
+</p>
+
+<p>在为视差元素设计精灵时，通常需要保持透视图，使得精灵顶部和底部的投影宽度与“ xscale”参数中两个值的比率相对应。例如，您可以查看 work/stages/kfm/floor0.pcx（所有KFM的舞台工作文件都在 work/stages/kfm/中）。
+</p>
+
+
+<br><h3>系统背景</h3>
+<p>系统背景只是舞台背景，没有任何增量值（假定相机位于固定位置）。这里的所有都是它的！ data/system.def具有多个可以更改的背景。最好与这些人一起玩以熟悉背景的工作方式。
+</p>
+
+<br><h3>从这往哪儿走</h3>
+<p>请务必阅读<a href="bgs.html">Background / Stage文档</a>以获得有关背景的完整文档。您可以使用许多其他参数来使舞台和背景看起来更好。学习使用背景控制器制作更复杂的动画。您所了解的背景知识也可以应用于 <a href="storyboard.html">情节提要</a>。
+</p>
+
+<!---------------------------------------------------------------->
+<br><hr>
+
+</BODY></HTML>

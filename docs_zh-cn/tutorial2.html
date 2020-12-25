@@ -1,0 +1,253 @@
+<HTML>
+<HEAD>
+<title>M.U.G.E.N 教程 2</title>
+<style type="text/css">
+
+/*
+M.U.G.E.N documentation stylesheet.
+
+
+Modified from voidspace.css.
+
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+em, i {
+  font-family: Times New Roman, Times, serif;
+}
+
+a {
+  color: #5577EE;
+  text-decoration: none;
+}
+
+a.reference.internal {
+  font-size: 80%;
+}
+
+a.toc-backref {
+  color: black;
+  text-decoration: none;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+a img {
+  border: none;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #445BAA;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #667788;
+  color: #ffffff;
+  border: thin solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #445BAA;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+  font-size: 120%;
+}
+
+</style>
+</HEAD>
+
+<BODY>
+
+<h1>
+  我如何能...?  M.U.G.E.N 入门</h1>
+<h2>教程第 2 部分 - 碰撞盒</h2>
+
+<p>M.U.G.E.N, Elecbyte (c)1999-2009<br>
+Updated 17 September 2009
+</p><br>
+
+Tutorial <a href="tutorial1.html">1</a> | <b>2</b> | 
+         <a href="tutorial3.html">3</a> | <a href="tutorial4.html">4</a>
+<hr>
+
+<br><h3>介绍</h3>
+<p>在这一部分中，我们将讨论如何为角色的.air文件中的动画定义碰撞盒。 .air文件的文档位于<a href="air.html">air.html</a>中。在继续本教程之前，请先阅读它。</p>
+
+<br><h3>1. 关于碰撞箱</h3>
+<p>将角色的动画放在一起后，可以使用AirEditor定义碰撞盒。有两种碰撞盒：
+<ul>
+<li>Clsn1 - 攻击盒（红色）
+<li>Clsn2 - 打击盒（蓝色）
+</ul>
+简而言之，如果玩家1的攻击框之一与玩家2的命中框之一重叠，则表示玩家1已击中玩家2。</p>
+
+<br><h3>2. 使用AirEditor</h3>
+<p>AirEditor是一个开发人员工具，可以在M.U.G.E.N安装目录的 old_tools/ 目录中找到。 airEditor的使用说明位于airedit.txt中。准备就绪后，运行airedit可执行文件。</p>
+
+<p>转到文件 -&gt 打开，然后选择要加载的sff文件，然后选择随附的air文件。现在，您将在屏幕上看到您的角色：</p>
+
+<img src="tutorial/airvw0.gif" width="320" height="240" alt="AirEditor screen">
+
+<p>让我们解释一下您在屏幕上看到的内容。
+<ul>
+<li>您看到的显示角色的大窗口称为<b>显示窗口</b>。标题区域显示您正在查看的当前动画动作，以及显示的精灵的精灵编号。
+<li>左上角的<b>信息窗口</b>显示：
+  <ul>
+  <li>光标的X，Y坐标，在显示窗口中显示为十字准线
+  <li>精灵轴的X，Y位置，相对于精灵的左上角。这是您在 player-sff.def 文件中输入的用于生成SFF的数字
+  <li>在显示窗口上拖动光标时创建的框的两个相对角的坐标
+  </ul>
+<li><b>导航窗口</b></b>:
+  <ul>
+  <li>当前动作正在显示。您可以通过按下任一方向上的箭头按钮来滚动 .air 文件中的动画动作，也可以通过单击中间按钮来手动输入动画动作
+  <li>正在显示的操作的当前元素。您可以滚动浏览可用的元素，或手动输入它，就像操作一样
+  <li>点击“播放动画”预览动画
+  </ul>
+<li><b>碰撞盒窗口</b>:
+  <ul>
+  <li>这里有一些按钮可以让您设置当前动画元素的边界框
+  </ul>
+<li><b>选项窗口</b>:
+  <ul>
+  <li>一个切换按钮，用于 启用/禁用 Clsn1（攻击）框的显示
+  <li>一个切换按钮，用于 启用/禁用 Clsn2（命中）框的显示
+  <li>切换按钮以 启用/禁用 精灵轴的显示
+  </ul>
+<li>屏幕顶部菜单旁边的宽灰色框是<b>状态栏</b>，它向您显示一些信息，例如上一次菜单操作。
+<li>在屏幕底部，您会看到一行“保存”框。这些都代表一个插槽，您可以将一个盒子保存到其中。清除按钮将全部清除。
+</ul>
+</p>
+
+<p>要定义碰撞盒，只需将鼠标光标拖到要在其上创建盒的区域上即可。这将显示为明亮的绿色框。单击而不拖动以使绿色框消失。首先，为KFM的站立框架定义框。首先，我们将拖动一个框来代表他的身体。
+</p>
+<img src="tutorial/airvw1.gif" width="320" height="240" alt="Boxes1">
+<img src="tutorial/airvw2.gif" width="320" height="240" alt="Boxes2">
+<p>单击屏幕底部的“保存1”按钮以将该框保存到内存。现在，将第二个方框拖到头部，然后单击Save2保存。请注意，已保存的框如何以深色显示。如果您想返回并更正其中一个已保存的框，只需拖动一个新的绿色框即可。</p>
+
+<p>接下来，将一组框分配给当前动画元素。在<b>碰撞框</b>菜单中单击相应的“设置”框。对动画动作中的所有元素重复该过程。</p>
+
+<p>完成更改后，请记住保存.air文件。单击文件菜单，然后选择保存。</p>
+
+<br>
+<h3>3. 一般提示</h3>
+<p>
+<ul>
+<li>您可以通过在提示符下指定 .sff和 .air文件名来快速加载角色。例如，<br>
+	<tt>airedit chars/kfm/kfm.sff chars/kfm/kfm.air</tt>
+<li>如果您有很多使用同一组框的框架，则可以滚动浏览每个元素，将框保存到 .air文件，而无需每次都清除框。另外，您可以将碰撞盒设置为“默认”，以为动作中的每个帧定义一组默认的盒。单击“选项”，阅读 air.html，以获取有关默认冲突框的更多信息。
+<li>在常见情况下，请尝试将Clsn2框保留在Clsn1框内。这样做的原因是使得可以在玩家之间交换命中。如果您有一个不带Clsn2框的Clsn1框，则为攻击设置优先级将变得毫无意义，因为这样攻击将具有无限的优先级。
+<li>碰撞盒不要太详细。关键不是要对角色进行像素精确的表示，而是要使游戏友好。例如，地面上您的角色的盒子应该有Clsn2盒子，它们跨过两条腿之间的空间。在这种情况下，太多细节实际上是不希望的。<br>
+<br>这是一张太详细的图片。您要避免这种情况。<br>
+<img src="tutorial/airvw3.gif" width="320" height="240" alt="Too much detail" border="0"><br>
+<br>下一个有更好的设置。创建不仅花费更少的精力，而且可以更好地近似角色随时间的运动。同样，攻击产生的Clsn1框穿过间隙的可能性也较小。<br>
+<img src="tutorial/airvw4.gif" width="320" height="240" alt="Just right" border="0">
+</ul>
+</p>
+
+<!---------------------------------------------------------------->
+<br><hr>
+
+Tutorial <a href="tutorial1.html">1</a> | <b>2</b> | 
+         <a href="tutorial3.html">3</a> | <a href="tutorial4.html">4</a>
+<p>Next is <b><a href="tutorial3.html">Tutorial Part 3</a></b>
+</p>
+</BODY></HTML>
